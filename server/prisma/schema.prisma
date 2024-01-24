@@ -1,0 +1,20 @@
+// prisma/schema.prisma
+
+// Define the data source, specifying PostgreSQL as the provider and using the DATABASE_URL environment variable.
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Define the Prisma Client generator configuration.
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Define a Prisma model called HydrationLog.
+model HydrationLog {
+  id        Int       @id @default(autoincrement())
+  intake    Int
+  timestamp DateTime  @default(now())
+}
+
