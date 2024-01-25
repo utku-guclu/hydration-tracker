@@ -1,18 +1,12 @@
-// src/components/HydrationForm.jsx
 import React, { useState } from "react";
 
 function HydrationForm({ onSubmitSuccess }) {
-    const [waterIntake, setWaterIntake] = useState(0);
-
-    const handleInputChange = (e) => {
-        setWaterIntake(e.target.value);
-    };
+    const [waterIntakeLocal, setWaterIntakeLocal] = useState(0);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            // Make a POST request to the server endpoint
             const response = await fetch(
                 "http://localhost:3008/api/hydration-logs",
                 {
@@ -21,14 +15,13 @@ function HydrationForm({ onSubmitSuccess }) {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        intake: parseInt(waterIntake, 10),
+                        intake: parseInt(waterIntakeLocal, 10),
                     }),
                 }
             );
 
             if (response.ok) {
                 console.log("Hydration log added successfully");
-                // Call the callback function to trigger a re-fetch
                 onSubmitSuccess();
             } else {
                 console.error("Failed to add hydration log");
@@ -37,7 +30,7 @@ function HydrationForm({ onSubmitSuccess }) {
             console.error("Error:", error);
         }
 
-        console.log(`Submitted water intake: ${waterIntake} ml`);
+        console.log(`Submitted water intake: ${waterIntakeLocal} ml`);
     };
 
     return (
@@ -48,8 +41,8 @@ function HydrationForm({ onSubmitSuccess }) {
                     Water Intake (ml):
                     <input
                         type="number"
-                        value={waterIntake}
-                        onChange={handleInputChange}
+                        value={waterIntakeLocal}
+                        onChange={(e) => setWaterIntakeLocal(e.target.value)}
                     />
                 </label>
                 <button type="submit">Log Water Intake</button>

@@ -1,38 +1,47 @@
 /* src/App.css */
 body {
-  font-family: "Arial", sans-serif;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  margin: 0;
+    font-family: "Arial", sans-serif;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
 h1,
 h2 {
-  color: #333;
+    color: #333;
 }
 
 form {
-  margin-top: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
 
 /* Updated styles for list items */
 .log-item {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px;
+    display: flex;
+    justify-content: space-between;
 }
 
 /* Additional styles for log details */
 .log-details {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+/* progress bar */
+progress {
+    width: 100%;
+    height: 20px;
 }
