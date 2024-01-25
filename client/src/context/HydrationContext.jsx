@@ -16,6 +16,7 @@ export const HydrationProvider = ({ children }) => {
     );
 };
 
+// hook
 export const useHydration = () => {
     const context = useContext(HydrationContext);
     if (!context) {

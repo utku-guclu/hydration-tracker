@@ -4,6 +4,8 @@ function HydrationForm({ onSubmitSuccess }) {
     const [waterIntakeLocal, setWaterIntakeLocal] = useState(0);
 
     const handleFormSubmit = async (e) => {
+        if (waterIntakeLocal <= 0 || "") return;
+
         e.preventDefault();
 
         try {
