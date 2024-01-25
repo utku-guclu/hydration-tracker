@@ -10,7 +10,7 @@ function HydrationForm({ onSubmitSuccess }) {
 
         try {
             const response = await fetch(
-                "http://localhost:3008/api/hydration-logs",
+                "http://localhost:3000/api/hydration-logs",
                 {
                     method: "POST",
                     headers: {

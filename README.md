@@ -1,4 +1,4 @@
-# Hydration Tracker App 
+# Hydration Tracker App
 
 ## Overview
 
@@ -24,33 +24,112 @@ The Hydration App is a simple application for tracking water intake, allowing us
 
 To install the dependencies, run:
 
-```bash
+```
 npm install
+```
+The app will be accessible at [http://localhost:3008](http://localhost:3008).
 
-Running the App
-Start the server:
+### Running the App
 
-bash
-Copy code
-npm start
-The app will be accessible at http://localhost:3008.
+This document provides instructions on how to run the Hydration App.
 
-Usage
-Logging Water Intake
-Open the app in your browser.
-Use the "Log Your Water Intake" form to enter the amount of water you've consumed in milliliters.
-Click the "Log Water Intake" button to submit the form.
-Viewing Hydration Logs
-Navigate to the "Hydration Logs" section of the app.
-The app will display a list of hydration logs, showing the intake amount and timestamp.
-Updating and Deleting Logs
-In the "Hydration Logs" section, find the log you want to update or delete.
-Click the "Update" button to modify the log's details.
-To delete a log, click the "Delete" button.
-Folder Structure
-plaintext
-Copy code
-hydration-app/
+## Prerequisites
+
+Make sure you have the following prerequisites installed on your machine:
+
+- [Node.js](https://nodejs.org/) (v14.0.0 or higher)
+- [npm](https://www.npmjs.com/) (v6.0.0 or higher)
+- [Prisma](https://www.prisma.io/docs/getting-started/installation) (for the server)
+
+## Setup
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/your-username/hydration-tracker.git
+    ```
+
+2. Navigate to the project directory:
+
+    ```bash
+    cd hydration-tracker
+    ```
+
+3. Install dependencies for the client:
+
+    ```bash
+    cd src
+    npm install
+    ```
+
+4. Install dependencies for the server:
+
+    ```bash
+    cd ../server
+    npm install
+    ```
+
+## Configure the Database
+
+1. In the `server/prisma` directory, create a new file named `.env` and configure your database connection. You can use the `.env.example` file as a template.
+
+2. Run the Prisma migrations to set up the database schema:
+
+    ```bash
+    npx prisma migrate dev
+    ```
+
+## Run the App
+
+1. Start the server:
+
+    ```bash
+    cd ../server
+    npm start
+    ```
+
+2. Open a new terminal and start the client:
+
+    ```bash
+    cd ../client
+    npm run dev
+    ```
+
+3. Access the app in your web browser at [http://localhost:3000](http://localhost:3000).
+
+## Usage
+
+- Log your water intake using the provided form.
+- View and manage your hydration logs.
+- Update and delete hydration logs as needed.
+
+Feel free to customize the app according to your preferences or project requirements.
+
+Happy hydrating!
+
+## Usage
+
+### Logging Water Intake
+
+1. Open the app in your browser.
+2. Use the "Log Your Water Intake" form to enter the amount of water you've consumed in milliliters.
+3. Click the "Log Water Intake" button to submit the form.
+
+### Viewing Hydration Logs
+
+1. Navigate to the "Hydration Logs" section of the app.
+2. The app will display a list of hydration logs, showing the intake amount and timestamp.
+
+### Updating and Deleting Logs
+
+1. In the "Hydration Logs" section, find the log you want to update or delete.
+2. Click the "Update" button to modify the log's details.
+3. To delete a log, click the "Delete" button.
+
+## Folder Structure
+
+```
+hydration-tracker/
 |-- server/
 |   |-- app.js
 |   |-- prisma/
@@ -60,18 +139,27 @@ hydration-app/
 |       |-- HydrationForm.jsx
 |       |-- HydrationLogs.jsx
 |       |-- HydrationUpdateForm.jsx
+|   |-- context/
+|       |-- HydrationContext.js
 |   |-- App.jsx
 |-- .env
 |-- package.json
 |-- README.md
-Dependencies
-express: Web server framework for Node.js.
-prisma: Database toolkit for Node.js.
-react: JavaScript library for building user interfaces.
-react-dom: React package for working with the DOM.
-... (list other dependencies)
-Contributing
+```
+
+## Dependencies
+
+- **express**: Web server framework for Node.js.
+- **prisma**: Database toolkit for Node.js.
+- **react**: JavaScript library for building user interfaces.
+- **react-dom**: React package for working with the DOM.
+- (other dependencies coming soon...)
+
+## Contributing
+
 Contributions are welcome! Feel free to open issues or submit pull requests.
 
-License
+## License
+
 This project is licensed under the MIT License.
+
