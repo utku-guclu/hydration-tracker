@@ -7,6 +7,7 @@ The Hydration App is a simple application for tracking water intake, allowing us
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
    - [Installation](#installation)
    - [Running the App](#running-the-app)
 2. [Usage](#usage)
@@ -21,15 +22,6 @@ The Hydration App is a simple application for tracking water intake, allowing us
 ## Getting Started
 
 ### Installation
-
-To install the dependencies, run:
-
-```
-npm install
-```
-The app will be accessible at [http://localhost:3008](http://localhost:3008).
-
-### Running the App
 
 This document provides instructions on how to run the Hydration App.
 
@@ -79,7 +71,7 @@ Make sure you have the following prerequisites installed on your machine:
     npx prisma migrate dev
     ```
 
-## Run the App
+## Running the App
 
 1. Start the server:
 
