@@ -87,7 +87,7 @@ Make sure you have the following prerequisites installed on your machine:
     npm run dev
     ```
 
-3. Access the app in your web browser at [http://localhost:3000](http://localhost:3000).
+3. Access the server in your web browser at [http://localhost:3000](http://localhost:3000).
 
 ## Usage
 
