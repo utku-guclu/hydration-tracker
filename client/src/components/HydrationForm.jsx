@@ -47,7 +47,12 @@ function HydrationForm({ onSubmitSuccess }) {
                         onChange={(e) => setWaterIntakeLocal(e.target.value)}
                     />
                 </label>
-                <button type="submit">Log Water Intake</button>
+                <button
+                    disabled={waterIntakeLocal == 0 || waterIntakeLocal === ""}
+                    type="submit"
+                >
+                    Log Water Intake
+                </button>
             </form>
         </div>
     );

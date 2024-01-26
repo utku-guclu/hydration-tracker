@@ -30,6 +30,7 @@ ul {
 .log-item {
     display: flex;
     justify-content: space-between;
+    gap: 1em;
 }
 
 /* Additional styles for log details */

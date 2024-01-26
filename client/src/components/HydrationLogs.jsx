@@ -80,7 +80,9 @@ function HydrationLogs() {
             <ul>
                 {logs.map((log) => (
                     <li key={log.timestamp} className="log-item">
-                        <p>{`Intake: ${log.intake} ml`}</p>
+                        <p>{`Intake: ${log.intake} ml | Time: ${new Date(
+                            log.timestamp
+                        ).toLocaleString()}`}</p>
                         <div className="log-details">
                             <button onClick={() => handleUpdate(log)}>
                                 Update
