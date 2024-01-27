@@ -38,10 +38,11 @@ function HydrationForm({ onSubmitSuccess }) {
     return (
         <div>
             <h2>Log Your Water Intake</h2>
-            <form onSubmit={handleFormSubmit}>
-                <label>
+            <form data-testid="hydration-form" onSubmit={handleFormSubmit}>
+                <label htmlFor="waterIntake">
                     Water Intake (ml):
                     <input
+                        id="waterIntake"
                         type="number"
                         value={waterIntakeLocal}
                         onChange={(e) => setWaterIntakeLocal(e.target.value)}
