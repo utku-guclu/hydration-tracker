@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { useHydration } from '../context/HydrationContext';
+import React, { useState } from "react";
+import { useHydration } from "../context/HydrationContext";
 
 function MaxGoalInput() {
   const { dailyGoal, updateDailyGoal } = useHydration();
-  const [newMaxGoal, setNewMaxGoal] = useState('');
+  const [newMaxGoal, setNewMaxGoal] = useState("");
 
   const handleInputChange = (e) => {
     setNewMaxGoal(e.target.value);
   };
 
   const handleUpdateGoal = () => {
-    if (newMaxGoal !== '' && !isNaN(newMaxGoal)) {
+    if (newMaxGoal !== "" && !isNaN(newMaxGoal)) {
       updateDailyGoal(parseInt(newMaxGoal, 10));
-      setNewMaxGoal('');
+      setNewMaxGoal("");
     }
   };
 
@@ -22,6 +22,7 @@ function MaxGoalInput() {
         Set Your Daily Goal:
         <input
           type="number"
+          min="2000"
           value={newMaxGoal}
           onChange={handleInputChange}
         />

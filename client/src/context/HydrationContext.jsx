@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 const HydrationContext = createContext();
 
@@ -11,6 +11,7 @@ export const HydrationProvider = ({ children }) => {
   };
 
   const updateDailyGoal = (goal) => {
+    if (goal <= 0 || "") return;
     setDailyGoal(goal);
   };
 
@@ -26,7 +27,7 @@ export const HydrationProvider = ({ children }) => {
 export const useHydration = () => {
   const context = useContext(HydrationContext);
   if (!context) {
-    throw new Error('useHydration must be used within a HydrationProvider');
+    throw new Error("useHydration must be used within a HydrationProvider");
   }
   return context;
 };
