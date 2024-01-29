@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+
 import HydrationForm from "./components/HydrationForm";
 import HydrationLogs from "./components/HydrationLogs";
 import ProgressBar from "./components/ProgressBar";
+
 import "./App.css";
 import Timer from "./components/Timer";
 import { useTimer } from "./context/TimerContext";
