@@ -19,8 +19,9 @@ function MaxGoalInput() {
   return (
     <div>
       <label>
-        Set Your Daily Goal:
+        Set Your Daily Goal (ml):
         <input
+          placeholder={dailyGoal}
           type="number"
           value={newMaxGoal}
           onChange={handleInputChange}
