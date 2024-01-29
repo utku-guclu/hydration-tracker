@@ -22,7 +22,6 @@ function MaxGoalInput() {
         Set Your Daily Goal:
         <input
           type="number"
-          min="2000"
           value={newMaxGoal}
           onChange={handleInputChange}
         />
