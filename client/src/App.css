@@ -1,48 +1,79 @@
 /* src/App.css */
+@import url(https://db.onlinewebfonts.com/c/84cb021d5f9af287ffff84b61beef6dc?family=clockicons);
+
 body {
-    font-family: "Arial", sans-serif;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 h1,
 h2 {
-    color: #333;
+  color: #333;
+}
+
+h2:hover {
+  color: #646cff;
+  cursor: none;
 }
 
 form {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
 }
 
 ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-/* Updated styles for list items */
-.log-item {
-    display: flex;
-    justify-content: space-between;
-    gap: 1em;
-}
-
-/* Additional styles for log details */
-.log-details {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1em;
+  list-style-type: none;
+  padding: 0;
 }
 
 /* progress bar */
 progress {
-    width: 100%;
-    height: 20px;
+  width: 100%;
+  height: 20px;
+}
+
+label {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Updated styles for list items */
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+/* Additional styles for log details */
+.log-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+
+.time {
+  font-family: clockicons, sans-serif;
+  color: #14ea14;
+}
+
+.goal-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.progress-info {
+  margin-top: 0;
+}
+
+.water-info {
+  color: #646cff;
 }

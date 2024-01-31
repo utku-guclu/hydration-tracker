@@ -17,9 +17,9 @@ function MaxGoalInput() {
   };
 
   return (
-    <div>
+    <div className="goal-container">
       <label>
-        Set Your Daily Goal (ml):
+        <span>Daily Goal (ml):</span>
         <input
           placeholder={dailyGoal}
           type="number"

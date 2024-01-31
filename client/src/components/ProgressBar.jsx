@@ -1,6 +1,6 @@
-import React from 'react';
-import { useHydration } from '../context/HydrationContext';
-import MaxGoalInput from './MaxGoalInput';
+import React from "react";
+import { useHydration } from "../context/HydrationContext";
+import MaxGoalInput from "./MaxGoalInput";
 
 function ProgressBar() {
   const { totalIntake, dailyGoal } = useHydration();
@@ -8,9 +8,9 @@ function ProgressBar() {
   return (
     <div>
       <MaxGoalInput />
-      <div style={{ marginTop: '10px' }}>
+      <div style={{ marginTop: "10px" }}>
         <progress value={totalIntake} max={dailyGoal}></progress>
-        <p>{`${totalIntake} ml / ${dailyGoal} ml`}</p>
+        <p className="italic progress-info">{`${totalIntake} ml / ${dailyGoal} ml`}</p>
       </div>
 
       {/* Check if max goal is reached and show a prompt */}
