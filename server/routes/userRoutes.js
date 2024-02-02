@@ -3,6 +3,6 @@ const userController = require("../controllers/userController");
 
 const userRoutes = express.Router();
 
-userRoutes.use("/api", userController);
+userRoutes.use("/register", userController);
 
 module.exports = userRoutes;

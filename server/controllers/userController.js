@@ -11,7 +11,7 @@ const validatePassword = require("../middlewares/validatePass");
 const authenticateToken = require("../middlewares/authToken");
 
 // Endpoint to create a new user
-userController.post("/user", validatePassword, async (req, res) => {
+userController.post("/", validatePassword, async (req, res) => {
   const { username, password } = req.body;
 
   try {

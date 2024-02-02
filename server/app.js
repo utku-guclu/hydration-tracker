@@ -10,6 +10,11 @@ const userController = require("./controllers/userController");
 const authController = require("./controllers/authController");
 const hydrationLogController = require("./controllers/hydrationLogController");
 
+/* routers */
+const authRoutes = require("./routes/authRoutes");
+const hydrationRoutes = require("./routes/hydrationRoutes")
+const userRoutes = require("./routes/userRoutes")
+
 /* database */
 const prisma = new PrismaClient();
 
@@ -79,9 +84,9 @@ app.use(cors());
 app.use(express.json());
 
 /* ENDPOINTS */
-app.use("/api/users", userController);
-app.use("/api", authController); // For user login and registration
-app.use("/api/hydration-logs", hydrationLogController);
+app.use("/user", userRoutes); // For user registration
+app.use("/auth", authRoutes); // authenticate user
+app.use("/api/hydration", hydrationRoutes); // for hydration
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
