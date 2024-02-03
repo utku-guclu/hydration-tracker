@@ -5,13 +5,16 @@ import "./index.css";
 
 import { HydrationProvider } from "./context/HydrationContext";
 import { TimerProvider } from "./context/TimerContext";
+import { UserProvider } from "./context/UserContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-        <TimerProvider>
-            <HydrationProvider>
-                <App />
-            </HydrationProvider>
-        </TimerProvider>
-    </React.StrictMode>
+  <React.StrictMode>
+    <UserProvider>
+      <TimerProvider>
+        <HydrationProvider>
+          <App />
+        </HydrationProvider>
+      </TimerProvider>
+    </UserProvider>
+  </React.StrictMode>
 );

@@ -1,5 +1,5 @@
 import React from "react";
-import { useHydration } from "../context/HydrationContext";
+import { useHydration } from "../../context/HydrationContext";
 import MaxGoalInput from "./MaxGoalInput";
 
 function ProgressBar() {

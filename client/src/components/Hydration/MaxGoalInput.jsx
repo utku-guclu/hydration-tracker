@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHydration } from "../context/HydrationContext";
+import { useHydration } from "../../context/HydrationContext";
 
 function MaxGoalInput() {
   const { dailyGoal, updateDailyGoal } = useHydration();

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HydrationUpdateDialog from "./HydrationUpdateDialog";
-import { useHydration } from "../context/HydrationContext";
+import { useHydration } from "../../context/HydrationContext";
 
 function HydrationLogs() {
   const [selectedLog, setSelectedLog] = useState(null);

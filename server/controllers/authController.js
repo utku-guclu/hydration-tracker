@@ -13,7 +13,6 @@ const authController = express.Router();
 const validatePassword = require("../middlewares/validatePass");
 const authenticateToken = require("../middlewares/authToken");
 
-
 // Login endpoint with password validation and JWT token creation
 authController.post("/", validatePassword, async (req, res) => {
   const { username, password } = req.body;
@@ -39,7 +38,14 @@ authController.post("/", validatePassword, async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.status(200).json({ token });
+    const access = {
+      data: {
+        token,
+        username,
+      },
+    };
+
+    res.status(200).json(access);
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });
