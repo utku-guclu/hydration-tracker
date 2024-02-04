@@ -1,10 +1,11 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
-const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient();
 
 const userController = express.Router();
+const secretKey = process.env.JWT_SECRET_KEY;
+
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
 /* middlewares */
 const validatePassword = require("../middlewares/validatePass");
@@ -39,7 +40,7 @@ userController.post("/", validatePassword, async (req, res) => {
     });
 
     // Generate a token (you may use a more secure method in production)
-    const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET_KEY, {
+    const token = jwt.sign({ userId: newUser.id }, secretKey, {
       expiresIn: "1h",
     });
 
