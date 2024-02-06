@@ -6,7 +6,7 @@ function HydrationUpdateForm({ log, onUpdate }) {
     const handleUpdate = async () => {
         try {
             const response = await fetch(
-                `http://localhost:3000/api/hydration-logs/${log.timestamp}`,
+                `http://localhost:3000/api/hydration/logs/${log.timestamp}`,
                 {
                     method: "PUT",
                     headers: {

@@ -9,7 +9,7 @@ function HydrationForm({ onSubmitSuccess }) {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/api/hydration-logs", {
+      const response = await fetch("http://localhost:3000/api/hydration/logs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

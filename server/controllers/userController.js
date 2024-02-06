@@ -1,6 +1,8 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 
+const jwt = require("jsonwebtoken");
+
 const userController = express.Router();
 const secretKey = process.env.JWT_SECRET_KEY;
 
@@ -45,12 +47,11 @@ userController.post("/", validatePassword, async (req, res) => {
     });
 
     const access = {
-      data: {
-        token,
-        username,
-      },
+      token,
+      username,
     };
 
+    console.log("user created!")
     // Return the token in the response
     res.status(201).json(access);
   } catch (error) {

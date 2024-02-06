@@ -39,13 +39,12 @@ authController.post("/", validatePassword, async (req, res) => {
     });
 
     const access = {
-      data: {
-        token,
-        username,
-      },
+      token,
+      username,
     };
 
     res.status(200).json(access);
+    console.log("user accessed!")
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });

@@ -1,20 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "../../context/UserContext";
 import authService from "../../services/authService";
 
 const Login = () => {
-  const { login } = useUser();
+  // Access user and token using useUser hook
+  const { username: accessedUser, token, login, logout } = useUser();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
       const user = await authService.login(username, password);
-      const userData = login(user); // {token, username}
+      login(user); // {token, username}
+      // give success message to user - ui
+      // save data to localstorage
+      // navigate - redirect to user authenticated - homepage
     } catch (error) {
+      // give error message to user - ui
       console.error("Login failed", error);
     }
   };
+
+  useEffect(() => {
+    console.log("user:", accessedUser);
+    console.log("token:", token);
+  }, [accessedUser]);
 
   return (
     <div>

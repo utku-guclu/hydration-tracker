@@ -9,7 +9,7 @@ function HydrationLogs() {
 
   const fetchHydrationLogs = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/hydration-logs", {
+      const response = await fetch("http://localhost:3000/api/hydration/logs", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +38,7 @@ function HydrationLogs() {
   const handleDelete = async (timestamp) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/hydration-logs/${timestamp}`,
+        `http://localhost:3000/api/hydration/logs/${timestamp}`,
         {
           method: "DELETE",
           headers: {

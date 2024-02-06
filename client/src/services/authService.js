@@ -5,11 +5,10 @@ const BASE_URL = "http://localhost:3000";
 const authService = {
   login: async (username, password) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/auth/login`, {
+      const response = await axios.post(`${BASE_URL}/auth/login`, {
         username,
         password,
       });
-
       return response.data;
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);
@@ -19,7 +18,7 @@ const authService = {
 
   register: async (username, password) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/user/register`, {
+      const response = await axios.post(`${BASE_URL}/user/register`, {
         username,
         password,
       });
