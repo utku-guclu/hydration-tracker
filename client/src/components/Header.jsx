@@ -7,7 +7,6 @@ const StyledHeader = styled.header`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 2em;
   align-items: center;
   padding: 10px;
   background-color: #333;
@@ -47,9 +46,9 @@ const Header = () => {
         <ul>
           {/* Render the "Home" link only if not on the home page */}
           {location.pathname !== "/" && (
-          <li>
-            <Link to="/">Home</Link>
-          </li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
           )}
           {/* Render the "Login" link only if not on the login page */}
           {location.pathname !== "/login" && (
