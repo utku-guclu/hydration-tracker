@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../../context/UserContext";
 import authService from "../../services/authService";
 
+import { styled } from "@mui/system";
+
+const LoginHeading = styled("h2")(({ color }) => ({
+  color: color,
+}));
+
 const Login = () => {
+  const [headingColor, setHeadingColor] = useState("#333");
   // Access user and token using useUser hook
   const { username: accessedUser, token, login, logout } = useUser();
   const [username, setUsername] = useState("");
@@ -26,9 +33,17 @@ const Login = () => {
     console.log("token:", token);
   }, [accessedUser]);
 
+  useEffect(() => {
+    if (username && password) {
+      setHeadingColor("#646cff");
+    } else {
+      setHeadingColor("#333");
+    }
+  }, [username, password]);
+
   return (
     <div>
-      <h2>Login</h2>
+      <LoginHeading color={headingColor}>Login</LoginHeading>
       <form>
         <label>
           Username:

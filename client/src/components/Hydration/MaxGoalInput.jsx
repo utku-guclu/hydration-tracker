@@ -27,7 +27,7 @@ function MaxGoalInput() {
           onChange={handleInputChange}
         />
       </label>
-      <button onClick={handleUpdateGoal}>Update Goal</button>
+      <button onClick={handleUpdateGoal} disabled={!newMaxGoal}>Update Goal</button>
     </div>
   );
 }

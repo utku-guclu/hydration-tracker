@@ -1,7 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+import { styled } from "@mui/system";
+
+const WaterIntakeHeading = styled("h2")(({ color }) => ({
+  color: color,
+}));
 
 function HydrationForm({ onSubmitSuccess }) {
+  const [headingColor, setHeadingColor] = useState("#333");
+
   const [waterIntakeLocal, setWaterIntakeLocal] = useState(0);
+
+  useEffect(() => {
+    if (waterIntakeLocal) {
+      setHeadingColor("#646cff");
+    } else {
+      setHeadingColor("#333");
+    }
+  }, [waterIntakeLocal]);
 
   const handleFormSubmit = async (e) => {
     if (waterIntakeLocal <= 0 || "") return;
@@ -34,7 +50,9 @@ function HydrationForm({ onSubmitSuccess }) {
 
   return (
     <div>
-      <h2>Log Your Water Intake</h2>
+      <WaterIntakeHeading color={headingColor}>
+        Log Your Water Intake
+      </WaterIntakeHeading>
       <form data-testid="hydration-form" onSubmit={handleFormSubmit}>
         <label htmlFor="waterIntake">
           <span>Water Intake (ml):</span>
@@ -45,7 +63,7 @@ function HydrationForm({ onSubmitSuccess }) {
           />
         </label>
         <button
-          disabled={waterIntakeLocal == 0 || waterIntakeLocal === ""}
+          disabled={!waterIntakeLocal}
           type="submit"
         >
           Log Water Intake
