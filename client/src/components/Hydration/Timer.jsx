@@ -1,7 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTimer } from "../../context/TimerContext";
 
+import { styled } from "@mui/system";
+
+const TimerHeading = styled("h2")(({ color }) => ({
+  color: color,
+}));
+
 const Timer = () => {
+  const [headingColor, setHeadingColor] = useState("#333");
+
   const {
     time,
     timerRunning,
@@ -18,9 +26,19 @@ const Timer = () => {
     }
   }, [time]);
 
+  useEffect(() => {
+    if (timerRunning) {
+      setHeadingColor("#646cff");
+    } else {
+      setHeadingColor("#333");
+    }
+  }, [time]);
+
   return (
     <div>
-      <h2>Timer</h2>
+      <TimerHeading className="timer" color={headingColor}>
+        Timer
+      </TimerHeading>
       <p>
         Remaining Time: <span className="time">{formatTime(time)}</span>
       </p>

@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import HydrationUpdateDialog from "./HydrationUpdateDialog";
 import { useHydration } from "../../context/HydrationContext";
 
+import { styled } from "@mui/system";
+
+const LogsHeading = styled("h2")(({ color }) => ({
+  color: color,
+}));
+
 function HydrationLogs() {
+  const [headingColor, setHeadingColor] = useState("#333");
   const [selectedLog, setSelectedLog] = useState(null);
   const [logs, setLogs] = useState([]);
   const { updateTotalIntake } = useHydration();
@@ -26,14 +33,6 @@ function HydrationLogs() {
       console.error("Error:", error);
     }
   };
-
-  useEffect(() => {
-    fetchHydrationLogs();
-  }, []);
-
-  useEffect(() => {
-    updateTotalIntake(parseInt(calculateTotalIntake(), 10));
-  }, [logs]);
 
   const handleDelete = async (timestamp) => {
     try {
@@ -70,9 +69,17 @@ function HydrationLogs() {
     return logs.reduce((total, log) => total + log.intake, 0);
   };
 
+  useEffect(() => {
+    if (logs.length !== 0) {
+      setHeadingColor("#646cff");
+    } else {
+      setHeadingColor("#333");
+    }
+  }, [logs]);
+
   return (
     <div>
-      <h2>Hydration Logs</h2>
+      <LogsHeading color={headingColor}>Hydration Logs</LogsHeading>
       <p>
         Total Water Intake:{" "}
         <span className="italic water-info">{calculateTotalIntake()} ml</span>

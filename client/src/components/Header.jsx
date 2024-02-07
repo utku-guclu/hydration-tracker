@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
+/* Semantic Header */
 const StyledHeader = styled.header`
   display: flex;
   flex-direction: column;
@@ -37,20 +38,31 @@ const StyledNav = styled.nav`
 `;
 
 const Header = () => {
+  const location = useLocation();
+
   return (
     <StyledHeader>
       <StyledHeading>Hydration Tracker</StyledHeading>
       <StyledNav>
         <ul>
+          {/* Render the "Home" link only if not on the home page */}
+          {location.pathname !== "/" && (
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
+          )}
+          {/* Render the "Login" link only if not on the login page */}
+          {location.pathname !== "/login" && (
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          )}
+          {/* Render the "Register" link only if not on the register page */}
+          {location.pathname !== "/register" && (
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+          )}
         </ul>
       </StyledNav>
     </StyledHeader>
