@@ -99,7 +99,12 @@ Feel free to customize the app according to your preferences or project requirem
 
 Happy hydrating!
 
-## Usage
+### Prisma | Docker 
+`npx prisma migrate dev
+npx prisma migrate up
+sudo docker-compose build
+sudo docker-compose up
+`
 
 ### Logging Water Intake
 

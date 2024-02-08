@@ -12,17 +12,21 @@ const hydrationLogController = require("./controllers/hydrationLogController");
 
 /* routers */
 const authRoutes = require("./routes/authRoutes");
-const hydrationRoutes = require("./routes/hydrationRoutes")
-const userRoutes = require("./routes/userRoutes")
+const hydrationRoutes = require("./routes/hydrationRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 /* database */
 const prisma = new PrismaClient();
 
-/* port */
-const PORT = process.env.PORT || 3000;
-
 /* app */
 const app = express();
+
+app.set("view engine", "ejs");
+app.set("views", "views");
+app.use(express.static("public"));
+
+/* port */
+const PORT = process.env.PORT || 3000;
 
 /* secret-key */
 const secretKey = process.env.JWT_SECRET_KEY;
@@ -84,11 +88,17 @@ app.use(cors());
 app.use(express.json());
 
 /* ENDPOINTS */
+
+/* welcome */
+app.get("/", (req, res) => {
+  res.render("welcome");
+});
+/* welcome */
+
 app.use("/user", userRoutes); // For user registration
 app.use("/auth", authRoutes); // authenticate user
 app.use("/api/hydration", hydrationRoutes); // for hydration
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
-  
+  console.log(`Server is running on port ${PORT}`);
+});
