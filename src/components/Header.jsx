@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import styled from "styled-components";
+import { styled } from "@mui/system";
 
 /* Semantic Header */
 const StyledHeader = styled.header`
