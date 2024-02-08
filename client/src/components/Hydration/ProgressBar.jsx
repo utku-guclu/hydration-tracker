@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHydration } from "../../context/HydrationContext";
 import MaxGoalInput from "./MaxGoalInput";
 
-function ProgressBar() {
-  const { totalIntake, dailyGoal } = useHydration();
-
+function ProgressBar({ totalIntake, dailyGoal }) {
   return (
     <div>
       <MaxGoalInput />

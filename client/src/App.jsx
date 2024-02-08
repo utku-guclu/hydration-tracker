@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 /* Hydration */
 import HydrationForm from "./components/Hydration/HydrationForm";
 import HydrationLogs from "./components/Hydration/HydrationLogs";
-import ProgressBar from "./components/Hydration/ProgressBar";
 
 /* User */
 import Login from "./components/User/Login";
@@ -21,22 +19,11 @@ import { useTimer } from "./context/TimerContext";
 import Layout from "./components/Layout";
 
 function App() {
-  const { handleReset, handleStart } = useTimer();
-  const [refreshLogs, setRefreshLogs] = useState(false);
-
-  const handleRefreshLogs = () => {
-    // Reset the timer when logging water intake and start again
-    handleReset();
-    handleStart();
-    setRefreshLogs((prev) => !prev);
-  };
-
   const Hydration = () => {
     return (
       <>
-        <HydrationForm onSubmitSuccess={handleRefreshLogs} />
-        <ProgressBar />
-        <HydrationLogs key={refreshLogs} />
+        <HydrationForm />
+        <HydrationLogs />
         <Timer />
       </>
     );

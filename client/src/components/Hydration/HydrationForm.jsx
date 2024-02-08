@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-
 import { styled } from "@mui/system";
+
+import { useHydration } from "../../context/HydrationContext";
+import { useTimer } from "../../context/TimerContext";
 
 const WaterIntakeHeading = styled("h2")(({ color }) => ({
   color: color,
 }));
 
-function HydrationForm({ onSubmitSuccess }) {
+function HydrationForm() {
+  const { addHydrationLog } = useHydration();
+  const { handleStart, handleReset } = useTimer();
   const [headingColor, setHeadingColor] = useState("#333");
-
   const [waterIntakeLocal, setWaterIntakeLocal] = useState(0);
 
   useEffect(() => {
@@ -20,29 +23,17 @@ function HydrationForm({ onSubmitSuccess }) {
   }, [waterIntakeLocal]);
 
   const handleFormSubmit = async (e) => {
-    if (waterIntakeLocal <= 0 || "") return;
-
     e.preventDefault();
+    handleReset();
+    handleStart();
+    setWaterIntakeLocal(0);
+    if (waterIntakeLocal <= 0 || waterIntakeLocal === "") return;
 
     try {
-      const response = await fetch("http://localhost:3000/api/hydration/logs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          intake: parseInt(waterIntakeLocal, 10),
-        }),
-      });
-
-      if (response.ok) {
-        console.log("Hydration log added successfully");
-        onSubmitSuccess();
-      } else {
-        console.error("Failed to add hydration log");
-      }
+      await addHydrationLog(parseInt(waterIntakeLocal, 10));
+      console.log("Hydration log added successfully");
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Failed to add hydration log", error);
     }
 
     console.log(`Submitted water intake: ${waterIntakeLocal} ml`);
@@ -58,14 +49,13 @@ function HydrationForm({ onSubmitSuccess }) {
           <span>Water Intake (ml):</span>
           <input
             type="number"
+            id="waterIntake"
+            name="waterIntake"
             value={waterIntakeLocal}
             onChange={(e) => setWaterIntakeLocal(e.target.value)}
           />
         </label>
-        <button
-          disabled={!waterIntakeLocal}
-          type="submit"
-        >
+        <button disabled={!waterIntakeLocal} type="submit">
           Log Water Intake
         </button>
       </form>

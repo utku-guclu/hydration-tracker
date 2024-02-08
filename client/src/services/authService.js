@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000";
+import server from "../config/baseURL";
 
 const authService = {
   login: async (username, password) => {
     try {
-      const response = await axios.post(`${BASE_URL}/auth/login`, {
+      const response = await axios.post(`${server}/auth/login`, {
         username,
         password,
       });
@@ -18,7 +18,7 @@ const authService = {
 
   register: async (username, password) => {
     try {
-      const response = await axios.post(`${BASE_URL}/user/register`, {
+      const response = await axios.post(`${server}/user/register`, {
         username,
         password,
       });

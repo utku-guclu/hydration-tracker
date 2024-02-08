@@ -4,6 +4,9 @@ import { useHydration } from "../../context/HydrationContext";
 
 import { styled } from "@mui/system";
 
+import server from "../../config/baseURL";
+import ProgressBar from "./ProgressBar";
+
 const LogsHeading = styled("h2")(({ color }) => ({
   color: color,
 }));
@@ -11,33 +14,12 @@ const LogsHeading = styled("h2")(({ color }) => ({
 function HydrationLogs() {
   const [headingColor, setHeadingColor] = useState("#333");
   const [selectedLog, setSelectedLog] = useState(null);
-  const [logs, setLogs] = useState([]);
-  const { updateTotalIntake } = useHydration();
-
-  const fetchHydrationLogs = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/api/hydration/logs", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const fetchedLogs = await response.json();
-        setLogs(fetchedLogs);
-      } else {
-        console.error("Failed to fetch hydration logs");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+  const { logs, fetchHydrationLogs, dailyGoal } = useHydration();
 
   const handleDelete = async (timestamp) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/hydration/logs/${timestamp}`,
+        `${server}/api/hydration/logs/${timestamp}`,
         {
           method: "DELETE",
           headers: {
@@ -70,6 +52,10 @@ function HydrationLogs() {
   };
 
   useEffect(() => {
+    fetchHydrationLogs();
+  }, []);
+
+  useEffect(() => {
     if (logs.length !== 0) {
       setHeadingColor("#646cff");
     } else {
@@ -78,39 +64,42 @@ function HydrationLogs() {
   }, [logs]);
 
   return (
-    <div>
-      <LogsHeading color={headingColor}>Hydration Logs</LogsHeading>
-      <p>
-        Total Water Intake:{" "}
-        <span className="italic water-info">{calculateTotalIntake()} ml</span>
-      </p>
-      <ul>
-        {logs.map((log) => (
-          <li key={log.timestamp} className="log-item">
-            <p>{`Intake: ${log.intake} ml | Time: ${new Date(
-              log.timestamp
-            ).toLocaleString()}`}</p>
-            <div className="log-details">
-              <button onClick={() => handleUpdate(log)}>Update</button>
-              <button onClick={() => handleDelete(log.timestamp)}>
-                Delete
-              </button>
-            </div>
+    <>
+      <ProgressBar totalIntake={calculateTotalIntake()} dailyGoal={dailyGoal} />
+      <div>
+        <LogsHeading color={headingColor}>Hydration Logs</LogsHeading>
+        <p>
+          Total Water Intake:{" "}
+          <span className="italic water-info">{calculateTotalIntake()} ml</span>
+        </p>
+        <ul>
+          {logs.map((log) => (
+            <li key={log.timestamp} className="log-item">
+              <p>{`Intake: ${log.intake} ml | Time: ${new Date(
+                log.timestamp
+              ).toLocaleString()}`}</p>
+              <div className="log-details">
+                <button onClick={() => handleUpdate(log)}>Update</button>
+                <button onClick={() => handleDelete(log.timestamp)}>
+                  Delete
+                </button>
+              </div>
 
-            {selectedLog === log && (
-              <HydrationUpdateDialog
-                log={log}
-                onUpdate={() => {
-                  fetchHydrationLogs();
-                  handleCancelUpdate();
-                }}
-                onCancel={handleCancelUpdate}
-              />
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+              {selectedLog === log && (
+                <HydrationUpdateDialog
+                  log={log}
+                  onUpdate={() => {
+                    fetchHydrationLogs();
+                    handleCancelUpdate();
+                  }}
+                  onCancel={handleCancelUpdate}
+                />
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }
 

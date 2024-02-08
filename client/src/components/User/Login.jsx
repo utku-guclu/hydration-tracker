@@ -45,20 +45,26 @@ const Login = () => {
     <div>
       <LoginHeading color={headingColor}>Login</LoginHeading>
       <form>
-        <label>
+        <label htmlFor="login">
           Username:
           <input
+            id="login"
+            name="login"
             type="text"
             value={username}
+            autoComplete="username"
             onChange={(e) => setUsername(e.target.value)}
           />
         </label>
         <br />
-        <label>
+        <label htmlFor="password">
           Password:
           <input
+            id="password"
+            name="password"
             type="password"
             value={password}
+            autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>

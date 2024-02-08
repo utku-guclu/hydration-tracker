@@ -9,6 +9,7 @@ const TimerHeading = styled("h2")(({ color }) => ({
 
 const Timer = () => {
   const [headingColor, setHeadingColor] = useState("#333");
+  const [drinkWater, setDrinkWater] = useState(false);
 
   const {
     time,
@@ -20,9 +21,11 @@ const Timer = () => {
   } = useTimer();
 
   useEffect(() => {
+    // Handle action when timer reaches 0 (e.g., remind to drink water)
     if (time === 0) {
-      // Handle action when timer reaches 0 (e.g., remind to drink water)
-      console.log("It's time to drink water!");
+      setDrinkWater(true);
+    } else {
+      setDrinkWater(false);
     }
   }, [time]);
 
@@ -42,7 +45,7 @@ const Timer = () => {
       <p>
         Remaining Time: <span className="time">{formatTime(time)}</span>
       </p>
-      {time === 0 && <p>It's time to drink water!</p>}
+      {drinkWater && <p>It's time to drink water!</p>}
       <button onClick={handleStart} disabled={timerRunning}>
         Start
       </button>

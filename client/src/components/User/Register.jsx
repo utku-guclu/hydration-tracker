@@ -45,20 +45,26 @@ const Register = () => {
     <div>
       <RegisterHeading color={headingColor}>Register</RegisterHeading>
       <form>
-        <label>
+        <label htmlFor="register">
           Username:
           <input
+            id="register"
+            name="register"
             type="text"
             value={username}
+            autoComplete="username"
             onChange={(e) => setUsername(e.target.value)}
           />
         </label>
         <br />
-        <label>
+        <label htmlFor="password">
           Password:
           <input
+            id="password"
+            name="password"
             type="password"
             value={password}
+            autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
