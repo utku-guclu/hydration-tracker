@@ -5,6 +5,7 @@ import "./index.css";
 
 import { HydrationProvider } from "./context/HydrationContext.jsx";
 import { TimerProvider } from "./context/TimerContext.jsx";
+
 import { UserProvider } from "./context/UserContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
