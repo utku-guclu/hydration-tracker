@@ -1,18 +1,19 @@
 import React from "react";
 import { styled } from "@mui/system";
 
-const StyledFooter = styled.footer`
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-`;
+/* Semantic Footer */
+const StyledFooter = styled("footer")({
+  position: "fixed",
+  bottom: 0,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "10px",
+});
 
-const FooterText = styled.p`
-  margin: 0; /* Remove default margin */
-`;
+const FooterText = styled("p")({
+  margin: 0, // Remove default margin
+});
 
 const Footer = () => {
   return (
