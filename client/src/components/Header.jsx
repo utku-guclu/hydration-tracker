@@ -3,38 +3,36 @@ import { Link, useLocation } from "react-router-dom";
 import { styled } from "@mui/system";
 
 /* Semantic Header */
-const StyledHeader = styled.header`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: #333;
-`;
+const StyledHeader = styled('header')({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '10px',
+  backgroundColor: '#333',
+});
 
-const StyledHeading = styled.h1`
-  color: #646cff;
-`;
+const StyledHeading = styled('h1')({
+  color: '#646cff',
+});
 
-const StyledNav = styled.nav`
-  ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-  }
-
-  li {
-    font-size: 18px;
-  }
-
-  a {
-    color: #fff;
-    text-decoration: none;
-    &:hover {
-      color: #646cff;
-    }
-  }
-`;
+const StyledNav = styled('nav')({
+  ul: {
+    listStyle: 'none',
+    display: 'flex',
+    gap: '20px',
+  },
+  li: {
+    fontSize: '18px',
+  },
+  a: {
+    color: '#fff',
+    textDecoration: 'none',
+    '&:hover': {
+      color: '#646cff',
+    },
+  },
+});
 
 const Header = () => {
   const location = useLocation();
