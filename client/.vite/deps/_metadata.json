@@ -1,8 +1,64 @@
 {
-  "hash": "e5530ec4",
-  "configHash": "baec1d95",
-  "lockfileHash": "e3b0c442",
-  "browserHash": "6a435d82",
-  "optimized": {},
-  "chunks": {}
+  "hash": "d3478723",
+  "configHash": "35e3fcff",
+  "lockfileHash": "6b045c7f",
+  "browserHash": "2588e612",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "d13c44c8",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "866b878b",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "787e49c5",
+      "needsInterop": false
+    },
+    "@mui/system": {
+      "src": "../../node_modules/@mui/system/esm/index.js",
+      "file": "@mui_system.js",
+      "fileHash": "4c1780c0",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "9ba1cb3d",
+      "needsInterop": false
+    },
+    "react-dom": {
+      "src": "../../node_modules/react-dom/index.js",
+      "file": "react-dom.js",
+      "fileHash": "83c431b1",
+      "needsInterop": true
+    },
+    "@emotion/styled": {
+      "src": "../../node_modules/@emotion/styled/dist/emotion-styled.browser.esm.js",
+      "file": "@emotion_styled.js",
+      "fileHash": "79445cd6",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-IBXAGRP2": {
+      "file": "chunk-IBXAGRP2.js"
+    },
+    "chunk-P3XNE4LH": {
+      "file": "chunk-P3XNE4LH.js"
+    },
+    "chunk-FQO5W7GE": {
+      "file": "chunk-FQO5W7GE.js"
+    },
+    "chunk-ZS7NZCD4": {
+      "file": "chunk-ZS7NZCD4.js"
+    }
+  }
 }
