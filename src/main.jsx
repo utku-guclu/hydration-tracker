@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 
-import { HydrationProvider } from "./context/HydrationContext";
-import { TimerProvider } from "./context/TimerContext";
+import { HydrationProvider } from "./context/HydrationContext.jsx";
+import { TimerProvider } from "./context/TimerContext.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
