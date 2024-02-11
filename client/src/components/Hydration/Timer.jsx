@@ -38,7 +38,7 @@ const Timer = () => {
   }, [time]);
 
   return (
-    <div>
+    <section id="timer">
       <TimerHeading className="timer" color={headingColor}>
         Timer
       </TimerHeading>
@@ -53,7 +53,7 @@ const Timer = () => {
         Pause
       </button>
       <button onClick={handleReset}>Reset</button>
-    </div>
+    </section>
   );
 };
 

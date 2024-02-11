@@ -47,7 +47,7 @@ const Register = () => {
       <RegisterHeading color={headingColor}>Register</RegisterHeading>
       <form>
         <label htmlFor="register">
-          Username:
+          <span>Username:</span>
           <input
             id="register"
             name="register"
@@ -59,7 +59,7 @@ const Register = () => {
         </label>
         <br />
         <label htmlFor="password">
-          Password:
+          <span>Password:</span>
           <input
             id="password"
             name="password"
