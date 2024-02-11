@@ -1,35 +1,43 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+
+import Logout from "./User/Logout";
+
+import { useUser } from "../context/UserContext";
+
 import { styled } from "@mui/system";
+import Greeting from "./User/Greeting";
 
 /* Semantic Header */
-const StyledHeader = styled('header')({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  padding: '10px',
-  backgroundColor: '#333',
+const StyledHeader = styled("header")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "10px",
+  backgroundColor: "#333",
 });
 
-const StyledHeading = styled('h1')({
-  color: '#646cff',
+const StyledHeading = styled("h1")({
+  color: "#646cff",
 });
 
-const StyledNav = styled('nav')({
+const StyledNav = styled("nav")({
   ul: {
-    listStyle: 'none',
-    display: 'flex',
-    gap: '20px',
+    listStyle: "none",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "20px",
   },
   li: {
-    fontSize: '18px',
+    fontSize: "18px",
   },
   a: {
-    color: '#fff',
-    textDecoration: 'none',
-    '&:hover': {
-      color: '#646cff',
+    color: "#fff",
+    textDecoration: "none",
+    "&:hover": {
+      color: "#646cff",
     },
   },
 });
@@ -37,9 +45,12 @@ const StyledNav = styled('nav')({
 const Header = () => {
   const location = useLocation();
 
+  const { token, logout, username } = useUser();
+
   return (
     <StyledHeader>
       <StyledHeading>Hydration Tracker</StyledHeading>
+      {username && <Greeting username={username} />}
       <StyledNav>
         <ul>
           {/* Render the "Home" link only if not on the home page */}
@@ -48,16 +59,22 @@ const Header = () => {
               <Link to="/">Home</Link>
             </li>
           )}
-          {/* Render the "Login" link only if not on the login page */}
-          {location.pathname !== "/login" && (
+          {/* Render the "Login" link only if not on the login page and user is not logged in */}
+          {location.pathname !== "/login" && !token && (
             <li>
               <Link to="/login">Login</Link>
             </li>
           )}
-          {/* Render the "Register" link only if not on the register page */}
-          {location.pathname !== "/register" && (
+          {/* Render the "Register" link only if not on the register page and user is not logged in */}
+          {location.pathname !== "/register" && !token && (
             <li>
               <Link to="/register">Register</Link>
+            </li>
+          )}
+          {/* Render the "Logout" link only if user is logged in */}
+          {token && (
+            <li>
+              <Logout logout={logout}>Logout</Logout>
             </li>
           )}
         </ul>

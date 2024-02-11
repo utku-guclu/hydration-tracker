@@ -3,9 +3,10 @@ import { useUser } from "../../context/UserContext";
 import authService from "../../services/authService";
 
 import { styled } from "@mui/system";
+import { useNavigate } from "react-router-dom";
 
 const LoginHeading = styled("h2")(({ color }) => ({
-  color: color,
+  color,
 }));
 
 const Login = () => {
@@ -15,23 +16,23 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleLogin = async () => {
     try {
       const user = await authService.login(username, password);
-      login(user); // {token, username}
+      login(user);
       // give success message to user - ui
-      // save data to localstorage
       // navigate - redirect to user authenticated - homepage
+      navigate("/");
     } catch (error) {
       // give error message to user - ui
       console.error("Login failed", error);
+    } finally {
+      setUsername("");
+      setPassword("");
     }
   };
-
-  useEffect(() => {
-    console.log("user:", accessedUser);
-    console.log("token:", token);
-  }, [accessedUser]);
 
   useEffect(() => {
     if (username && password) {
