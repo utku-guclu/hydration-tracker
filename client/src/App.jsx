@@ -13,7 +13,6 @@ import "./App.css";
 
 /* Timer */
 import Timer from "./components/Hydration/Timer";
-import { useTimer } from "./context/TimerContext";
 
 /* Layout */
 import Layout from "./components/Layout";
@@ -22,8 +21,10 @@ function App() {
   const Hydration = () => {
     return (
       <>
-        <HydrationForm />
-        <HydrationLogs />
+        <section id="hydration">
+          <HydrationForm />
+          <HydrationLogs />
+        </section>
         <Timer />
       </>
     );

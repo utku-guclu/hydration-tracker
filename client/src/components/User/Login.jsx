@@ -46,7 +46,7 @@ const Login = () => {
       <LoginHeading color={headingColor}>Login</LoginHeading>
       <form>
         <label htmlFor="login">
-          Username:
+          <span>Username:</span>
           <input
             id="login"
             name="login"
@@ -58,7 +58,7 @@ const Login = () => {
         </label>
         <br />
         <label htmlFor="password">
-          Password:
+          <span>Password:</span>
           <input
             id="password"
             name="password"

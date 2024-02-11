@@ -40,7 +40,7 @@ function HydrationForm() {
   };
 
   return (
-    <div>
+    <>
       <WaterIntakeHeading color={headingColor}>
         Log Your Water Intake
       </WaterIntakeHeading>
@@ -59,7 +59,7 @@ function HydrationForm() {
           Log Water Intake
         </button>
       </form>
-    </div>
+    </>
   );
 }
 

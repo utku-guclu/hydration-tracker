@@ -3,12 +3,13 @@ import { styled } from "@mui/system";
 
 /* Semantic Footer */
 const StyledFooter = styled("footer")({
-  position: "fixed",
   bottom: 0,
   display: "flex",
+  width: "100%",
   alignItems: "center",
   justifyContent: "center",
   padding: "10px",
+  marginTop: "100px",
 });
 
 const FooterText = styled("p")({
