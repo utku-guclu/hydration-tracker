@@ -3,6 +3,7 @@ import { useUser } from "../../context/UserContext";
 import authService from "../../services/authService";
 
 import { styled } from "@mui/system";
+import { useNavigate } from "react-router-dom";
 
 const RegisterHeading = styled("h2")(({ color }) => ({
   color: color,
@@ -15,23 +16,23 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleRegister = async () => {
     try {
       const user = await authService.register(username, password);
       login(user); // {token, username}
       // give success message to user - ui
-      // save data to localstorage
       // navigate - redirect to user authenticated - homepage
+      navigate("/");
     } catch (error) {
       // give error message to user - ui
       console.error("Registration failed", error);
+    } finally {
+      setUsername("");
+      setPassword("");
     }
   };
-
-  useEffect(() => {
-    console.log("user:", accessedUser);
-    console.log("token:", token);
-  }, [accessedUser]);
 
   useEffect(() => {
     if (username && password) {
