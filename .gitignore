@@ -29,3 +29,8 @@ dist-ssr
 
 # AWS
 hydration.pem*
+
+#Vite
+.vite/
+#Github
+.github/
