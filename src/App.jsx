@@ -12,7 +12,7 @@ import Register from "./components/User/Register";
 import "./App.css";
 
 /* Timer */
-import Timer from "./components/Hydration/Timer";
+import Timer from "./components/Timer/Timer";
 
 /* Layout */
 import Layout from "./components/Layout";

@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useTimer } from "../../context/TimerContext";
 
 import { styled } from "@mui/system";
+import Dialog from "../../context/Dialog";
+import SetTimer from "./SetTimer";
 
 const TimerHeading = styled("h2")(({ color }) => ({
   color: color,
+  cursor: "pointer", // Add cursor pointer for indicating clickability
 }));
 
 const Timer = () => {
   const [headingColor, setHeadingColor] = useState("#333");
   const [drinkWater, setDrinkWater] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // State to control dialog visibility
 
   const {
     time,
@@ -37,9 +41,19 @@ const Timer = () => {
     }
   }, [time]);
 
+  // Function to handle opening the dialog
+  const handleDialogOpen = () => {
+    setIsDialogOpen(true);
+  };
+
   return (
-    <section id="timer">
-      <TimerHeading className="timer" color={headingColor}>
+    <section id="timer" style={{ marginBottom: "100px" }}>
+      {/* TimerHeading is now clickable */}
+      <TimerHeading
+        className="timer"
+        color={headingColor}
+        onClick={handleDialogOpen} // Open dialog on click
+      >
         Timer
       </TimerHeading>
       <p>
@@ -53,6 +67,12 @@ const Timer = () => {
         Pause
       </button>
       <button onClick={handleReset}>Reset</button>
+
+      {/* Dialog component, conditionally rendered based on isDialogOpen state */}
+      <Dialog visible={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+        <h3>Set Timer</h3>
+        <SetTimer />
+      </Dialog>
     </section>
   );
 };
