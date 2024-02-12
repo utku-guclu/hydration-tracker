@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useHydration } from "../../context/HydrationContext";
+import React from "react";
 import MaxGoalInput from "../Hydration/MaxGoalInput";
 
 function ProgressBar({ totalIntake, dailyGoal }) {

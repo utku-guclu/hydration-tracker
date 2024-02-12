@@ -5,7 +5,7 @@ import { useHydration } from "../../context/HydrationContext";
 import { styled } from "@mui/system";
 
 import server from "../../config/baseURL";
-import ProgressBar from "../ProgressBar/ProgressBar";
+import { ProgressBar } from "../ProgressBar";
 
 const LogsHeading = styled("h2")(({ color }) => ({
   color: color,
