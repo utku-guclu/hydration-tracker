@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useHydration } from "../../context/HydrationContext";
 
-function MaxGoalInput() {
-  const { dailyGoal, updateDailyGoal } = useHydration();
+function MaxGoalInput({ unit }) {
+  const { updateDailyGoal, convertedDailyGoal } = useHydration();
   const [newMaxGoal, setNewMaxGoal] = useState("");
 
   const handleInputChange = (e) => {
@@ -19,15 +19,17 @@ function MaxGoalInput() {
   return (
     <div className="goal-container">
       <label>
-        <span>Daily Goal (ml):</span>
+        <span>Daily Goal:</span>
         <input
-          placeholder={dailyGoal}
+          placeholder={`${convertedDailyGoal} ${unit}`}
           type="number"
           value={newMaxGoal}
           onChange={handleInputChange}
         />
       </label>
-      <button onClick={handleUpdateGoal} disabled={!newMaxGoal}>Update Goal</button>
+      <button onClick={handleUpdateGoal} disabled={!newMaxGoal}>
+        Update Goal
+      </button>
     </div>
   );
 }

@@ -1,17 +1,17 @@
 import React from "react";
 import MaxGoalInput from "../Hydration/MaxGoalInput";
 
-function ProgressBar({ totalIntake, dailyGoal }) {
+function ProgressBar({ convertedDailyGoal, unit, convertedTotal }) {
   return (
     <div>
-      <MaxGoalInput />
+      <MaxGoalInput unit={unit} />
       <div style={{ marginTop: "10px" }}>
-        <progress value={totalIntake} max={dailyGoal}></progress>
-        <p className="italic progress-info">{`${totalIntake} ml / ${dailyGoal} ml`}</p>
+        <progress value={convertedTotal} max={convertedDailyGoal}></progress>
+        <p className="italic progress-info">{`${convertedTotal} / ${convertedDailyGoal} ${unit}`}</p>
       </div>
 
       {/* Check if max goal is reached and show a prompt */}
-      {totalIntake >= dailyGoal && (
+      {convertedTotal >= convertedDailyGoal && (
         <p>{"You've reached your daily hydration goal!"}</p>
       )}
     </div>

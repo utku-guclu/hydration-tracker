@@ -8,6 +8,8 @@ import { ProgressBar } from "../ProgressBar";
 
 import { styled } from "@mui/system";
 
+import { mlToCups } from "../../utils/hydration-converter";
+
 const LogsHeading = styled("h2")(({ color }) => ({
   color: color,
 }));
@@ -15,8 +17,15 @@ const LogsHeading = styled("h2")(({ color }) => ({
 function HydrationLogs() {
   const [headingColor, setHeadingColor] = useState("#333");
   const [selectedLog, setSelectedLog] = useState(null);
-  const { logs, fetchHydrationLogs, dailyGoal, deleteHydrationLog } =
-    useHydration();
+  const {
+    logs,
+    fetchHydrationLogs,
+    deleteHydrationLog,
+    isCup,
+    convertedTotal,
+    convertedDailyGoal,
+    unit,
+  } = useHydration();
 
   const handleDelete = (timestamp) => {
     deleteHydrationLog(timestamp);
@@ -28,10 +37,6 @@ function HydrationLogs() {
 
   const handleCancelUpdate = () => {
     setSelectedLog(null);
-  };
-
-  const calculateTotalIntake = () => {
-    return logs.reduce((total, log) => total + log.intake, 0);
   };
 
   useEffect(() => {
@@ -46,21 +51,31 @@ function HydrationLogs() {
     }
   }, [logs]);
 
+  useEffect(() => {
+    console.log(convertedTotal);
+  }, [convertedTotal]);
+
   return (
     <>
-      <ProgressBar totalIntake={calculateTotalIntake()} dailyGoal={dailyGoal} />
+      <ProgressBar
+        convertedDailyGoal={convertedDailyGoal}
+        unit={unit}
+        convertedTotal={convertedTotal}
+      />
       <div>
         <LogsHeading color={headingColor}>Hydration Logs</LogsHeading>
         <p>
           Total Water Intake:{" "}
-          <span className="italic water-info">{calculateTotalIntake()} ml</span>
+          <span className="italic water-info">
+            {convertedTotal} {unit}
+          </span>
         </p>
         <ul>
           {logs.map((log) => (
             <li key={log.timestamp} className="log-item">
-              <p>{`Intake: ${log.intake} ml | Time: ${new Date(
-                log.timestamp
-              ).toLocaleString()}`}</p>
+              <p>{`Intake: ${isCup ? mlToCups(log.intake) : log.intake}  ${
+                isCup ? "(cup)" : "(ml)"
+              } | Time: ${new Date(log.timestamp).toLocaleString()}`}</p>
               <div className="log-details">
                 <button onClick={() => handleUpdate(log)}>Update</button>
                 <button onClick={() => handleDelete(log.timestamp)}>

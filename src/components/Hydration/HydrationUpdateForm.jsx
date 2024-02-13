@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 
 import { useHydration } from "../../context/HydrationContext";
+import { mlToCups } from "../../utils/hydration-converter";
 
 function HydrationUpdateForm({ log, onUpdate }) {
-  const { intake, timestamp } = log;
-  const [updatedIntake, setUpdatedIntake] = useState(intake);
+  const { updateHydrationLog, unit, convertedTotal, isCup } = useHydration();
 
-  const { updateHydrationLog } = useHydration();
+  let { intake, timestamp } = log;
+ 
+  intake = isCup ? mlToCups(intake) : intake;
+
+  const [updatedIntake, setUpdatedIntake] = useState(intake);
 
   const handleUpdate = () => {
     updateHydrationLog(timestamp, updatedIntake);
@@ -16,7 +20,7 @@ function HydrationUpdateForm({ log, onUpdate }) {
   return (
     <div>
       <label htmlFor="updatedIntake">
-        <span>Updated Intake:</span>
+        <span>Updated Intake {unit}:</span>
         <input
           type="number"
           id="updatedIntake"

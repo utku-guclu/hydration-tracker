@@ -9,7 +9,7 @@ const WaterIntakeHeading = styled("h2")(({ color }) => ({
 }));
 
 function HydrationForm() {
-  const { addHydrationLog } = useHydration();
+  const { addHydrationLog, unit } = useHydration();
   const { handleStart, handleReset } = useTimer();
   const [headingColor, setHeadingColor] = useState("#333");
   const [waterIntakeLocal, setWaterIntakeLocal] = useState(0);
@@ -46,8 +46,9 @@ function HydrationForm() {
       </WaterIntakeHeading>
       <form data-testid="hydration-form" onSubmit={handleFormSubmit}>
         <label htmlFor="waterIntake">
-          <span>Water Intake (ml):</span>
+          <span>Water Intake {unit}:</span>
           <input
+            placeholder={waterIntakeLocal}
             type="number"
             id="waterIntake"
             name="waterIntake"

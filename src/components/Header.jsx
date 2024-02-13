@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import Logout from "./User/Logout";
 
 import { useUser } from "../context/UserContext";
+import { useHydration } from "../context/HydrationContext";
 
 import { styled } from "@mui/system";
 import Greeting from "./User/Greeting";
+
+import { LuGlassWater } from "react-icons/lu";
+import { IoWaterOutline } from "react-icons/io5";
 
 /* Semantic Header */
 const StyledHeader = styled("header")({
@@ -46,9 +50,21 @@ const Header = () => {
   const location = useLocation();
 
   const { token: authenticated, logout, username } = useUser();
+  const { switchUnit, isCup } = useHydration();
 
   return (
     <StyledHeader>
+      {isCup ? (
+        <LuGlassWater
+          onClick={switchUnit}
+          style={{ position: "absolute", top: "10px", right: "10px" }}
+        />
+      ) : (
+        <IoWaterOutline
+          onClick={switchUnit}
+          style={{ position: "absolute", top: "10px", right: "10px" }}
+        />
+      )}
       <StyledHeading>Hydration Tracker</StyledHeading>
       {username && <Greeting username={username} />}
       <StyledNav>
