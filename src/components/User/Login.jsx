@@ -11,8 +11,8 @@ const LoginHeading = styled("h2")(({ color }) => ({
 
 const Login = () => {
   const [headingColor, setHeadingColor] = useState("#333");
-  // Access user and token using useUser hook
-  const { username: accessedUser, token, login, logout } = useUser();
+  // Access user
+  const { login } = useUser();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+
 import HydrationUpdateDialog from "./HydrationUpdateDialog";
+
 import { useHydration } from "../../context/HydrationContext";
 
-import { styled } from "@mui/system";
-
-import server from "../../config/baseURL";
 import { ProgressBar } from "../ProgressBar";
+
+import { styled } from "@mui/system";
 
 const LogsHeading = styled("h2")(({ color }) => ({
   color: color,
@@ -14,29 +15,11 @@ const LogsHeading = styled("h2")(({ color }) => ({
 function HydrationLogs() {
   const [headingColor, setHeadingColor] = useState("#333");
   const [selectedLog, setSelectedLog] = useState(null);
-  const { logs, fetchHydrationLogs, dailyGoal } = useHydration();
+  const { logs, fetchHydrationLogs, dailyGoal, deleteHydrationLog } =
+    useHydration();
 
-  const handleDelete = async (timestamp) => {
-    try {
-      const response = await fetch(
-        `${server}/api/hydration/logs/${timestamp}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.ok) {
-        await fetchHydrationLogs();
-        // Don't reset selectedLog immediately after deletion
-      } else {
-        console.error("Failed to delete hydration log");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+  const handleDelete = (timestamp) => {
+    deleteHydrationLog(timestamp);
   };
 
   const handleUpdate = (log) => {

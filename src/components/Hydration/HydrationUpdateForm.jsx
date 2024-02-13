@@ -1,33 +1,16 @@
 import React, { useState } from "react";
 
-import server from "../../config/baseURL";
+import { useHydration } from "../../context/HydrationContext";
 
 function HydrationUpdateForm({ log, onUpdate }) {
-  const [updatedIntake, setUpdatedIntake] = useState(log.intake);
+  const { intake, timestamp } = log;
+  const [updatedIntake, setUpdatedIntake] = useState(intake);
 
-  const handleUpdate = async () => {
-    try {
-      const response = await fetch(
-        `${server}/api/hydration/logs/${log.timestamp}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            intake: updatedIntake,
-          }),
-        }
-      );
+  const { updateHydrationLog } = useHydration();
 
-      if (response.ok) {
-        onUpdate(); // Call the callback to trigger updates in the parent component
-      } else {
-        console.error("Failed to update hydration log");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+  const handleUpdate = () => {
+    updateHydrationLog(timestamp, updatedIntake);
+    onUpdate();
   };
 
   return (

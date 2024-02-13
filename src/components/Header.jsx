@@ -45,7 +45,7 @@ const StyledNav = styled("nav")({
 const Header = () => {
   const location = useLocation();
 
-  const { token, logout, username } = useUser();
+  const { token: authenticated, logout, username } = useUser();
 
   return (
     <StyledHeader>
@@ -60,19 +60,19 @@ const Header = () => {
             </li>
           )}
           {/* Render the "Login" link only if not on the login page and user is not logged in */}
-          {location.pathname !== "/login" && !token && (
+          {location.pathname !== "/login" && !authenticated && (
             <li>
               <Link to="/login">Login</Link>
             </li>
           )}
           {/* Render the "Register" link only if not on the register page and user is not logged in */}
-          {location.pathname !== "/register" && !token && (
+          {location.pathname !== "/register" && !authenticated && (
             <li>
               <Link to="/register">Register</Link>
             </li>
           )}
           {/* Render the "Logout" link only if user is logged in */}
-          {token && (
+          {authenticated && (
             <li>
               <Logout logout={logout}>Logout</Logout>
             </li>
