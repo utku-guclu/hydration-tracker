@@ -4,7 +4,7 @@ import server from "../config/baseURL";
 
 import { useUser } from "./UserContext";
 
-import { cupsToMl, mlToCups } from "../utils/hydration-converter";
+import { mlToCups, cupsToMl } from "hydration-converter";
 
 const HydrationContext = createContext();
 
@@ -176,7 +176,7 @@ export const HydrationProvider = ({ children }) => {
   };
 
   const updateDailyGoal = (goal) => {
-    goal = isCup ? cupsToMl(goal) : goal
+    goal = isCup ? cupsToMl(goal) : goal;
     if (goal <= 0 || "") return;
     setDailyGoal(goal);
     localStorage.setItem("dailyGoal", JSON.stringify(goal));
@@ -222,7 +222,7 @@ export const HydrationProvider = ({ children }) => {
         isCup,
         unit,
         convertedTotal,
-        convertedDailyGoal
+        convertedDailyGoal,
       }}
     >
       {children}

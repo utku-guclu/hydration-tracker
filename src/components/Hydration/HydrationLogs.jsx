@@ -6,9 +6,9 @@ import { useHydration } from "../../context/HydrationContext";
 
 import { ProgressBar } from "../ProgressBar";
 
-import { styled } from "@mui/system";
+import { mlToCups } from "hydration-converter";
 
-import { mlToCups } from "../../utils/hydration-converter";
+import { styled } from "@mui/system";
 
 const LogsHeading = styled("h2")(({ color }) => ({
   color: color,
@@ -50,10 +50,6 @@ function HydrationLogs() {
       setHeadingColor("#333");
     }
   }, [logs]);
-
-  useEffect(() => {
-    console.log(convertedTotal);
-  }, [convertedTotal]);
 
   return (
     <>
