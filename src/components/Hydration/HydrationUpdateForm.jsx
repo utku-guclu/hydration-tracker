@@ -24,6 +24,7 @@ function HydrationUpdateForm({ log, onUpdate }) {
         <span>Updated Intake {unit}:</span>
         <input
           type="number"
+          min="0"
           id="updatedIntake"
           name="updatedIntake"
           value={updatedIntake}

@@ -7,7 +7,8 @@ import SetTimer from "./SetTimer";
 
 const TimerHeading = styled("h2")(({ color }) => ({
   color: color,
-  cursor: "pointer", // Add cursor pointer for indicating clickability
+  cursor: "pointer",
+  display: "inline",
 }));
 
 const Timer = () => {

@@ -35,6 +35,8 @@ function Dialog({ visible, onClose, children }) {
         padding: "10px",
         flexDirection: "column",
         alignItems: "center",
+        top: "50%",
+        bottom: "50%",
         backgroundColor: "rgba(33,33,33, 1)",
       }}
       ref={dialogRef}

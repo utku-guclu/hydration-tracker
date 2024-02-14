@@ -16,6 +16,7 @@ const SetTimer = () => {
   return (
     <form onSubmit={handleSubmit}>
       <input
+        min="0"
         type="number"
         value={inputTime}
         onChange={(e) => setInputTime(e.target.value)}

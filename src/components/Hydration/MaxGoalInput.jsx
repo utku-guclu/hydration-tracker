@@ -25,6 +25,7 @@ function MaxGoalInput({ unit }) {
           type="number"
           value={newMaxGoal}
           onChange={handleInputChange}
+          min="0"
         />
       </label>
       <button onClick={handleUpdateGoal} disabled={!newMaxGoal}>

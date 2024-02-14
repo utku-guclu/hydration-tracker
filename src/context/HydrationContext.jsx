@@ -30,9 +30,17 @@ export const HydrationProvider = ({ children }) => {
   /* constants */
   const unit = isCup ? "(cup)" : "(ml)";
 
-  const convertedTotal = isCup ? totalIntakeCups : totalIntake;
+  const convertedTotal = isCup
+    ? isNaN(totalIntakeCups)
+      ? 0
+      : totalIntakeCups
+    : totalIntake;
 
-  const convertedDailyGoal = isCup ? dailyGoalCups : dailyGoal;
+  const convertedDailyGoal = isCup
+    ? isNaN(dailyGoalCups)
+      ? 0
+      : dailyGoalCups
+    : dailyGoal;
 
   const fetchHydrationLogs = async () => {
     try {

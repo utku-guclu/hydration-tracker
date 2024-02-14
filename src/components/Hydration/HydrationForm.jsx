@@ -46,13 +46,14 @@ function HydrationForm() {
       </WaterIntakeHeading>
       <form data-testid="hydration-form" onSubmit={handleFormSubmit}>
         <label htmlFor="waterIntake">
-          <span>Water Intake {unit}:</span>
+          <span>Water {unit}:</span>
           <input
             placeholder={waterIntakeLocal}
             type="number"
             id="waterIntake"
             name="waterIntake"
             value={waterIntakeLocal}
+            min="0"
             onChange={(e) => setWaterIntakeLocal(e.target.value)}
           />
         </label>

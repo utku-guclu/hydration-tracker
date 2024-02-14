@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import Logout from "./User/Logout";
@@ -9,6 +9,7 @@ import { useHydration } from "../context/HydrationContext";
 import { styled } from "@mui/system";
 import Greeting from "./User/Greeting";
 
+/* ICONS */
 import { LuGlassWater } from "react-icons/lu";
 import { IoWaterOutline } from "react-icons/io5";
 
@@ -20,10 +21,15 @@ const StyledHeader = styled("header")({
   alignItems: "center",
   padding: "10px",
   backgroundColor: "#333",
+  marginTop: "20px",
+  position: "relative",
 });
 
 const StyledHeading = styled("h1")({
-  color: "#646cff",
+  color: "var(--main-color)",
+  "&:hover": {
+    color: "var(--main-color)",
+  },
 });
 
 const StyledNav = styled("nav")({
@@ -41,7 +47,7 @@ const StyledNav = styled("nav")({
     color: "#fff",
     textDecoration: "none",
     "&:hover": {
-      color: "#646cff",
+      color: "var(--main-color)",
     },
   },
 });
@@ -56,13 +62,13 @@ const Header = () => {
     <StyledHeader>
       {isCup ? (
         <LuGlassWater
+          className="water-icon"
           onClick={switchUnit}
-          style={{ position: "absolute", top: "10px", right: "10px" }}
         />
       ) : (
         <IoWaterOutline
+          className="water-icon"
           onClick={switchUnit}
-          style={{ position: "absolute", top: "10px", right: "10px" }}
         />
       )}
       <StyledHeading>Hydration Tracker</StyledHeading>

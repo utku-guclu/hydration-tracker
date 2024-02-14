@@ -40,7 +40,14 @@ const TimerProvider = ({ children, initialTime = 60 * 60 }) => {
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+    return (
+      <span>
+        {minutes}
+        <span className={timerRunning ? "blink" : ""}>:</span>
+        {remainingSeconds < 10 ? "0" : ""}
+        {remainingSeconds}
+      </span>
+    );
   };
 
   return (
