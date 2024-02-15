@@ -19,12 +19,12 @@ const authenticateToken = (req, res, next) => {
     }
 
     req.user = user; // Attach decoded user information to the request
+    // { userId: 1, iat: 1707954851, exp: 1707958451 }
     next();
   });
 };
 
 module.exports = authenticateToken;
-
 
 /* 
 // Use authenticateToken as middleware for protected routes

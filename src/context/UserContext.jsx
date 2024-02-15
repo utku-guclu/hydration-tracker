@@ -6,20 +6,21 @@ const UserContext = createContext();
 const initialState = {
   username: null,
   token: null,
+  userId: null,
 };
 
 const userReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      const { username, token } = action.payload;
+      const { username, token, userId } = action.payload;
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
-      return { ...state, username, token };
+      return { ...state, username, token, userId };
     case "LOGOUT":
       // clearSession();
       localStorage.removeItem("token");
       localStorage.removeItem("username");
-      return { ...state, username: null, token: null };
+      return { ...state, username: null, token: null, userId: null };
     default:
       return state;
   }
@@ -31,6 +32,7 @@ const UserProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
+    /* auto login */
     if (token && username) {
       dispatch({ type: "LOGIN", payload: { token, username } });
     }
@@ -46,7 +48,7 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ username: state.username, token: state.token, login, logout }}
+      value={{ username: state.username, token: state.token, userId: state.userId, login, logout }}
     >
       {children}
     </UserContext.Provider>

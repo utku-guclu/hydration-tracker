@@ -5,6 +5,8 @@ import { styled } from "@mui/system";
 import Dialog from "../../context/Dialog";
 import SetTimer from "./SetTimer";
 
+import { Tooltip } from "react-tooltip";
+
 const TimerHeading = styled("h2")(({ color }) => ({
   color: color,
   cursor: "pointer",
@@ -36,7 +38,7 @@ const Timer = () => {
 
   useEffect(() => {
     if (timerRunning) {
-      setHeadingColor("#646cff");
+      setHeadingColor("var(--main-color)");
     } else {
       setHeadingColor("#333");
     }
@@ -50,7 +52,10 @@ const Timer = () => {
   return (
     <section id="timer" style={{ marginBottom: "100px" }}>
       {/* TimerHeading is now clickable */}
+      {!timerRunning && <Tooltip id="timer-tooltip" />}
       <TimerHeading
+        data-tooltip-id="timer-tooltip"
+        data-tooltip-content="Set Timer!"
         className="timer"
         color={headingColor}
         onClick={handleDialogOpen} // Open dialog on click

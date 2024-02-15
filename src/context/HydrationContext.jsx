@@ -25,7 +25,7 @@ export const HydrationProvider = ({ children }) => {
   const [dailyGoalCups, setDailyGoalCups] = useState(0);
 
   /* hooks */
-  const { token } = useUser();
+  const { token, userId } = useUser();
 
   /* constants */
   const unit = isCup ? "(cup)" : "(ml)";
@@ -183,6 +183,34 @@ export const HydrationProvider = ({ children }) => {
     }
   };
 
+  const resetLogs = async () => {
+    try {
+      if (!token) {
+        localStorage.removeItem("hydrationLogs");
+        setLogs([]);
+
+        return;
+      }
+
+      const response = await fetch(`${server}/api/hydration/logs/reset`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userId }),
+      });
+
+      if (response.ok) {
+        console.log("Hydration logs reset successfully");
+      } else {
+        console.error("Failed to reset hydration logs");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const updateDailyGoal = (goal) => {
     goal = isCup ? cupsToMl(goal) : goal;
     if (goal <= 0 || "") return;
@@ -231,6 +259,7 @@ export const HydrationProvider = ({ children }) => {
         unit,
         convertedTotal,
         convertedDailyGoal,
+        resetLogs,
       }}
     >
       {children}

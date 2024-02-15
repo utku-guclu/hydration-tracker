@@ -1,3 +1,4 @@
+/* REGISTER */
 const express = require("express");
 const bcrypt = require("bcrypt");
 
@@ -41,6 +42,9 @@ userController.post("/", validatePassword, async (req, res) => {
       },
     });
 
+    // Get the user ID
+    const userId = newUser.id;
+
     // Generate a token (you may use a more secure method in production)
     const token = jwt.sign({ userId: newUser.id }, secretKey, {
       expiresIn: "1h",
@@ -49,9 +53,10 @@ userController.post("/", validatePassword, async (req, res) => {
     const access = {
       token,
       username,
+      userId
     };
 
-    console.log("user created!")
+    console.log("user created!");
     // Return the token in the response
     res.status(201).json(access);
   } catch (error) {

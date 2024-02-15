@@ -10,8 +10,11 @@ import { mlToCups } from "hydration-converter";
 
 import { styled } from "@mui/system";
 
+import { Tooltip } from "react-tooltip";
+
 const LogsHeading = styled("h2")(({ color }) => ({
   color: color,
+  cursor: "pointer",
 }));
 
 function HydrationLogs() {
@@ -25,7 +28,12 @@ function HydrationLogs() {
     convertedTotal,
     convertedDailyGoal,
     unit,
+    resetLogs,
   } = useHydration();
+
+  const handleReset = () => {
+    resetLogs();
+  };
 
   const handleDelete = (timestamp) => {
     deleteHydrationLog(timestamp);
@@ -45,7 +53,7 @@ function HydrationLogs() {
 
   useEffect(() => {
     if (logs.length !== 0) {
-      setHeadingColor("#646cff");
+      setHeadingColor("var(--main-color)");
     } else {
       setHeadingColor("#333");
     }
@@ -59,7 +67,17 @@ function HydrationLogs() {
         convertedTotal={convertedTotal}
       />
       <div>
-        <LogsHeading color={headingColor}>Hydration Logs</LogsHeading>
+        {logs.length > 0 && <Tooltip id="logs-heading" />}
+        <LogsHeading
+          data-tooltip-id="logs-heading"
+          data-tooltip-content="Double click to reset logs!"
+          data-tooltip-place="top"
+          onDoubleClick={handleReset}
+          color={headingColor}
+        >
+          Hydration Logs
+        </LogsHeading>
+
         <p>
           Total Water Intake:{" "}
           <span className="italic water-info">

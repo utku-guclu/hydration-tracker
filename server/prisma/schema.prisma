@@ -10,15 +10,17 @@ generator client {
 }
 
 model HydrationLog {
-  id        Int      @id @default(autoincrement())
-  intake    Int
-  timestamp DateTime @default(now())
+  id         Int       @id @default(autoincrement())
+  intake     Int
+  timestamp  DateTime  @default(now())
+  userId     Int       // Add a foreign key to associate with User model
+  user       User      @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  username String   @unique
-  //email    String   @unique
-  password String
+  id         Int           @id @default(autoincrement())
+  username   String        @unique
+  password   String
+  hydrations HydrationLog[] // Define a one-to-many relationship with HydrationLog
   // Add other fields as needed
 }

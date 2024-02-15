@@ -60,17 +60,17 @@ const Header = () => {
 
   return (
     <StyledHeader>
-      {isCup ? (
-        <LuGlassWater
-          className="water-icon"
-          onClick={switchUnit}
-        />
-      ) : (
-        <IoWaterOutline
-          className="water-icon"
-          onClick={switchUnit}
-        />
+      {/* Conditionally render icons only on the homepage */}
+      {location.pathname === "/" && (
+        <>
+          {isCup ? (
+            <LuGlassWater className="water-icon" onClick={switchUnit} />
+          ) : (
+            <IoWaterOutline className="water-icon" onClick={switchUnit} />
+          )}
+        </>
       )}
+
       <StyledHeading>Hydration Tracker</StyledHeading>
       {username && <Greeting username={username} />}
       <StyledNav>

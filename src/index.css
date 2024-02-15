@@ -1,7 +1,10 @@
 :root {
   --main-color: #646cff;
   --secondary-color: #14ea14;
-  --water: #99C8FF;
+  --water: #99c8ff;
+
+  /* tooltip */
+  --rt-opacity: 1 !important;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

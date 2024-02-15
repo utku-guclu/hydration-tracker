@@ -34,6 +34,9 @@ authController.post("/", validatePassword, async (req, res) => {
       return res.status(401).json({ error: "Invalid username or password" });
     }
 
+    // Get the user ID
+    const userId = user.id;
+
     const token = jwt.sign({ userId: user.id }, secretKey, {
       expiresIn: "1h",
     });
@@ -41,10 +44,11 @@ authController.post("/", validatePassword, async (req, res) => {
     const access = {
       token,
       username,
+      userId
     };
 
     res.status(200).json(access);
-    console.log("user accessed!")
+    console.log("user accessed!");
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });

@@ -16,7 +16,7 @@ function HydrationForm() {
 
   useEffect(() => {
     if (waterIntakeLocal) {
-      setHeadingColor("#646cff");
+      setHeadingColor("var(--main-color)");
     } else {
       setHeadingColor("#333");
     }
