@@ -49,6 +49,10 @@ const Timer = () => {
     setIsDialogOpen(true);
   };
 
+  const handleDialogClose = () => {
+    setIsDialogOpen(false);
+  };
+
   return (
     <section id="timer" style={{ marginBottom: "100px" }}>
       {/* TimerHeading is now clickable */}
@@ -77,7 +81,7 @@ const Timer = () => {
       {/* Dialog component, conditionally rendered based on isDialogOpen state */}
       <Dialog visible={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
         <h3>Set Timer</h3>
-        <SetTimer />
+        <SetTimer handleDialogClose={handleDialogClose}/>
       </Dialog>
     </section>
   );

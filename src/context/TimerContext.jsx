@@ -29,7 +29,7 @@ const TimerProvider = ({ children, initialTime = 60 * 60 }) => {
   };
 
   const handleReset = () => {
-    setTime(initialTime);
+    setTime(time);
     setTimerRunning(false);
   };
 

@@ -1,15 +1,16 @@
 import React, { useState, useContext } from "react";
 import { TimerContext } from "../../context/TimerContext";
 
-const SetTimer = () => {
+const SetTimer = ({handleDialogClose}) => {
   const { setTimer } = useContext(TimerContext);
-  const [inputTime, setInputTime] = useState("");
+
+  const [inputTime, setInputTime] = useState(60);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (inputTime.trim() !== "") {
-      setTimer(Number(inputTime));
-      setInputTime("");
+    if (inputTime !== 0) {
+      setTimer(inputTime * 60);
+      setInputTime(0);
     }
   };
 
@@ -22,7 +23,7 @@ const SetTimer = () => {
         onChange={(e) => setInputTime(e.target.value)}
         placeholder="Enter time in minutes"
       />
-      <button type="submit">Set Timer</button>
+      <button type="submit" onClick={() => handleDialogClose(false)}>Set Timer</button>
     </form>
   );
 };
