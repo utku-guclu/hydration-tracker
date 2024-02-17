@@ -104,6 +104,12 @@ Happy hydrating!
 npx prisma migrate up
 sudo docker-compose build
 sudo docker-compose up
+
+docker tag <image_name>:<tag> <registry_url>/<image_name>:<tag>
+docker push <registry_url>/<image_name>:<tag>
+
+docker run -p 3000:3000 hydration
+
 `
 
 ### Logging Water Intake

@@ -35,8 +35,7 @@ function HydrationForm() {
     } catch (error) {
       console.error("Failed to add hydration log", error);
     }
-
-    console.log(`Submitted water intake: ${waterIntakeLocal} ml`);
+    console.log(`Submitted water intake: ${waterIntakeLocal} ${unit}`);
   };
 
   return (
