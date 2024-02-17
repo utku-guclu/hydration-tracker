@@ -71,7 +71,6 @@ const TimerProvider = ({ children, initialTime = 60 * 60 }) => {
   // Effect to retrieve timer state from localStorage on component mount
   useEffect(() => {
     const storedTimerState = localStorage.getItem("timerState");
-    console.log(storedTimerState);
     if (storedTimerState) {
       const { time: storedTime, timerRunning: storedTimerRunning } =
         JSON.parse(storedTimerState);

@@ -17,6 +17,9 @@ import Timer from "./components/Timer/Timer";
 /* Layout */
 import Layout from "./components/Layout";
 
+/* Not Found */
+import NotFound from "./components/NotFound";
+
 function App() {
   const Hydration = () => {
     return (
@@ -37,7 +40,7 @@ function App() {
           <Route index element={<Hydration />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {/* <Route path="*" element={<NotFound />} /> */}
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Router>
