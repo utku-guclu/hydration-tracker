@@ -81,7 +81,7 @@ const Timer = () => {
       {/* Dialog component, conditionally rendered based on isDialogOpen state */}
       <Dialog visible={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
         <h3>Set Timer</h3>
-        <SetTimer handleDialogClose={handleDialogClose}/>
+        <SetTimer handleDialogClose={handleDialogClose} isDialogOpen={isDialogOpen}/>
       </Dialog>
     </section>
   );

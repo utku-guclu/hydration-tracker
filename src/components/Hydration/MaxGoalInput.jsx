@@ -9,7 +9,9 @@ function MaxGoalInput({ unit }) {
     setNewMaxGoal(e.target.value);
   };
 
-  const handleUpdateGoal = () => {
+  const handleUpdateGoal = (e) => {
+    e.preventDefault();
+
     if (newMaxGoal !== "" && !isNaN(newMaxGoal)) {
       updateDailyGoal(parseInt(newMaxGoal, 10));
       setNewMaxGoal("");
