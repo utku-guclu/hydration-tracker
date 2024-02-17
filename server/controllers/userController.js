@@ -53,7 +53,7 @@ userController.post("/", validatePassword, async (req, res) => {
     const access = {
       token,
       username,
-      userId
+      userId,
     };
 
     console.log("user created!");

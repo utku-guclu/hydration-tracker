@@ -1,6 +1,8 @@
 // UserContext.js
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 
+import authService from "../services/authService";
+
 const UserContext = createContext();
 
 const initialState = {
@@ -29,13 +31,26 @@ const userReducer = (state, action) => {
 const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
 
+  // access check
   useEffect(() => {
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
-    /* auto login */
-    if (token && username) {
-      dispatch({ type: "LOGIN", payload: { token, username } });
-    }
+
+    const fetchUserStatus = async () => {
+      try {
+        if (token && username) {
+          const userStatus = await authService.checkAccess(token);
+          if (userStatus) {
+            const user = { token, username };
+            login(user);
+          }
+        }
+      } catch (error) {
+        console.error("Error checking access:", error);
+        logout();
+      }
+    };
+    fetchUserStatus();
   }, []);
 
   const login = (user) => {
@@ -48,7 +63,13 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ username: state.username, token: state.token, userId: state.userId, login, logout }}
+      value={{
+        username: state.username,
+        token: state.token,
+        userId: state.userId,
+        login,
+        logout,
+      }}
     >
       {children}
     </UserContext.Provider>

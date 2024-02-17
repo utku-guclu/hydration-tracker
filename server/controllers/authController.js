@@ -14,7 +14,7 @@ const validatePassword = require("../middlewares/validatePass");
 const authenticateToken = require("../middlewares/authToken");
 
 // Login endpoint with password validation and JWT token creation
-authController.post("/", validatePassword, async (req, res) => {
+authController.post("/login", validatePassword, async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -44,7 +44,7 @@ authController.post("/", validatePassword, async (req, res) => {
     const access = {
       token,
       username,
-      userId
+      userId,
     };
 
     res.status(200).json(access);
@@ -52,6 +52,17 @@ authController.post("/", validatePassword, async (req, res) => {
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Use authenticateToken as middleware for protected routes
+authController.post("/access", authenticateToken, (req, res) => {
+  // Access granted for authenticated users
+  try {
+    res.json({ message: "Access granted to protected route", status: true });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(403).json({ error: "Access Denied", status: false });
   }
 });
 

@@ -32,6 +32,27 @@ const authService = {
       throw new Error("Registration failed");
     }
   },
+
+  checkAccess: async (token) => {
+    try {
+      const response = await axios.post(`${server}/auth/access`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        // Access granted
+        return true;
+      } else {
+        // Access denied
+        console.error("Access denied:", response.statusText);
+        return false;
+      }
+    } catch (error) {
+      // Access denied
+      console.error("Access denied:", error.message);
+    }
+  },
 };
 
 export default authService;

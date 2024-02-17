@@ -15,7 +15,7 @@ describe("User Registration and Authentication", () => {
     const response = await request(app)
       .post("/user/register")
       .send({
-        username: "testuser",
+        username: "testuser2",
         password: "Testpass1",
       })
       .expect(201);
@@ -53,3 +53,26 @@ describe("Protected Routes", () => {
       .expect(204);
   });
 });
+
+describe('Authentication Controller', () => {
+    // Test case for access granted
+    it('should grant access to authenticated users', async () => {
+      const response = await request(app)
+        .post('auth/access')
+        .set('Authorization', `Bearer ${token}`);
+      
+      // Verify that the response status code is 200 and contains the expected message
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('message', 'Access granted to protected route');
+    });
+  
+    // Test case for access denied (invalid or missing token)
+    it('should deny access if token is missing or invalid', async () => {
+      // Send a request without setting the Authorization header
+      const response = await request(app).post('auth/access');
+  
+      // Verify that the response status code is 403 and contains the expected error message
+      expect(response.status).toBe(403);
+      expect(response.body).toHaveProperty('error', 'Access Denied');
+    });
+  });
