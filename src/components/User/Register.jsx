@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const RegisterHeading = styled("h2")(({ color }) => ({
   color: color,
 }));
@@ -22,7 +21,9 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
     try {
       const user = await authService.register(username, password);
       login(user); // {token, username}
@@ -40,6 +41,14 @@ const Register = () => {
     }
   };
 
+  const handleUserChange = (e) => {
+    setUsername(e.target.value)
+  }
+
+  const handlePassChange = (e) => {
+    setPassword(e.target.value)
+  }
+
   useEffect(() => {
     if (username && password) {
       setHeadingColor("var(--main-color)");
@@ -50,9 +59,9 @@ const Register = () => {
 
   return (
     <div>
-      <ToastContainer/>
+      <ToastContainer />
       <RegisterHeading color={headingColor}>Register</RegisterHeading>
-      <form>
+      <form onSubmit={handleRegister}>
         <label htmlFor="register">
           <span>Username:</span>
           <input
@@ -61,7 +70,8 @@ const Register = () => {
             type="text"
             value={username}
             autoComplete="username"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleUserChange}
+            required
           />
         </label>
         <br />
@@ -73,13 +83,12 @@ const Register = () => {
             type="password"
             value={password}
             autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePassChange}
+            required
           />
         </label>
         <br />
-        <button type="button" onClick={handleRegister}>
-          Register
-        </button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );

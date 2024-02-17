@@ -21,7 +21,9 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     try {
       const user = await authService.login(username, password);
       login(user);
@@ -38,9 +40,17 @@ const Login = () => {
     }
   };
 
+  const handleUserChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePassChange = (e) => {
+    setPassword(e.target.value);
+  };
+
   useEffect(() => {
     if (username && password) {
-      setHeadingColor("#646cff");
+      setHeadingColor("var(--main-color)");
     } else {
       setHeadingColor("#333");
     }
@@ -50,7 +60,7 @@ const Login = () => {
     <div>
       <ToastContainer />
       <LoginHeading color={headingColor}>Login</LoginHeading>
-      <form>
+      <form onSubmit={handleLogin}>
         <label htmlFor="login">
           <span>Username:</span>
           <input
@@ -59,7 +69,8 @@ const Login = () => {
             type="text"
             value={username}
             autoComplete="username"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleUserChange}
+            required
           />
         </label>
         <br />
@@ -71,13 +82,12 @@ const Login = () => {
             type="password"
             value={password}
             autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePassChange}
+            required
           />
         </label>
         <br />
-        <button type="button" onClick={handleLogin}>
-          Login
-        </button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
