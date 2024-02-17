@@ -5,6 +5,10 @@ import authService from "../../services/authService";
 import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 const RegisterHeading = styled("h2")(({ color }) => ({
   color: color,
 }));
@@ -23,11 +27,13 @@ const Register = () => {
       const user = await authService.register(username, password);
       login(user); // {token, username}
       // give success message to user - ui
+      toast.success("Registration successful!");
       // navigate - redirect to user authenticated - homepage
       navigate("/");
     } catch (error) {
       // give error message to user - ui
       console.error("Registration failed", error);
+      toast.error(error.toString().slice(6));
     } finally {
       setUsername("");
       setPassword("");
@@ -36,7 +42,7 @@ const Register = () => {
 
   useEffect(() => {
     if (username && password) {
-      setHeadingColor("#646cff");
+      setHeadingColor("var(--main-color)");
     } else {
       setHeadingColor("#333");
     }
@@ -44,6 +50,7 @@ const Register = () => {
 
   return (
     <div>
+      <ToastContainer/>
       <RegisterHeading color={headingColor}>Register</RegisterHeading>
       <form>
         <label htmlFor="register">

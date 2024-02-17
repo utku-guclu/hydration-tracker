@@ -22,6 +22,22 @@ function HydrationForm() {
     }
   }, [waterIntakeLocal]);
 
+  const handleInputFocus = () => {
+    if (waterIntakeLocal === 0) {
+      setWaterIntakeLocal("");
+    }
+  };
+
+  const handleInputBlur = () => {
+    if (waterIntakeLocal === "") {
+      setWaterIntakeLocal(0);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setWaterIntakeLocal(e.target.value);
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     handleReset();
@@ -43,7 +59,7 @@ function HydrationForm() {
       <WaterIntakeHeading color={headingColor}>
         Log Your Water Intake
       </WaterIntakeHeading>
-      <form data-testid="hydration-form" onSubmit={handleFormSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <label htmlFor="waterIntake">
           <span>Water {unit}:</span>
           <input
@@ -53,7 +69,9 @@ function HydrationForm() {
             name="waterIntake"
             value={waterIntakeLocal}
             min="0"
-            onChange={(e) => setWaterIntakeLocal(e.target.value)}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
           />
         </label>
         <button disabled={!waterIntakeLocal} type="submit">

@@ -79,11 +79,6 @@ input:focus {
   gap: 1em;
 }
 
-.goal-container {
-  display: flex;
-  flex-direction: column;
-}
-
 .italic {
   font-style: italic;
 }

@@ -5,6 +5,9 @@ import authService from "../../services/authService";
 import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const LoginHeading = styled("h2")(({ color }) => ({
   color,
 }));
@@ -23,11 +26,12 @@ const Login = () => {
       const user = await authService.login(username, password);
       login(user);
       // give success message to user - ui
+      toast.success("Login successful!");
       // navigate - redirect to user authenticated - homepage
       navigate("/");
     } catch (error) {
       // give error message to user - ui
-      console.error("Login failed", error);
+      toast.error(error.toString().slice(6));
     } finally {
       setUsername("");
       setPassword("");
@@ -44,6 +48,7 @@ const Login = () => {
 
   return (
     <div>
+      <ToastContainer />
       <LoginHeading color={headingColor}>Login</LoginHeading>
       <form>
         <label htmlFor="login">

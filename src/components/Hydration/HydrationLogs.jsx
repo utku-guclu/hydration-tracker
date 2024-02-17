@@ -91,39 +91,37 @@ function HydrationLogs() {
         </p>
         <ul>
           {/* Loading Circle */}
-          {isLoadingLogs && (
+          {isLoadingLogs ? (
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <CircularProgress />
             </Box>
+          ) : (
+            /* Logs */
+            logs.map((log) => (
+              <li key={log.timestamp} className="log-item">
+                <p>{`Intake: ${isCup ? mlToCups(log.intake) : log.intake}  ${
+                  isCup ? "(cup)" : "(ml)"
+                } | Time: ${new Date(log.timestamp).toLocaleString()}`}</p>
+                <div className="log-details">
+                  <button onClick={() => handleUpdate(log)}>Update</button>
+                  <button onClick={() => handleDelete(log.timestamp)}>
+                    Delete
+                  </button>
+                </div>
+
+                {selectedLog === log && (
+                  <HydrationUpdateDialog
+                    log={log}
+                    onUpdate={() => {
+                      fetchHydrationLogs();
+                      handleCancelUpdate();
+                    }}
+                    onCancel={handleCancelUpdate}
+                  />
+                )}
+              </li>
+            ))
           )}
-          {/* Loading Circle */}
-
-          {/* Logs */}
-          {logs.map((log) => (
-            <li key={log.timestamp} className="log-item">
-              <p>{`Intake: ${isCup ? mlToCups(log.intake) : log.intake}  ${
-                isCup ? "(cup)" : "(ml)"
-              } | Time: ${new Date(log.timestamp).toLocaleString()}`}</p>
-              <div className="log-details">
-                <button onClick={() => handleUpdate(log)}>Update</button>
-                <button onClick={() => handleDelete(log.timestamp)}>
-                  Delete
-                </button>
-              </div>
-
-              {selectedLog === log && (
-                <HydrationUpdateDialog
-                  log={log}
-                  onUpdate={() => {
-                    fetchHydrationLogs();
-                    handleCancelUpdate();
-                  }}
-                  onCancel={handleCancelUpdate}
-                />
-              )}
-            </li>
-          ))}
-          {/* Logs */}
         </ul>
       </div>
     </>

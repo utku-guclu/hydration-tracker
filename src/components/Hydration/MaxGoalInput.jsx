@@ -17,21 +17,23 @@ function MaxGoalInput({ unit }) {
   };
 
   return (
-    <div className="goal-container">
-      <label>
+    <form onSubmit={handleUpdateGoal}>
+      <label htmlFor="dailyGoal">
         <span>Daily Goal:</span>
         <input
           placeholder={`${convertedDailyGoal} ${unit}`}
           type="number"
+          id="dailyGoal"
+          name="dailyGoal"
           value={newMaxGoal}
           onChange={handleInputChange}
           min="0"
         />
       </label>
-      <button onClick={handleUpdateGoal} disabled={!newMaxGoal}>
+      <button disabled={!newMaxGoal} type="submit">
         Update Goal
       </button>
-    </div>
+    </form>
   );
 }
 

@@ -14,7 +14,7 @@ const validatePassword = require("../middlewares/validatePass");
 const authenticateToken = require("../middlewares/authToken");
 
 // Login endpoint with password validation and JWT token creation
-authController.post("/login", validatePassword, async (req, res) => {
+authController.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   try {

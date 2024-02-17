@@ -11,8 +11,9 @@ const authService = {
       });
       return response.data;
     } catch (error) {
-      console.error("Login failed:", error.response?.data || error.message);
-      throw new Error("Login failed");
+      const errorMessage = error.response?.data || error.message;
+      const toastError = errorMessage.error;
+      throw new Error(toastError);
     }
   },
 
@@ -25,11 +26,9 @@ const authService = {
 
       return response.data;
     } catch (error) {
-      console.error(
-        "Registration failed:",
-        error.response?.data || error.message
-      );
-      throw new Error("Registration failed");
+      const errorMessage = error.response?.data || error.message;
+      const toastError = errorMessage.error;
+      throw new Error(toastError);
     }
   },
 
