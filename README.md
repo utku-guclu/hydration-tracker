@@ -37,29 +37,29 @@ Make sure you have the following prerequisites installed on your machine:
 
 1. Clone the repository:
 
-    ```bash
-    git clone https://github.com/your-username/hydration-tracker.git
-    ```
+   ```bash
+   git clone https://github.com/your-username/hydration-tracker.git
+   ```
 
 2. Navigate to the project directory:
 
-    ```bash
-    cd hydration-tracker
-    ```
+   ```bash
+   cd hydration-tracker
+   ```
 
 3. Install dependencies for the client:
 
-    ```bash
-    cd src
-    npm install
-    ```
+   ```bash
+   cd src
+   npm install
+   ```
 
 4. Install dependencies for the server:
 
-    ```bash
-    cd ../server
-    npm install
-    ```
+   ```bash
+   cd ../server
+   npm install
+   ```
 
 ## Configure the Database
 
@@ -67,25 +67,25 @@ Make sure you have the following prerequisites installed on your machine:
 
 2. Run the Prisma migrations to set up the database schema:
 
-    ```bash
-    npx prisma migrate dev
-    ```
+   ```bash
+   npx prisma migrate dev
+   ```
 
 ## Running the App
 
 1. Start the server:
 
-    ```bash
-    cd ../server
-    npm start
-    ```
+   ```bash
+   cd ../server
+   npm start
+   ```
 
 2. Open a new terminal and start the client:
 
-    ```bash
-    cd ../client
-    npm run dev
-    ```
+   ```bash
+   cd ../client
+   npm run dev
+   ```
 
 3. Access the server in your web browser at [http://localhost:3000](http://localhost:3000).
 
@@ -99,17 +99,24 @@ Feel free to customize the app according to your preferences or project requirem
 
 Happy hydrating!
 
-### Prisma | Docker 
+### Prisma | Docker
+
 `npx prisma migrate dev
 npx prisma migrate up
 sudo docker-compose build
 sudo docker-compose up
 
+docker build -t <image_name>:<tag> .
+    
+docker stop <container_id or container_name>
+docker rm <container_id or container_name>
+
+docker run -d --name <container_name> -p <host_port>:<container_port> <image_name>:<tag>
+
 docker tag <image_name>:<tag> <registry_url>/<image_name>:<tag>
 docker push <registry_url>/<image_name>:<tag>
 
 docker run -p 3000:3000 hydration
-
 `
 
 ### Logging Water Intake
@@ -165,4 +172,3 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 ## License
 
 This project is licensed under the MIT License.
-

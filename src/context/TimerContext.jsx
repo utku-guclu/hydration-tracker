@@ -5,7 +5,10 @@ const TimerContext = createContext();
 const TimerProvider = ({ children, initialTime = 60 * 60 }) => {
   // Function to get the initial time from localStorage or use the default initial time
   const getInitialTime = () => {
-    const { time: storedTime } = JSON.parse(localStorage.getItem("timerState"));
+    const timerStorage = JSON.parse(localStorage.getItem("timerState")) || {
+      time: initialTime,
+    };
+    const { time: storedTime } = timerStorage;
     return storedTime ? parseInt(storedTime, 10) : initialTime;
   };
 
