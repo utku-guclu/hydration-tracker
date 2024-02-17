@@ -32,7 +32,7 @@ export const HydrationProvider = ({ children }) => {
 
   const [thirstiness, setThirstiness] = useState("Water is Life!");
 
-  const [thirstinessColor, setThirstinessColor] = useState(null)
+  const [thirstinessColor, setThirstinessColor] = useState(null);
 
   /* hooks */
   const { token, userId } = useUser();
@@ -58,7 +58,7 @@ export const HydrationProvider = ({ children }) => {
     try {
       if (!token) {
         const hydratedLogs = JSON.parse(localStorage.getItem("hydrationLogs"));
-        if (hydratedLogs.length > 0) {
+        if (hydratedLogs?.length > 0) {
           const lastIntake = hydratedLogs.slice(-1)[0].intake;
           setRecentIntake(lastIntake);
           setLogs(hydratedLogs);
@@ -66,7 +66,7 @@ export const HydrationProvider = ({ children }) => {
         return; // no access db unless valid token
       }
 
-      setIsLoadingLogs(true)
+      setIsLoadingLogs(true);
 
       const response = await fetch(`${server}/api/hydration/logs`, {
         method: "GET",
@@ -87,7 +87,7 @@ export const HydrationProvider = ({ children }) => {
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      setIsLoadingLogs(false)
+      setIsLoadingLogs(false);
     }
   };
 
@@ -227,6 +227,7 @@ export const HydrationProvider = ({ children }) => {
       });
 
       if (response.ok) {
+        setLogs([]);
         console.log("Hydration logs reset successfully");
       } else {
         console.error("Failed to reset hydration logs");
@@ -254,19 +255,19 @@ export const HydrationProvider = ({ children }) => {
   const calculateThirstinessLevel = (intake, timeSinceLastDrink) => {
     // Determine the user's current thirstiness level based on recent intake and time since last drink
     if (timeSinceLastDrink >= 3600) {
-      setThirstinessColor("var(--danger)")
+      setThirstinessColor("var(--danger)");
       return "Very Thirsty"; // If it has been more than 1 hour since the last drink, the user is very thirsty
     } else if (intake === 0) {
-      setThirstinessColor("var(--threat)")
+      setThirstinessColor("var(--threat)");
       return "Dehydrated"; // If the recent intake is 0, the user is dehydrated
     } else if (intake < 500 && timeSinceLastDrink >= 3000) {
-      setThirstinessColor("var(--warning)")
+      setThirstinessColor("var(--warning)");
       return "Slightly Thirsty"; // If intake is low and 10 mins passed
     } else if (intake < 1000 && timeSinceLastDrink >= 1800) {
-      setThirstinessColor("var(--normal)")
+      setThirstinessColor("var(--normal)");
       return "Moderately Thirsty"; // If intake is moderate and 30 mins passed
     } else {
-      setThirstinessColor("var(--water)")
+      setThirstinessColor("var(--water)");
       return "Hydrated"; // Otherwise, the user is hydrated
     }
   };
@@ -315,7 +316,7 @@ export const HydrationProvider = ({ children }) => {
         resetLogs,
         thirstiness,
         isLoadingLogs,
-        thirstinessColor
+        thirstinessColor,
       }}
     >
       {children}
