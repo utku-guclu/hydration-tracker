@@ -12,6 +12,10 @@ import { styled } from "@mui/system";
 
 import { Tooltip } from "react-tooltip";
 
+// Circular indeterminate
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
 const LogsHeading = styled("h2")(({ color }) => ({
   color: color,
   cursor: "pointer",
@@ -22,6 +26,7 @@ function HydrationLogs() {
   const [selectedLog, setSelectedLog] = useState(null);
   const {
     logs,
+    isLoadingLogs,
     fetchHydrationLogs,
     deleteHydrationLog,
     isCup,
@@ -85,6 +90,15 @@ function HydrationLogs() {
           </span>
         </p>
         <ul>
+          {/* Loading Circle */}
+          {isLoadingLogs && (
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <CircularProgress />
+            </Box>
+          )}
+          {/* Loading Circle */}
+
+          {/* Logs */}
           {logs.map((log) => (
             <li key={log.timestamp} className="log-item">
               <p>{`Intake: ${isCup ? mlToCups(log.intake) : log.intake}  ${
@@ -109,6 +123,7 @@ function HydrationLogs() {
               )}
             </li>
           ))}
+          {/* Logs */}
         </ul>
       </div>
     </>

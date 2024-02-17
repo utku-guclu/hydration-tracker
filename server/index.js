@@ -99,6 +99,11 @@ app.use("/user", userRoutes); // For user registration
 app.use("/auth", authRoutes); // authenticate user
 app.use("/api/hydration", hydrationRoutes); // for hydration
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Only start the server if the file is run directly
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+
+module.exports = app;

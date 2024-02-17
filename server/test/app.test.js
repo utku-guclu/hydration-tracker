@@ -1,37 +1,55 @@
 const request = require("supertest");
-const app = require("../app");
+const app = require("../index");
 
-describe("POST /api/hydration-logs", () => {
-    it("should create a new hydration log", async () => {
-        const response = await request(app)
-            .post("/api/hydration-logs")
-            .send({ intake: 500 });
+let token = ""; // Variable to store the token for later use
 
-        expect(response.statusCode).toBe(201);
-        expect(response.body).toHaveProperty(
-            "message",
-            "Hydration log added successfully"
-        );
-    });
-
-    it("should return 500 on internal server error", async () => {
-        // Simulate an internal server error by not providing the required data
-        const response = await request(app).post("/api/hydration-logs");
-
-        expect(response.statusCode).toBe(500);
-    });
+// WELCOME
+describe("Welcome", () => {
+  it("welcome", async () => {
+    const response = await request(app).get("/").expect(200);
+  });
 });
 
-// Add more test cases for GET, DELETE, and PUT endpoints
+describe("User Registration and Authentication", () => {
+  it("should register a new user", async () => {
+    const response = await request(app)
+      .post("/user/register")
+      .send({
+        username: "testuser",
+        password: "Testpass1",
+      })
+      .expect(201);
 
-describe("GET /api/hydration-logs", () => {
-    // Add test cases for fetching hydration logs
+    // Store the token for later use
+    token = response.body.token;
+
+    // Ensure the response contains the token
+    expect(response.body).toHaveProperty("token");
+  });
+
+  it("should authenticate an existing user", async () => {
+    const response = await request(app)
+      .post("/auth/login")
+      .send({
+        username: "testuser",
+        password: "Testpass1",
+      })
+      .expect(200);
+
+    // Ensure the response contains the token
+    expect(response.body).toHaveProperty("token");
+
+    // Store the token for later use
+    token = response.body.token;
+  });
 });
 
-describe("DELETE /api/hydration-logs/:timestamp", () => {
-    // Add test cases for deleting hydration logs
-});
-
-describe("PUT /api/hydration-logs/:timestamp", () => {
-    // Add test cases for updating hydration logs
+// Use the stored token for subsequent authenticated requests
+describe("Protected Routes", () => {
+  it("should access protected route with stored token", async () => {
+    const response = await request(app)
+      .delete("/api/hydration/logs/reset")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(204);
+  });
 });

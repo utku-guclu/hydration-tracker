@@ -26,7 +26,7 @@ hydrationLogController.delete("/reset", authenticateToken, async (req, res) => {
     if (userLogs.length === 0) {
       console.log("No hydration logs found for the user");
       return res
-        .status(200)
+        .status(204)
         .json({ message: "No hydration logs found for the user" });
     }
 

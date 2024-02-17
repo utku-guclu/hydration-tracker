@@ -2,6 +2,10 @@
   --main-color: #646cff;
   --secondary-color: #14ea14;
   --water: #99c8ff;
+  --normal: #0377DD;
+  --warning:#E2DB03;
+  --threat:#E26803;
+  --danger:#DD0303;
 
   /* tooltip */
   --rt-opacity: 1 !important;

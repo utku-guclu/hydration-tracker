@@ -4,6 +4,8 @@ import server from "../config/baseURL";
 
 import { useUser } from "./UserContext";
 
+import { useTimer } from "./TimerContext";
+
 import { mlToCups, cupsToMl } from "hydration-converter";
 
 const HydrationContext = createContext();
@@ -14,7 +16,9 @@ export const HydrationProvider = ({ children }) => {
 
   const [logs, setLogs] = useState([]);
 
-  const [isCup, setIsCup] = useState(false);
+  const [isLoadingLogs, setIsLoadingLogs] = useState(false);
+
+  const [isCup, setIsCup] = useState(true);
 
   const [dailyGoal, setDailyGoal] = useState(
     JSON.parse(localStorage.getItem("dailyGoal")) || 2000
@@ -24,8 +28,16 @@ export const HydrationProvider = ({ children }) => {
 
   const [dailyGoalCups, setDailyGoalCups] = useState(0);
 
+  const [recentIntake, setRecentIntake] = useState(0);
+
+  const [thirstiness, setThirstiness] = useState("Water is Life!");
+
+  const [thirstinessColor, setThirstinessColor] = useState(null)
+
   /* hooks */
   const { token, userId } = useUser();
+
+  const { timeDifference } = useTimer();
 
   /* constants */
   const unit = isCup ? "(cup)" : "(ml)";
@@ -46,11 +58,16 @@ export const HydrationProvider = ({ children }) => {
     try {
       if (!token) {
         const hydratedLogs = JSON.parse(localStorage.getItem("hydrationLogs"));
-        if (hydratedLogs) {
+        if (hydratedLogs.length > 0) {
+          const lastIntake = hydratedLogs.slice(-1)[0].intake;
+          setRecentIntake(lastIntake);
           setLogs(hydratedLogs);
         }
         return; // no access db unless valid token
       }
+
+      setIsLoadingLogs(true)
+
       const response = await fetch(`${server}/api/hydration/logs`, {
         method: "GET",
         headers: {
@@ -61,18 +78,26 @@ export const HydrationProvider = ({ children }) => {
 
       if (response.ok) {
         const fetchedLogs = await response.json();
+        const lastIntake = fetchedLogs.slice(-1).intake;
+        setRecentIntake(lastIntake);
         setLogs(fetchedLogs);
       } else {
         console.error("Failed to fetch hydration logs");
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setIsLoadingLogs(false)
     }
   };
 
   const addHydrationLog = async (intake) => {
     // convert unit cup to ml
     intake = isCup ? cupsToMl(intake) : intake;
+    calculateThirstinessLevel(intake);
+
+    // update recent intake amount
+    setRecentIntake(intake);
 
     try {
       if (!token) {
@@ -226,6 +251,26 @@ export const HydrationProvider = ({ children }) => {
     setIsCup((prev) => !prev);
   };
 
+  const calculateThirstinessLevel = (intake, timeSinceLastDrink) => {
+    // Determine the user's current thirstiness level based on recent intake and time since last drink
+    if (timeSinceLastDrink >= 3600) {
+      setThirstinessColor("var(--danger)")
+      return "Very Thirsty"; // If it has been more than 1 hour since the last drink, the user is very thirsty
+    } else if (intake === 0) {
+      setThirstinessColor("var(--threat)")
+      return "Dehydrated"; // If the recent intake is 0, the user is dehydrated
+    } else if (intake < 500 && timeSinceLastDrink >= 3000) {
+      setThirstinessColor("var(--warning)")
+      return "Slightly Thirsty"; // If intake is low and 10 mins passed
+    } else if (intake < 1000 && timeSinceLastDrink >= 1800) {
+      setThirstinessColor("var(--normal)")
+      return "Moderately Thirsty"; // If intake is moderate and 30 mins passed
+    } else {
+      setThirstinessColor("var(--water)")
+      return "Hydrated"; // Otherwise, the user is hydrated
+    }
+  };
+
   useEffect(() => {
     setTotalIntake(calculateTotalIntake(logs));
   }, [logs]);
@@ -241,6 +286,14 @@ export const HydrationProvider = ({ children }) => {
   useEffect(() => {
     setDailyGoalCups(mlToCups(dailyGoal));
   }, [dailyGoal]);
+
+  useEffect(() => {
+    const thirstinessLevel = calculateThirstinessLevel(
+      recentIntake,
+      timeDifference
+    );
+    setThirstiness(thirstinessLevel);
+  }, [recentIntake, timeDifference]);
 
   return (
     <HydrationContext.Provider
@@ -260,6 +313,9 @@ export const HydrationProvider = ({ children }) => {
         convertedTotal,
         convertedDailyGoal,
         resetLogs,
+        thirstiness,
+        isLoadingLogs,
+        thirstinessColor
       }}
     >
       {children}

@@ -5,20 +5,8 @@ const TimerContext = createContext();
 const TimerProvider = ({ children, initialTime = 60 * 60 }) => {
   const [time, setTime] = useState(initialTime);
   const [timerRunning, setTimerRunning] = useState(false);
-
-  useEffect(() => {
-    let timer;
-
-    if (timerRunning) {
-      timer = setInterval(() => {
-        setTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
-      }, 1000);
-    }
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, [timerRunning]);
+  const [adjustedTime, setAdjustedTime] = useState(time);
+  const [timeDifference, setTimeDifference] = useState(0);
 
   const handleStart = () => {
     setTimerRunning(true);
@@ -35,7 +23,32 @@ const TimerProvider = ({ children, initialTime = 60 * 60 }) => {
 
   const setTimer = (time) => {
     setTime(time);
+    setAdjustedTime(time);
   };
+
+  const calculateTimeDifference = (time, adjustedTime) => {
+    const timeSinceLastDrink = adjustedTime - time;
+    return timeSinceLastDrink;
+  };
+
+  useEffect(() => {
+    let timer;
+
+    if (timerRunning) {
+      timer = setInterval(() => {
+        setTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [timerRunning]);
+
+  useEffect(() => {
+    const timeDiff = calculateTimeDifference(time, adjustedTime);
+    setTimeDifference(timeDiff);
+  }, [time, adjustedTime]);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -60,6 +73,7 @@ const TimerProvider = ({ children, initialTime = 60 * 60 }) => {
         handleReset,
         formatTime,
         setTimer,
+        timeDifference,
       }}
     >
       {children}

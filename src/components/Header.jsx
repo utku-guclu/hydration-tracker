@@ -1,17 +1,18 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import Logout from "./User/Logout";
-
+/* Hooks */
 import { useUser } from "../context/UserContext";
 import { useHydration } from "../context/HydrationContext";
-
-import { styled } from "@mui/system";
-import Greeting from "./User/Greeting";
 
 /* ICONS */
 import { LuGlassWater } from "react-icons/lu";
 import { IoWaterOutline } from "react-icons/io5";
+
+import { styled } from "@mui/system";
+
+import Logout from "./User/Logout";
+import Greeting from "./User/Greeting";
 
 /* Semantic Header */
 const StyledHeader = styled("header")({
@@ -26,6 +27,7 @@ const StyledHeader = styled("header")({
 });
 
 const StyledHeading = styled("h1")({
+  marginBottom: 0,
   color: "var(--main-color)",
   "&:hover": {
     color: "var(--main-color)",
@@ -33,6 +35,7 @@ const StyledHeading = styled("h1")({
 });
 
 const StyledNav = styled("nav")({
+  marginBottom: "10px",
   ul: {
     listStyle: "none",
     display: "flex",
@@ -52,11 +55,19 @@ const StyledNav = styled("nav")({
   },
 });
 
+const ThirstinessLevel = styled("div")(({ color }) => ({
+  color,
+  position: "absolute",
+  bottom: "10px",
+  right: "10px",
+  fontStyle: "italic",
+}));
+
 const Header = () => {
   const location = useLocation();
 
   const { token: authenticated, logout, username } = useUser();
-  const { switchUnit, isCup } = useHydration();
+  const { switchUnit, isCup, thirstiness, thirstinessColor } = useHydration();
 
   return (
     <StyledHeader>
@@ -73,6 +84,12 @@ const Header = () => {
 
       <StyledHeading>Hydration Tracker</StyledHeading>
       {username && <Greeting username={username} />}
+      {/* thirstiness level */}
+      {location.pathname === "/" && (
+        <ThirstinessLevel color={thirstinessColor}>
+          {thirstiness}
+        </ThirstinessLevel>
+      )}
       <StyledNav>
         <ul>
           {/* Render the "Home" link only if not on the home page */}
