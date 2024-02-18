@@ -1,7 +1,7 @@
 @import url(https://db.onlinewebfonts.com/c/84cb021d5f9af287ffff84b61beef6dc?family=clockicons);
 
 body {
-  font-family: "Arial", sans-serif;
+  font-family: "monospace", "Arial", sans-serif;
   text-align: center;
   flex-direction: column;
   align-items: center;
@@ -25,7 +25,6 @@ h2 {
 }
 
 form {
-  margin: 20px auto;
   display: flex;
   flex-direction: column;
 }
@@ -70,19 +69,10 @@ input:focus {
   border: 2px solid var(--main-color);
 }
 
-/* Updated styles for list items */
-.log-item {
-  display: flex;
-  justify-content: space-between;
-  gap: 1em;
-}
+/* Additional styles */
 
-/* Additional styles for log details */
-.log-details {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1em;
+#log-submit-form {
+  margin: 20px auto;
 }
 
 .italic {

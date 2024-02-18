@@ -32,7 +32,6 @@ function Dialog({ visible, onClose, children }) {
         position: "fixed",
         border: "4px solid var(--main-color)",
         boxShadow: "0 0 10px 5px var(--main-color)",
-        padding: "10px",
         flexDirection: "column",
         alignItems: "center",
         top: "50%",

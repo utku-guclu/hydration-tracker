@@ -12,7 +12,9 @@ function ProgressBar({ convertedDailyGoal, unit, convertedTotal }) {
 
       {/* Check if max goal is reached and show a prompt */}
       {convertedTotal >= convertedDailyGoal && (
-        <p>{"You've reached your daily hydration goal!"}</p>
+        <p style={{
+          color: "var(--secondary-color)"
+        }}>{"You've reached your daily hydration goal!"}</p>
       )}
     </div>
   );

@@ -46,9 +46,9 @@ function HydrationUpdateForm({ log, onUpdate, isDialogOpen }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ margin: 0 }}>
       <label htmlFor="updatedIntake">
-        <span>Updated Intake {unit}:</span>
+        <span>Intake {unit}:</span>
         <input
           ref={inputRef}
           type="number"

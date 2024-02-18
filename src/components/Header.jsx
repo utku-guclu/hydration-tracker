@@ -22,7 +22,6 @@ const StyledHeader = styled("header")({
   alignItems: "center",
   padding: "10px",
   backgroundColor: "#333",
-  marginTop: "20px",
   position: "relative",
 });
 

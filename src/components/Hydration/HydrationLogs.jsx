@@ -16,9 +16,54 @@ import { Tooltip } from "react-tooltip";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
+// icons
+import { GrUpdate } from "react-icons/gr";
+import { TiDeleteOutline } from "react-icons/ti";
+
 const LogsHeading = styled("h2")(({ color }) => ({
-  color: color,
+  color,
   cursor: "pointer",
+}));
+
+const LogsDetails = styled("div")(() => ({
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: "2em",
+}));
+
+const LogsTable = styled("ul")(() => ({
+  backgroundColor: "#333",
+  display: "grid",
+  padding: "20px",
+  gap: "10px",
+}));
+
+const TableRow = styled("li")(({ bgColor }) => ({
+  display: "grid",
+  gridTemplateColumns: "1fr auto",
+  gap: "1em",
+  justifyContent: "center",
+  backgroundColor: bgColor,
+}));
+
+const IntakeCol = styled("div")(() => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column",
+}));
+
+const TimeCol = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  maxWidth: "fit-content",
+}));
+
+const LogButtons = styled("div")(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  width: "80px",
 }));
 
 function HydrationLogs() {
@@ -89,40 +134,64 @@ function HydrationLogs() {
             {convertedTotal} {unit}
           </span>
         </p>
-        <ul>
-          {/* Loading Circle */}
-          {isLoadingLogs ? (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <CircularProgress />
-            </Box>
-          ) : (
-            /* Logs */
-            logs.map((log) => (
-              <li key={log.timestamp} className="log-item">
-                <p>{`Intake: ${isCup ? mlToCups(log.intake) : log.intake}  ${
-                  isCup ? "(cup)" : "(ml)"
-                } | Time: ${new Date(log.timestamp).toLocaleString()}`}</p>
-                <div className="log-details">
-                  <button onClick={() => handleUpdate(log)}>Update</button>
-                  <button onClick={() => handleDelete(log.timestamp)}>
-                    Delete
-                  </button>
-                </div>
+        {logs.length > 0 && (
+          <LogsTable>
+            {/* Loading Circle */}
+            {isLoadingLogs ? (
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              /* Logs */
+              logs.map((log) => (
+                <TableRow key={log.timestamp}>
+                  <LogsDetails>
+                    <IntakeCol>
+                      <span style={{ color: "var(--ocean)" }}>INTAKE</span>
+                      <span>
+                        {` ${isCup ? mlToCups(log.intake) : log.intake}  ${
+                          isCup ? "(cup)" : "(ml)"
+                        }`}{" "}
+                      </span>
+                    </IntakeCol>
+                    {/* <span>|</span> */}
+                    <TimeCol>
+                      <span style={{ color: "var(--ocean)" }}>TIME</span>
+                      <span>
+                        {new Date(log.timestamp).toLocaleString().slice(11)}
+                      </span>
+                    </TimeCol>
+                  </LogsDetails>
 
-                {selectedLog === log && (
-                  <HydrationUpdateDialog
-                    log={log}
-                    onUpdate={() => {
-                      fetchHydrationLogs();
-                      handleCancelUpdate();
-                    }}
-                    onCancel={handleCancelUpdate}
-                  />
-                )}
-              </li>
-            ))
-          )}
-        </ul>
+                  {selectedLog === log && (
+                    <HydrationUpdateDialog
+                      log={log}
+                      onUpdate={() => {
+                        fetchHydrationLogs();
+                        handleCancelUpdate();
+                      }}
+                      onCancel={handleCancelUpdate}
+                    />
+                  )}
+                  <LogButtons>
+                    <GrUpdate
+                      cursor="pointer"
+                      size="1.5em"
+                      color="var(--secondary-color)"
+                      onClick={() => handleUpdate(log)}
+                    ></GrUpdate>
+                    <TiDeleteOutline
+                      cursor="pointer"
+                      size="2em"
+                      color="var(--danger)"
+                      onClick={() => handleDelete(log.timestamp)}
+                    ></TiDeleteOutline>
+                  </LogButtons>
+                </TableRow>
+              ))
+            )}
+          </LogsTable>
+        )}
       </div>
     </>
   );

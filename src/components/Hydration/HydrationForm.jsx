@@ -59,7 +59,7 @@ function HydrationForm() {
       <WaterIntakeHeading color={headingColor}>
         Log Your Water Intake
       </WaterIntakeHeading>
-      <form onSubmit={handleFormSubmit}>
+      <form id="log-submit-form" onSubmit={handleFormSubmit}>
         <label htmlFor="waterIntake">
           <span>Water {unit}:</span>
           <input
