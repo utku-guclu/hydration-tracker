@@ -7,11 +7,30 @@ import SetTimer from "./SetTimer";
 
 import { Tooltip } from "react-tooltip";
 
+import { IoPlay, IoPause } from "react-icons/io5";
+import { VscDebugRestart } from "react-icons/vsc";
+
 const TimerHeading = styled("h2")(({ color }) => ({
   color: color,
   cursor: "pointer",
   display: "inline",
 }));
+
+const TimerSetting = styled("div")(() => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "2em",
+}));
+
+const TimerButtons = styled("div")(() => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  cursor: "pointer",
+}));
+
+const TimerDigits = styled("div")(() => ({}));
 
 const Timer = () => {
   const [headingColor, setHeadingColor] = useState("#333");
@@ -67,22 +86,26 @@ const Timer = () => {
       >
         Timer
       </TimerHeading>
-      <p>
-        Remaining Time: <span className="time">{formatTime(time)}</span>
-      </p>
-      {drinkWater && <p>It's time to drink water!</p>}
-      <button onClick={handleStart} disabled={timerRunning}>
-        Start
-      </button>
-      <button onClick={handlePause} disabled={!timerRunning}>
-        Pause
-      </button>
-      <button onClick={handleReset}>Reset</button>
+      <TimerSetting>
+        <TimerDigits className="time">{formatTime(time)}</TimerDigits>
+        <TimerButtons>
+          {!timerRunning ? (
+            <IoPlay onClick={handleStart}>Start</IoPlay>
+          ) : (
+            <IoPause onClick={handlePause}>Pause</IoPause>
+          )}
+          <VscDebugRestart onClick={handleReset}>Reset</VscDebugRestart>
+        </TimerButtons>
+      </TimerSetting>
+      {!drinkWater && <p>It's time to drink water!</p>}
 
       {/* Dialog component, conditionally rendered based on isDialogOpen state */}
       <Dialog visible={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
         <h3>Set Timer</h3>
-        <SetTimer handleDialogClose={handleDialogClose} isDialogOpen={isDialogOpen}/>
+        <SetTimer
+          handleDialogClose={handleDialogClose}
+          isDialogOpen={isDialogOpen}
+        />
       </Dialog>
     </section>
   );
