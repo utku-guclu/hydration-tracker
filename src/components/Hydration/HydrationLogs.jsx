@@ -58,7 +58,7 @@ function HydrationLogs() {
 
   useEffect(() => {
     if (logs.length !== 0) {
-      setHeadingColor("var(--main-color)");
+      setHeadingColor("var(--water)");
     } else {
       setHeadingColor("#333");
     }

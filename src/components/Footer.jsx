@@ -12,7 +12,7 @@ const StyledFooter = styled("footer")({
   justifyContent: "center",
   padding: "10px",
   marginTop: "100px",
-  backgroundColor: "#646cff",
+  backgroundColor: "var(--sea)",
 });
 
 const FooterText = styled("p")({

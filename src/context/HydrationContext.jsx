@@ -264,7 +264,7 @@ export const HydrationProvider = ({ children }) => {
       setThirstinessColor("var(--warning)");
       return "Slightly Thirsty"; // If intake is low and 10 mins passed
     } else if (intake < 1000 && timeSinceLastDrink >= 1800) {
-      setThirstinessColor("var(--normal)");
+      setThirstinessColor("var(--sea)");
       return "Moderately Thirsty"; // If intake is moderate and 30 mins passed
     } else {
       setThirstinessColor("var(--water)");

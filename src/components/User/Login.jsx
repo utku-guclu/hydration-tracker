@@ -50,7 +50,7 @@ const Login = () => {
 
   useEffect(() => {
     if (username && password) {
-      setHeadingColor("var(--main-color)");
+      setHeadingColor("var(--secondary-color)");
     } else {
       setHeadingColor("#333");
     }

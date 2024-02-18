@@ -38,11 +38,11 @@ const Timer = () => {
 
   useEffect(() => {
     if (timerRunning) {
-      setHeadingColor("var(--main-color)");
+      setHeadingColor("var(--water)");
     } else {
       setHeadingColor("#333");
     }
-  }, [time]);
+  }, [timerRunning]);
 
   // Function to handle opening the dialog
   const handleDialogOpen = () => {

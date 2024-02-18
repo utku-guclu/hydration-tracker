@@ -2,7 +2,11 @@ import React, { useState, useEffect, createContext, useContext } from "react";
 
 const TimerContext = createContext();
 
-const TimerProvider = ({ children, initialTime = 60 * 60 }) => {
+const TimerProvider = ({
+  children,
+  initialTime = 60 * 60,
+  initialTimerRunningState = false,
+}) => {
   // Function to get the initial time from localStorage or use the default initial time
   const getInitialTime = () => {
     const timerStorage = JSON.parse(localStorage.getItem("timerState")) || {
@@ -12,8 +16,17 @@ const TimerProvider = ({ children, initialTime = 60 * 60 }) => {
     return storedTime ? parseInt(storedTime, 10) : initialTime;
   };
 
+  // Function to get the initial timer running state from localStorage or use the default initial timer running state
+  const getInitialTimerRunningState = () => {
+    const timerStorage = JSON.parse(localStorage.getItem("timerState")) || {
+      timerRunning: initialTimerRunningState,
+    };
+    const { timerRunning: storedTimerRunning } = timerStorage;
+    return storedTimerRunning ? storedTimerRunning : initialTimerRunningState;
+  };
+
   const [time, setTime] = useState(getInitialTime);
-  const [timerRunning, setTimerRunning] = useState(false);
+  const [timerRunning, setTimerRunning] = useState(getInitialTimerRunningState);
   const [adjustedTime, setAdjustedTime] = useState(initialTime);
   const [timeDifference, setTimeDifference] = useState(0);
 

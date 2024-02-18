@@ -28,9 +28,9 @@ const StyledHeader = styled("header")({
 
 const StyledHeading = styled("h1")({
   marginBottom: 0,
-  color: "var(--main-color)",
+  color: "var(--ocean)",
   "&:hover": {
-    color: "var(--main-color)",
+    color: "var(--sea)",
   },
 });
 
@@ -50,7 +50,7 @@ const StyledNav = styled("nav")({
     color: "#fff",
     textDecoration: "none",
     "&:hover": {
-      color: "var(--main-color)",
+      color: "var(--secondary-color)",
     },
   },
 });
