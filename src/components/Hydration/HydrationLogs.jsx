@@ -12,11 +12,11 @@ import { styled } from "@mui/system";
 
 import { Tooltip } from "react-tooltip";
 
-// Circular indeterminate
+/* Circular indeterminate */
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
-// icons
+/* Icons */
 import { GrUpdate } from "react-icons/gr";
 import { TiDeleteOutline } from "react-icons/ti";
 
@@ -158,7 +158,10 @@ function HydrationLogs() {
                     <TimeCol>
                       <span style={{ color: "var(--ocean)" }}>TIME</span>
                       <span>
-                        {new Date(log.timestamp).toLocaleString().slice(11)}
+                        {new Date(log.timestamp)
+                          .toLocaleString()
+                          .slice(11)
+                          .replace(/\s[AP]M/, "")}
                       </span>
                     </TimeCol>
                   </LogsDetails>
