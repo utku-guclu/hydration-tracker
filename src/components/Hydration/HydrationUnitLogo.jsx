@@ -6,21 +6,16 @@ import { useLocation } from "react-router";
 import { LuGlassWater } from "react-icons/lu";
 import { IoWaterOutline } from "react-icons/io5";
 
-
 function HydrationUnitLogo() {
   const { switchUnit, isCup } = useHydration();
-  const location = useLocation()
+
   return (
+    /* Conditionally render icons only on the homepage */
     <>
-      {/* Conditionally render icons only on the homepage */}
-      {location.pathname === "/" && (
-        <>
-          {isCup ? (
-            <LuGlassWater className="water-icon" onClick={switchUnit} />
-          ) : (
-            <IoWaterOutline className="water-icon" onClick={switchUnit} />
-          )}
-        </>
+      {isCup ? (
+        <LuGlassWater className="water-icon" onClick={switchUnit} />
+      ) : (
+        <IoWaterOutline className="water-icon" onClick={switchUnit} />
       )}
     </>
   );

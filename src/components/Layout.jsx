@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -10,12 +10,13 @@ import { useUser } from "../context/UserContext";
 
 const Layout = () => {
   const { username } = useUser();
+  const location = useLocation();
   return (
     <>
       <Header />
       <aside>
         {username && <Greeting username={username} />}
-        <ThirstinessLevel />
+        {location.pathname === "/" && <ThirstinessLevel />}
       </aside>
       <main>
         <Outlet />

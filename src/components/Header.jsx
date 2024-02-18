@@ -57,7 +57,9 @@ const Header = () => {
   return (
     <StyledHeader>
       <StyledHeading>Hydration Tracker</StyledHeading>
-      <HydrationUnitLogo/>
+
+      {location.pathname === "/" && <HydrationUnitLogo />}
+
       <StyledNav>
         <ul>
           {/* Render the "Home" link only if not on the home page */}
