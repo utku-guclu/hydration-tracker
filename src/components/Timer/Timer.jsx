@@ -97,7 +97,7 @@ const Timer = () => {
           <VscDebugRestart onClick={handleReset}>Reset</VscDebugRestart>
         </TimerButtons>
       </TimerSetting>
-      {!drinkWater && <p>It's time to drink water!</p>}
+      {drinkWater && <p style={{color: "var(--water)"}}>It's time to drink water!</p>}
 
       {/* Dialog component, conditionally rendered based on isDialogOpen state */}
       <Dialog visible={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
