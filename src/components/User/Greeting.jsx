@@ -23,7 +23,7 @@ const Greeting = ({ username }) => {
 
   return (
     <StyledGreeting>
-      {greeting}, {username}
+      {greeting}, {username}!
     </StyledGreeting>
   );
 };

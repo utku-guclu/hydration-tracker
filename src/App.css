@@ -69,6 +69,13 @@ input:focus {
   border: 2px solid var(--main-color);
 }
 
+aside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
 /* Additional styles */
 
 #log-submit-form {
@@ -95,7 +102,7 @@ input:focus {
   top: 10px;
   right: 10px;
   color: var(--water);
-  font-size: 30px;
+  font-size: 20px;
   cursor: pointer;
 }
 

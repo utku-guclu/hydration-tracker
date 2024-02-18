@@ -31,6 +31,7 @@ const Timer = () => {
     // Handle action when timer reaches 0 (e.g., remind to drink water)
     if (time === 0) {
       setDrinkWater(true);
+      handlePause();
     } else {
       setDrinkWater(false);
     }

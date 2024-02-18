@@ -1,18 +1,13 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-/* Hooks */
-import { useUser } from "../context/UserContext";
-import { useHydration } from "../context/HydrationContext";
-
-/* ICONS */
-import { LuGlassWater } from "react-icons/lu";
-import { IoWaterOutline } from "react-icons/io5";
-
 import { styled } from "@mui/system";
 
 import Logout from "./User/Logout";
-import Greeting from "./User/Greeting";
+import HydrationUnitLogo from "./Hydration/HydrationUnitLogo";
+
+/* Hooks */
+import { useUser } from "../context/UserContext";
 
 /* Semantic Header */
 const StyledHeader = styled("header")({
@@ -54,41 +49,15 @@ const StyledNav = styled("nav")({
   },
 });
 
-const ThirstinessLevel = styled("div")(({ color }) => ({
-  color,
-  position: "absolute",
-  bottom: "10px",
-  right: "10px",
-  fontStyle: "italic",
-}));
-
 const Header = () => {
   const location = useLocation();
 
-  const { token: authenticated, logout, username } = useUser();
-  const { switchUnit, isCup, thirstiness, thirstinessColor } = useHydration();
+  const { token: authenticated, logout } = useUser();
 
   return (
     <StyledHeader>
-      {/* Conditionally render icons only on the homepage */}
-      {location.pathname === "/" && (
-        <>
-          {isCup ? (
-            <LuGlassWater className="water-icon" onClick={switchUnit} />
-          ) : (
-            <IoWaterOutline className="water-icon" onClick={switchUnit} />
-          )}
-        </>
-      )}
-
       <StyledHeading>Hydration Tracker</StyledHeading>
-      {username && <Greeting username={username} />}
-      {/* thirstiness level */}
-      {location.pathname === "/" && (
-        <ThirstinessLevel color={thirstinessColor}>
-          {thirstiness}
-        </ThirstinessLevel>
-      )}
+      <HydrationUnitLogo/>
       <StyledNav>
         <ul>
           {/* Render the "Home" link only if not on the home page */}
