@@ -14,7 +14,7 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <aside>
+      <aside style={{ marginTop: "20px" }}>
         {username && <Greeting username={username} />}
         {location.pathname === "/" && <ThirstinessLevel />}
       </aside>

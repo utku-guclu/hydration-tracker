@@ -21,16 +21,20 @@ const TimerSetting = styled("div")(() => ({
   alignItems: "center",
   justifyContent: "center",
   gap: "2em",
+  marginTop: "20px",
+  backgroundColor: "#333",
+  padding: "1em",
 }));
 
 const TimerButtons = styled("div")(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  cursor: "pointer",
 }));
 
-const TimerDigits = styled("div")(() => ({}));
+const TimerDigits = styled("div")(() => ({
+  fontSize: "30px",
+}));
 
 const Timer = () => {
   const [headingColor, setHeadingColor] = useState("#333");
@@ -90,14 +94,22 @@ const Timer = () => {
         <TimerDigits className="time">{formatTime(time)}</TimerDigits>
         <TimerButtons>
           {!timerRunning ? (
-            <IoPlay onClick={handleStart}>Start</IoPlay>
+            <IoPlay className="timer-button" onClick={handleStart}>
+              Start
+            </IoPlay>
           ) : (
-            <IoPause onClick={handlePause}>Pause</IoPause>
+            <IoPause className="timer-button" onClick={handlePause}>
+              Pause
+            </IoPause>
           )}
-          <VscDebugRestart onClick={handleReset}>Reset</VscDebugRestart>
+          <VscDebugRestart className="timer-button" onClick={handleReset}>
+            Reset
+          </VscDebugRestart>
         </TimerButtons>
       </TimerSetting>
-      {drinkWater && <p style={{color: "var(--water)"}}>It's time to drink water!</p>}
+      {drinkWater && (
+        <p style={{ color: "var(--water)" }}>It's time to drink water!</p>
+      )}
 
       {/* Dialog component, conditionally rendered based on isDialogOpen state */}
       <Dialog visible={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
