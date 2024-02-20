@@ -1,22 +1,29 @@
-import React from "react";
-import MaxGoalInput from "../Hydration/MaxGoalInput";
+import React, { useEffect } from "react";
+import Bottle from "../Hydration/Bottle";
 
 function ProgressBar({ convertedDailyGoal, unit, convertedTotal }) {
   return (
-    <div>
-      <MaxGoalInput unit={unit} />
+    <>
       <div style={{ marginTop: "10px" }}>
-        <progress value={convertedTotal} max={convertedDailyGoal}></progress>
+        {/* <progress value={convertedTotal} max={convertedDailyGoal}></progress> */}
+        <Bottle
+          convertedTotal={convertedTotal}
+          convertedDailyGoal={convertedDailyGoal}
+        ></Bottle>
         <p className="italic progress-info">{`${convertedTotal} / ${convertedDailyGoal} ${unit}`}</p>
       </div>
 
       {/* Check if max goal is reached and show a prompt */}
-      {convertedTotal >= convertedDailyGoal && (
-        <p style={{
-          color: "var(--secondary-color)"
-        }}>{"You've reached your daily hydration goal!"}</p>
+      {convertedTotal !== 0 && convertedTotal >= convertedDailyGoal && (
+        <p
+          style={{
+            color: "var(--secondary-color)",
+          }}
+        >
+          {"You've reached your daily hydration goal!"}
+        </p>
       )}
-    </div>
+    </>
   );
 }
 

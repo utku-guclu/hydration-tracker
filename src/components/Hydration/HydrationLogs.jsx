@@ -4,8 +4,6 @@ import HydrationUpdateDialog from "./HydrationUpdateDialog";
 
 import { useHydration } from "../../context/HydrationContext";
 
-import { ProgressBar } from "../ProgressBar";
-
 import { mlToCups } from "hydration-converter";
 
 import { styled } from "@mui/system";
@@ -76,7 +74,6 @@ function HydrationLogs() {
     deleteHydrationLog,
     isCup,
     convertedTotal,
-    convertedDailyGoal,
     unit,
     resetLogs,
   } = useHydration();
@@ -111,11 +108,6 @@ function HydrationLogs() {
 
   return (
     <>
-      <ProgressBar
-        convertedDailyGoal={convertedDailyGoal}
-        unit={unit}
-        convertedTotal={convertedTotal}
-      />
       <div>
         {logs.length > 0 && <Tooltip id="logs-heading" />}
         <LogsHeading

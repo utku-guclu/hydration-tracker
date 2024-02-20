@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 
 import { useHydration } from "../../context/HydrationContext";
 import { useTimer } from "../../context/TimerContext";
+import MaxGoalInput from "./MaxGoalInput";
 
 const WaterIntakeHeading = styled("h2")(({ color }) => ({
   color: color,
@@ -78,6 +79,7 @@ function HydrationForm() {
           Log Water Intake
         </button>
       </form>
+      <MaxGoalInput unit={unit} />
     </>
   );
 }

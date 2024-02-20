@@ -28,7 +28,6 @@ function App() {
           <HydrationForm />
           <HydrationLogs />
         </section>
-
         <Timer />
       </>
     );

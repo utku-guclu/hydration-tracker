@@ -3,7 +3,7 @@ import { useHydration } from "../../context/HydrationContext";
 
 const ThirstinessLevelText = styled("div")(({ color }) => ({
   color,
-  textAlign: "right",
+  textAlign: "center",
   fontStyle: "italic",
 }));
 

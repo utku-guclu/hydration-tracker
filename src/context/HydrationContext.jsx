@@ -30,7 +30,7 @@ export const HydrationProvider = ({ children }) => {
 
   const [recentIntake, setRecentIntake] = useState(0);
 
-  const [thirstiness, setThirstiness] = useState("Water is Life!");
+  const [thirstiness, setThirstiness] = useState("");
 
   const [thirstinessColor, setThirstinessColor] = useState(null);
 
