@@ -30,6 +30,7 @@ const TimerProvider = ({
   };
 
   const tickingSound = () => {
+    tickingClockRef.current.loop = true;
     tickingClockRef.current.play();
   };
 
@@ -37,7 +38,6 @@ const TimerProvider = ({
     tickingClockRef.current.pause(); // Pause the sound
     tickingClockRef.current.currentTime = 0; // Reset the sound to the beginning
   };
-
 
   // Function to get the initial time from localStorage or use the default initial time
   const getInitialTime = () => {
@@ -156,7 +156,7 @@ const TimerProvider = ({
     <>
       <audio ref={timerClickRef} src={timerClick} />
       <audio ref={clockAlarmRef} src={clockAlarm} />
-      <audio ref={tickingClockRef} src={tickingClock} />
+      <audio ref={tickingClockRef} src={tickingClock}/>
       <TimerContext.Provider
         value={{
           time,
