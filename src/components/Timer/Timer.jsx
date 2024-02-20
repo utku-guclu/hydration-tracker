@@ -93,7 +93,7 @@ const Timer = () => {
       <TimerSetting>
         <TimerDigits className="time">{formatTime(time)}</TimerDigits>
         <TimerButtons>
-          {!timerRunning ? (
+          {!timerRunning && time !== 0 ? (
             <IoPlay className="timer-button" onClick={handleStart}>
               Start
             </IoPlay>

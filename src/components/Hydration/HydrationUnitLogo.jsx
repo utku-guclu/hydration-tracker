@@ -1,6 +1,5 @@
 /* HOOKS */
 import { useHydration } from "../../context/HydrationContext";
-import { useLocation } from "react-router";
 
 /* ICONS */
 import { LuGlassWater } from "react-icons/lu";

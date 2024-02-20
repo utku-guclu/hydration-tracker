@@ -1,4 +1,14 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  useRef,
+} from "react";
+
+import timerClick from "../assets/timer-click.mp3";
+import tickingClock from "../assets/ticking-clock.mp3";
+import clockAlarm from "../assets/clock-alarm.mp3";
 
 const TimerContext = createContext();
 
@@ -7,6 +17,28 @@ const TimerProvider = ({
   initialTime = 60 * 60,
   initialTimerRunningState = false,
 }) => {
+  const timerClickRef = useRef(null);
+  const clockAlarmRef = useRef(null);
+  const tickingClockRef = useRef(null);
+
+  const clickSound = () => {
+    timerClickRef.current.play();
+  };
+
+  const alarmSound = () => {
+    clockAlarmRef.current.play();
+  };
+
+  const tickingSound = () => {
+    tickingClockRef.current.play();
+  };
+
+  const stopTickingSound = () => {
+    tickingClockRef.current.pause(); // Pause the sound
+    tickingClockRef.current.currentTime = 0; // Reset the sound to the beginning
+  };
+
+
   // Function to get the initial time from localStorage or use the default initial time
   const getInitialTime = () => {
     const timerStorage = JSON.parse(localStorage.getItem("timerState")) || {
@@ -33,17 +65,21 @@ const TimerProvider = ({
   // Function to handle starting the timer
   const handleStart = () => {
     setTimerRunning(true);
+    clickSound();
+    tickingSound();
   };
 
   // Function to handle pausing the timer
   const handlePause = () => {
     setTimerRunning(false);
+    stopTickingSound();
   };
 
   // Function to handle resetting the timer
   const handleReset = () => {
-    setTime(initialTime);
+    setTime(adjustedTime);
     setTimerRunning(false);
+    stopTickingSound();
   };
 
   // Function to set the timer to a specific time
@@ -95,6 +131,13 @@ const TimerProvider = ({
     }
   }, []);
 
+  // Effect for alarm
+  useEffect(() => {
+    if (time === 0) {
+      alarmSound();
+    }
+  }, [time]);
+
   // Function to format time
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -110,20 +153,25 @@ const TimerProvider = ({
   };
 
   return (
-    <TimerContext.Provider
-      value={{
-        time,
-        timerRunning,
-        handleStart,
-        handlePause,
-        handleReset,
-        formatTime,
-        setTimer,
-        timeDifference,
-      }}
-    >
-      {children}
-    </TimerContext.Provider>
+    <>
+      <audio ref={timerClickRef} src={timerClick} />
+      <audio ref={clockAlarmRef} src={clockAlarm} />
+      <audio ref={tickingClockRef} src={tickingClock} />
+      <TimerContext.Provider
+        value={{
+          time,
+          timerRunning,
+          handleStart,
+          handlePause,
+          handleReset,
+          formatTime,
+          setTimer,
+          timeDifference,
+        }}
+      >
+        {children}
+      </TimerContext.Provider>
+    </>
   );
 };
 
