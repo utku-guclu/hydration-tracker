@@ -8,6 +8,8 @@ import { useTimer } from "./TimerContext";
 
 import { mlToCups, cupsToMl } from "hydration-converter";
 
+import axios from "axios";
+
 const HydrationContext = createContext();
 
 export const HydrationProvider = ({ children }) => {
@@ -34,6 +36,9 @@ export const HydrationProvider = ({ children }) => {
 
   const [thirstinessColor, setThirstinessColor] = useState(null);
 
+  /* statistics */
+  const [statistics, setStatistics] = useState({ 0: 100 });
+
   /* hooks */
   const { token, userId } = useUser();
 
@@ -54,6 +59,64 @@ export const HydrationProvider = ({ children }) => {
       : dailyGoalCups
     : dailyGoal;
 
+  /* for statistics */
+  const fetchLogPool = async () => {
+    if (!token) return;
+    try {
+      const response = await axios.get(
+        `${server}/api/hydration/logs/statistics`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Assuming you have a valid token
+          },
+        }
+      );
+      const data = response.data;
+      const { logCount, logPools, totalIntake } = data;
+      if (logPools.length > 0) {
+        const statisticsData = calculateHourlyIntakeByPercentage(logPools);
+        setStatistics(statisticsData);
+      }
+    } catch (error) {
+      console.error("Error fetching statistics:", error);
+    }
+  };
+
+  const addToLogPool = async (intake) => {
+    if (!token) return;
+    try {
+      const response = await axios.post(
+        `${server}/api/hydration/logs/statistics`,
+        { intake },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("New log pool added:", response.data);
+    } catch (error) {
+      console.error("Error adding to log pool:", error);
+    }
+  };
+  const resetLogPool = async () => {
+    if (!token) return;
+    try {
+      const response = await axios.delete(
+        `${server}/api/hydration/logs/statistics`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Assuming you have a valid token
+          },
+        }
+      );
+      setStatistics({ 0: 100 });
+      console.log("Log pools reset successfully");
+    } catch (error) {
+      console.error("Error resetting log pools:", error);
+    }
+  };
+  /* for logs */
   const fetchHydrationLogs = async () => {
     try {
       if (!token) {
@@ -120,6 +183,8 @@ export const HydrationProvider = ({ children }) => {
 
       if (response.ok) {
         await fetchHydrationLogs();
+        await addToLogPool(intake);
+        await fetchLogPool();
       } else {
         console.error("Failed to add hydration log");
       }
@@ -248,6 +313,31 @@ export const HydrationProvider = ({ children }) => {
     return logs.reduce((total, log) => total + log.intake, 0);
   };
 
+  const calculateHourlyIntakeByPercentage = (logPool) => {
+    // Initialize an object to hold hourly intake totals
+    const hourlyIntakeTotals = {};
+
+    // Group intake by hour
+    logPool.forEach((entry) => {
+      const hour = new Date(entry.timestamp).getHours();
+      hourlyIntakeTotals[hour] = (hourlyIntakeTotals[hour] || 0) + entry.intake;
+    });
+
+    // Calculate hourly intake percentage
+    const totalIntake = logPool.reduce(
+      (total, entry) => total + entry.intake,
+      0
+    );
+    const hourlyIntakePercentage = {};
+
+    Object.keys(hourlyIntakeTotals).forEach((hour) => {
+      hourlyIntakePercentage[hour] =
+        (hourlyIntakeTotals[hour] / totalIntake) * 100;
+    });
+
+    return hourlyIntakePercentage;
+  };
+
   const switchUnit = () => {
     setIsCup((prev) => !prev);
   };
@@ -278,6 +368,7 @@ export const HydrationProvider = ({ children }) => {
 
   useEffect(() => {
     fetchHydrationLogs();
+    fetchLogPool();
   }, [token]);
 
   useEffect(() => {
@@ -317,6 +408,8 @@ export const HydrationProvider = ({ children }) => {
         thirstiness,
         isLoadingLogs,
         thirstinessColor,
+        statistics,
+        resetLogPool,
       }}
     >
       {children}

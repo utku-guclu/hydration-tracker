@@ -98,6 +98,7 @@ app.get("/", (req, res) => {
 app.use("/user", userRoutes); // For user registration
 app.use("/auth", authRoutes); // authenticate user
 app.use("/api/hydration", hydrationRoutes); // for hydration
+app.use("/auth", authRoutes); // for statistics
 
 // Only start the server if the file is run directly
 if (require.main === module) {

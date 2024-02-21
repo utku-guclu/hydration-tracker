@@ -78,7 +78,7 @@ const Timer = () => {
   };
 
   return (
-    <section id="timer" style={{ marginBottom: "100px" }}>
+    <>
       {/* TimerHeading is now clickable */}
       {!timerRunning && <Tooltip id="timer-tooltip" />}
       <TimerHeading
@@ -119,7 +119,7 @@ const Timer = () => {
           isDialogOpen={isDialogOpen}
         />
       </Dialog>
-    </section>
+    </>
   );
 };
 

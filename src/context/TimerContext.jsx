@@ -7,7 +7,6 @@ import React, {
 } from "react";
 
 import timerClick from "../assets/timer-click.mp3";
-import tickingClock from "../assets/ticking-clock.mp3";
 import clockAlarm from "../assets/clock-alarm.mp3";
 
 const TimerContext = createContext();
@@ -19,7 +18,6 @@ const TimerProvider = ({
 }) => {
   const timerClickRef = useRef(null);
   const clockAlarmRef = useRef(null);
-  const tickingClockRef = useRef(null);
 
   const clickSound = () => {
     timerClickRef.current.play();
@@ -27,16 +25,6 @@ const TimerProvider = ({
 
   const alarmSound = () => {
     clockAlarmRef.current.play();
-  };
-
-  const tickingSound = () => {
-    tickingClockRef.current.loop = true;
-    tickingClockRef.current.play();
-  };
-
-  const stopTickingSound = () => {
-    tickingClockRef.current.pause(); // Pause the sound
-    tickingClockRef.current.currentTime = 0; // Reset the sound to the beginning
   };
 
   // Function to get the initial time from localStorage or use the default initial time
@@ -66,20 +54,17 @@ const TimerProvider = ({
   const handleStart = () => {
     setTimerRunning(true);
     clickSound();
-    tickingSound();
   };
 
   // Function to handle pausing the timer
   const handlePause = () => {
     setTimerRunning(false);
-    stopTickingSound();
   };
 
   // Function to handle resetting the timer
   const handleReset = () => {
     setTime(adjustedTime);
     setTimerRunning(false);
-    stopTickingSound();
   };
 
   // Function to set the timer to a specific time
@@ -156,7 +141,6 @@ const TimerProvider = ({
     <>
       <audio ref={timerClickRef} src={timerClick} />
       <audio ref={clockAlarmRef} src={clockAlarm} />
-      <audio ref={tickingClockRef} src={tickingClock}/>
       <TimerContext.Provider
         value={{
           time,

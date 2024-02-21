@@ -7,6 +7,60 @@ const hydrationLogController = express.Router();
 
 const authenticateToken = require("../middlewares/authToken");
 
+/* STATISTICS */
+
+// Separate endpoint for adding new log pools
+hydrationLogController.post(
+  "/statistics",
+  authenticateToken,
+  async (req, res) => {
+    const { intake } = req.body;
+    const { userId } = req.user;
+
+    try {
+      if (!intake) {
+        return res.status(400).json({ error: "Intake value is required" });
+      }
+
+      const createdLogPool = await prisma.logPool.create({
+        data: {
+          intake,
+          user: { connect: { id: userId } },
+          timestamp: new Date(),
+        },
+      });
+
+      console.log("Hydration log pool added successfully");
+      res.status(201).json(createdLogPool);
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+
+hydrationLogController.delete(
+  "/statistics",
+  authenticateToken,
+  async (req, res) => {
+    const { userId } = req.user;
+
+    try {
+      const deleteResult = await prisma.logPool.deleteMany({
+        where: { userId: parseInt(userId) },
+      });
+
+      console.log(
+        `${deleteResult.count} hydration log pools deleted successfully`
+      );
+      res.status(204).end();
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+
 /* RESET LOGS */
 hydrationLogController.delete("/reset", authenticateToken, async (req, res) => {
   const { userId } = req.user;
@@ -94,7 +148,40 @@ hydrationLogController.get("/", authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+hydrationLogController.get(
+  "/statistics",
+  authenticateToken,
+  async (req, res) => {
+    try {
+      const { userId } = req.user;
 
+      const userLogPools = await prisma.logPool.findMany({
+        where: { userId: parseInt(userId) },
+        select: { intake: true, timestamp: true },
+      });
+
+      // Calculate statistics
+      const totalIntake = userLogPools.reduce(
+        (acc, logPool) => acc + logPool.intake,
+        0
+      );
+
+      const statistics = {
+        totalIntake,
+        logCount: userLogPools.length,
+        logPools: userLogPools.map(({ intake, timestamp }) => ({
+          intake,
+          timestamp,
+        })),
+      };
+
+      res.status(200).json(statistics);
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
 hydrationLogController.delete(
   "/:timestamp",
   authenticateToken,

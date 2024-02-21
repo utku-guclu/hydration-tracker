@@ -102,7 +102,7 @@ Happy hydrating!
 ### Prisma | Docker
 
 `npx prisma migrate dev
-npx prisma migrate up
+npx prisma migrate deploy
 sudo docker-compose build
 sudo docker-compose up
 

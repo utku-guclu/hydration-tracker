@@ -20,6 +20,9 @@ import Layout from "./components/Layout";
 /* Not Found */
 import NotFound from "./components/NotFound";
 
+/* Statistics Chart */
+import HydrationLogsPoolChart from "./components/Hydration/HydrationLogsPoolChart";
+
 function App() {
   const Hydration = () => {
     return (
@@ -28,7 +31,12 @@ function App() {
           <HydrationForm />
           <HydrationLogs />
         </section>
-        <Timer />
+        <section id="timer">
+          <Timer />
+        </section>
+        <section style={{ marginBottom: "100px" }} id="statistics">
+          <HydrationLogsPoolChart />
+        </section>
       </>
     );
   };

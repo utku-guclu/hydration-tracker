@@ -18,9 +18,18 @@ model HydrationLog {
 }
 
 model User {
-  id         Int           @id @default(autoincrement())
-  username   String        @unique
-  password   String
-  hydrations HydrationLog[] // Define a one-to-many relationship with HydrationLog
+  id           Int           @id @default(autoincrement())
+  username     String        @unique
+  password     String
+  hydrations   HydrationLog[] // Define a one-to-many relationship with HydrationLog
+  logsPool     LogPool[]      // Define a one-to-many relationship with LogPool
   // Add other fields as needed
+}
+
+model LogPool {
+  id          Int       @id @default(autoincrement())
+  timestamp   DateTime
+  intake      Int
+  userId      Int       // Add a foreign key to associate with User model
+  user        User      @relation(fields: [userId], references: [id])
 }
