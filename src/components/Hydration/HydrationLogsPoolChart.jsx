@@ -31,6 +31,7 @@ export default function SimpleCharts() {
   return (
     <>
       <Tooltip id="statistics-tooltip" />
+      <h2>Statistics</h2>
       <BarChart
         tooltip={{ trigger: "axis" }}
         xAxis={[

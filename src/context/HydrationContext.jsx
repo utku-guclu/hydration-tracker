@@ -332,7 +332,7 @@ export const HydrationProvider = ({ children }) => {
 
     Object.keys(hourlyIntakeTotals).forEach((hour) => {
       hourlyIntakePercentage[hour] =
-        (hourlyIntakeTotals[hour] / totalIntake) * 100;
+        ((hourlyIntakeTotals[hour] / totalIntake) * 100).toFixed(0);
     });
 
     return hourlyIntakePercentage;
