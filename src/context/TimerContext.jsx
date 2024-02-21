@@ -53,7 +53,7 @@ const TimerProvider = ({
   // Function to handle starting the timer
   const handleStart = () => {
     setTimerRunning(true);
-    clickSound();
+    // clickSound();
   };
 
   // Function to handle pausing the timer
