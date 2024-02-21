@@ -1,6 +1,6 @@
-# Hydration Tracker App
+# React + Vite
 
-## Overview
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 The Hydration App is a simple application for tracking water intake, allowing users to log their daily hydration levels. It provides features to add, view, update, and delete hydration logs.
 
