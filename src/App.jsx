@@ -34,7 +34,7 @@ function App() {
         <section id="timer">
           <Timer />
         </section>
-        <section style={{ marginBottom: "100px" }} id="statistics">
+        <section style={{ margin: "20px 0 100px" }} id="statistics">
           <HydrationLogsPoolChart />
         </section>
       </>

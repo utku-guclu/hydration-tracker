@@ -18,6 +18,11 @@ import Box from "@mui/material/Box";
 import { GrUpdate } from "react-icons/gr";
 import { TiDeleteOutline } from "react-icons/ti";
 
+const WaterIntakeLabel = styled("p")(({ color }) => ({
+  color: "#fff",
+  cursor: "pointer",
+}));
+
 const LogsHeading = styled("h2")(({ color }) => ({
   color,
   cursor: "pointer",
@@ -120,12 +125,12 @@ function HydrationLogs() {
           Hydration Logs
         </LogsHeading>
 
-        <p>
+        <WaterIntakeLabel>
           Total Water Intake:{" "}
           <span className="italic water-info">
             {convertedTotal} {unit}
           </span>
-        </p>
+        </WaterIntakeLabel>
         {logs.length > 0 && (
           <LogsTable>
             {/* Loading Circle */}

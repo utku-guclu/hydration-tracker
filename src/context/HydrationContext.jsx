@@ -37,7 +37,7 @@ export const HydrationProvider = ({ children }) => {
   const [thirstinessColor, setThirstinessColor] = useState(null);
 
   /* statistics */
-  const [statistics, setStatistics] = useState({ 0: 100 });
+  const [statistics, setStatistics] = useState({ 0: 0 });
 
   /* hooks */
   const { token, userId } = useUser();
