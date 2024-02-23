@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import InlineText from "../../context/InlineText";
+
 const RegisterHeading = styled("h2")(({ color }) => ({
   color: color,
 }));
 
 const Register = () => {
-  const [headingColor, setHeadingColor] = useState("#333");
+  const [headingColor, setHeadingColor] = useState("var(--gray)");
   // Access user and token using useUser hook
   const { username: accessedUser, token, login, logout } = useUser();
   const [username, setUsername] = useState("");
@@ -42,18 +44,18 @@ const Register = () => {
   };
 
   const handleUserChange = (e) => {
-    setUsername(e.target.value)
-  }
+    setUsername(e.target.value);
+  };
 
   const handlePassChange = (e) => {
-    setPassword(e.target.value)
-  }
+    setPassword(e.target.value);
+  };
 
   useEffect(() => {
     if (username && password) {
       setHeadingColor("var(--secondary-color)");
     } else {
-      setHeadingColor("#333");
+      setHeadingColor("#var(--gray)");
     }
   }, [username, password]);
 
@@ -63,7 +65,7 @@ const Register = () => {
       <RegisterHeading color={headingColor}>Register</RegisterHeading>
       <form onSubmit={handleRegister}>
         <label htmlFor="register">
-          <span>Username:</span>
+          <InlineText>Username:</InlineText>
           <input
             id="register"
             name="register"
@@ -76,7 +78,7 @@ const Register = () => {
         </label>
         <br />
         <label htmlFor="password">
-          <span>Password:</span>
+          <InlineText>Password:</InlineText>
           <input
             id="password"
             name="password"

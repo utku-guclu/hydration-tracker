@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHydration } from "../../context/HydrationContext";
+
+import { ThemeContext } from "../../context/Theme";
 
 function MaxGoalInput({ unit }) {
   const { updateDailyGoal, convertedDailyGoal } = useHydration();
   const [newMaxGoal, setNewMaxGoal] = useState("");
+
+  const { theme } = useContext(ThemeContext);
 
   const handleInputChange = (e) => {
     setNewMaxGoal(e.target.value);
@@ -21,7 +25,7 @@ function MaxGoalInput({ unit }) {
   return (
     <form onSubmit={handleUpdateGoal}>
       <label htmlFor="dailyGoal">
-        <span>Daily Goal:</span>
+        <span style={{ color: theme.text }}>Daily Goal:</span>
         <input
           placeholder={`${convertedDailyGoal} ${unit}`}
           type="number"

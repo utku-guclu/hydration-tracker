@@ -1,39 +1,51 @@
 import React from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import Header from "./Header";
 import Footer from "./Footer";
 
-import Greeting from "../components/User/Greeting";
-import { ProgressBar } from "../components/ProgressBar";
+import { DarkModeSwitch } from "react-toggle-dark-mode";
 
-import { useUser } from "../context/UserContext";
-import { useHydration } from "../context/HydrationContext";
+import { ThemeContext } from "../context/Theme";
 
-import ThirstinessLevel from "./Hydration/ThirstinessLevel";
+import { styled } from "@mui/system";
+import { createGlobalStyle } from "styled-components";
+
+const Hydration = styled("div")(({ theme }) => ({
+  color: theme.color,
+  backgroundColor: theme.backgroundColor,
+  display: "inline",
+}));
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    color: ${(props) => props.theme.color};
+    background-color: ${(props) => props.theme.backgroundColor};
+  }
+`;
 
 const Layout = () => {
-  const { username } = useUser();
-  const location = useLocation();
-  const { convertedTotal, unit, convertedDailyGoal } = useHydration();
+  const { theme, isDarkTheme, toggleTheme } = React.useContext(ThemeContext);
 
   return (
     <>
-      <Header />
-      <aside style={{ marginTop: "20px" }}>
-        {username && <Greeting username={username} />}
-        {location.pathname === "/" && <ThirstinessLevel />}
-        {location.pathname === "/" && (
-          <ProgressBar
-            convertedDailyGoal={convertedDailyGoal}
-            unit={unit}
-            convertedTotal={convertedTotal}
-          />
-        )}
-      </aside>
-      <main>
-        <Outlet />
-      </main>
+      <GlobalStyle theme={theme} />
+      <Header>
+        <DarkModeSwitch
+          style={{
+            marginBottom: "2rem",
+            position: "absolute",
+            left: "10px",
+            top: "10px",
+            zIndex: "100",
+          }}
+          checked={isDarkTheme}
+          onChange={toggleTheme}
+          size={20}
+          sunColor="var(--water)"
+        />
+      </Header>
+      <Outlet />
       <Footer />
     </>
   );

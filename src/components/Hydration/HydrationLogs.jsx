@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import HydrationUpdateDialog from "./HydrationUpdateDialog";
 
@@ -10,6 +10,8 @@ import { styled } from "@mui/system";
 
 import { Tooltip } from "react-tooltip";
 
+import { ThemeContext } from "../../context/Theme";
+
 /* Circular indeterminate */
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -19,12 +21,12 @@ import { GrUpdate } from "react-icons/gr";
 import { TiDeleteOutline } from "react-icons/ti";
 
 const WaterIntakeLabel = styled("p")(({ color }) => ({
-  color: "#fff",
+  color,
   cursor: "pointer",
 }));
 
-const LogsHeading = styled("h2")(({ color }) => ({
-  color,
+const LogsHeading = styled("h2")(({ color, theme }) => ({
+  color: color,
   cursor: "pointer",
 }));
 
@@ -35,7 +37,7 @@ const LogsDetails = styled("div")(() => ({
 }));
 
 const LogsTable = styled("ul")(() => ({
-  backgroundColor: "#333",
+  backgroundColor: "var(--gray)",
   display: "grid",
   padding: "20px",
   gap: "10px",
@@ -70,7 +72,7 @@ const LogButtons = styled("div")(() => ({
 }));
 
 function HydrationLogs() {
-  const [headingColor, setHeadingColor] = useState("#333");
+  const [headingColor, setHeadingColor] = useState("var(--gray)");
   const [selectedLog, setSelectedLog] = useState(null);
   const {
     logs,
@@ -82,6 +84,8 @@ function HydrationLogs() {
     unit,
     resetLogs,
   } = useHydration();
+
+  const { theme } = useContext(ThemeContext);
 
   const handleReset = () => {
     resetLogs();
@@ -104,10 +108,10 @@ function HydrationLogs() {
   }, []);
 
   useEffect(() => {
-    if (logs.length !== 0) {
-      setHeadingColor("var(--water)");
+    if (logs.length === 0) {
+      setHeadingColor("var(--gray)");
     } else {
-      setHeadingColor("#333");
+      setHeadingColor("var(--ocean)");
     }
   }, [logs]);
 
@@ -121,12 +125,13 @@ function HydrationLogs() {
           data-tooltip-place="top"
           onDoubleClick={handleReset}
           color={headingColor}
+          theme={theme}
         >
           Hydration Logs
         </LogsHeading>
 
-        <WaterIntakeLabel>
-          Total Water Intake:{" "}
+        <WaterIntakeLabel color={theme.color}>
+          Total Water Intake:{""}
           <span className="italic water-info">
             {convertedTotal} {unit}
           </span>
@@ -145,7 +150,7 @@ function HydrationLogs() {
                   <LogsDetails>
                     <IntakeCol>
                       <span style={{ color: "var(--ocean)" }}>INTAKE</span>
-                      <span>
+                      <span style={{ color: theme.text }}>
                         {` ${isCup ? mlToCups(log.intake) : log.intake}  ${
                           isCup ? "(cup)" : "(ml)"
                         }`}{" "}
@@ -154,7 +159,7 @@ function HydrationLogs() {
                     {/* <span>|</span> */}
                     <TimeCol>
                       <span style={{ color: "var(--ocean)" }}>TIME</span>
-                      <span>
+                      <span style={{ color: theme.text }}>
                         {new Date(log.timestamp)
                           .toLocaleString()
                           .slice(11)

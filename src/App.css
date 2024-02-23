@@ -2,13 +2,13 @@
 
 body {
   font-family: "monospace", "Arial", sans-serif;
-  text-align: center;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   margin: 0;
   padding: 0 20px;
-  display: flex;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -19,19 +19,18 @@ main {
   justify-content: center;
 }
 
-h1,
-h2 {
-  color: #333;
-}
-
 form {
   display: flex;
   flex-direction: column;
+  background-color: var(--gray);
+  border-radius: 4px;
+  padding: 20px;
 }
 
 ul {
   list-style-type: none;
   padding: 0;
+  border-radius: 4px;
 }
 
 /* progress bar */
@@ -43,6 +42,8 @@ progress {
 label {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
 }
 
 label > * {
@@ -54,8 +55,7 @@ label > input {
 }
 
 label > span {
-  align-self: flex-start;
-  flex: 0.8;
+  flex: 1.8;
   font-size: 16px;
   min-width: 92px;
 }
@@ -63,10 +63,9 @@ label > span {
 input {
   border-radius: 4px;
   border: 0;
-}
-
-input:focus {
-  border: 2px solid var(--main-color);
+  background-color: var(--dark);
+  padding: 10px;
+  outline: none;
 }
 
 /* Additional styles */

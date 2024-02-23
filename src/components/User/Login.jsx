@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import InlineText from "../../context/InlineText";
+
 const LoginHeading = styled("h2")(({ color }) => ({
   color,
 }));
 
 const Login = () => {
-  const [headingColor, setHeadingColor] = useState("#333");
+  const [headingColor, setHeadingColor] = useState("var(--gray)");
   // Access user
   const { login } = useUser();
   const [username, setUsername] = useState("");
@@ -52,7 +54,7 @@ const Login = () => {
     if (username && password) {
       setHeadingColor("var(--secondary-color)");
     } else {
-      setHeadingColor("#333");
+      setHeadingColor("var(--gray)");
     }
   }, [username, password]);
 
@@ -62,7 +64,7 @@ const Login = () => {
       <LoginHeading color={headingColor}>Login</LoginHeading>
       <form onSubmit={handleLogin}>
         <label htmlFor="login">
-          <span>Username:</span>
+          <InlineText>Username:</InlineText>
           <input
             id="login"
             name="login"
@@ -75,7 +77,7 @@ const Login = () => {
         </label>
         <br />
         <label htmlFor="password">
-          <span>Password:</span>
+          <InlineText>Password:</InlineText>
           <input
             id="password"
             name="password"

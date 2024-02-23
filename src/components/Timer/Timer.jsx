@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useTimer } from "../../context/TimerContext";
 
 import { styled } from "@mui/system";
@@ -10,20 +10,24 @@ import { Tooltip } from "react-tooltip";
 import { IoPlay, IoPause } from "react-icons/io5";
 import { VscDebugRestart } from "react-icons/vsc";
 
+import { ThemeContext } from "../../context/Theme";
+
 const TimerHeading = styled("h2")(({ color }) => ({
   color: color,
   cursor: "pointer",
   display: "inline",
 }));
 
-const TimerSetting = styled("div")(() => ({
+const TimerSetting = styled("div")(({ color }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   gap: "2em",
   marginTop: "20px",
-  backgroundColor: "#333",
+  backgroundColor: "var(--gray)",
   padding: "1em",
+  borderRadius: "4px",
+  color,
 }));
 
 const TimerButtons = styled("div")(() => ({
@@ -37,9 +41,11 @@ const TimerDigits = styled("div")(() => ({
 }));
 
 const Timer = () => {
-  const [headingColor, setHeadingColor] = useState("#333");
+  const [headingColor, setHeadingColor] = useState("var(--gray)");
   const [drinkWater, setDrinkWater] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to control dialog visibility
+
+  const { theme } = useContext(ThemeContext);
 
   const {
     time,
@@ -62,9 +68,9 @@ const Timer = () => {
 
   useEffect(() => {
     if (timerRunning) {
-      setHeadingColor("var(--water)");
+      setHeadingColor("var(--ocean)");
     } else {
-      setHeadingColor("#333");
+      setHeadingColor("var(--gray)");
     }
   }, [timerRunning]);
 
@@ -90,7 +96,7 @@ const Timer = () => {
       >
         Timer
       </TimerHeading>
-      <TimerSetting>
+      <TimerSetting color={theme.text}>
         <TimerDigits className="time">{formatTime(time)}</TimerDigits>
         <TimerButtons>
           {!timerRunning && time !== 0 ? (

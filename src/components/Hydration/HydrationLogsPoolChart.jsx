@@ -48,7 +48,7 @@ export default function SimpleCharts() {
     if (isStatistics) {
       setHeadingColor("var(--water)");
     } else {
-      setHeadingColor("#333");
+      setHeadingColor("var(--gray)");
     }
   }, [isStatistics]);
 

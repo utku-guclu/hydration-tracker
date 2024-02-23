@@ -16,16 +16,13 @@ const StyledHeader = styled("header")({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "10px",
-  backgroundColor: "#333",
+  backgroundColor: "var(--gray)",
   position: "relative",
 });
 
 const StyledHeading = styled("h1")({
   marginBottom: 0,
   color: "var(--ocean)",
-  "&:hover": {
-    color: "var(--sea)",
-  },
 });
 
 const StyledNav = styled("nav")({
@@ -44,12 +41,12 @@ const StyledNav = styled("nav")({
     color: "#fff",
     textDecoration: "none",
     "&:hover": {
-      color: "var(--secondary-color)",
+      color: "var(--water)",
     },
   },
 });
 
-const Header = () => {
+const Header = ({ children }) => {
   const location = useLocation();
 
   const { token: authenticated, logout } = useUser();
@@ -57,7 +54,7 @@ const Header = () => {
   return (
     <StyledHeader>
       <StyledHeading>Hydration Tracker</StyledHeading>
-
+      {children}
       {location.pathname === "/" && <HydrationUnitLogo />}
 
       <StyledNav>

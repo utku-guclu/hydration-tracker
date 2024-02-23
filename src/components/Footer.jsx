@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { styled } from "@mui/system";
+import React, { useState, useEffect, useContext } from "react";
 
 import { FaArrowCircleUp } from "react-icons/fa";
 
+import { ThemeContext } from "../context/Theme";
+
+import { styled } from "@mui/system";
+
 /* Semantic Footer */
-const StyledFooter = styled("footer")({
+const StyledFooter = styled("footer")(({ color }) => ({
   left: 0,
   bottom: 0,
   display: "none", // Initially hide the footer
@@ -15,7 +18,8 @@ const StyledFooter = styled("footer")({
   padding: "10px",
   marginTop: "100px",
   backgroundColor: "var(--sea)",
-});
+  color,
+}));
 
 const InnerContainer = styled("footer")({
   display: "flex",
@@ -31,6 +35,7 @@ const FooterText = styled("p")({
 
 const Footer = () => {
   const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,7 +65,10 @@ const Footer = () => {
   };
 
   return (
-    <StyledFooter style={{ display: isFooterVisible ? "flex" : "none" }}>
+    <StyledFooter
+      color={theme.text}
+      style={{ display: isFooterVisible ? "flex" : "none" }}
+    >
       <InnerContainer>
         <FooterText>All rights reserved &copy; Hydration Tracker</FooterText>
         <FaArrowCircleUp

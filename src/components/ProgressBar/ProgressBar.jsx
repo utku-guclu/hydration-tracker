@@ -1,7 +1,20 @@
-import React, { useEffect } from "react";
+import { useContext } from "react";
+import { useHydration } from "../../context/HydrationContext";
+
 import Bottle from "../Hydration/Bottle";
 
-function ProgressBar({ convertedDailyGoal, unit, convertedTotal }) {
+import { ThemeContext } from "../../context/Theme";
+
+import { styled } from "@mui/system";
+
+const ProgressInfoLabel = styled("p")(({ color }) => ({
+  color: color,
+}));
+
+function ProgressBar() {
+  const { convertedTotal, unit, convertedDailyGoal } = useHydration();
+  const { theme } = useContext(ThemeContext);
+
   return (
     <>
       <div style={{ marginTop: "10px" }}>
@@ -10,7 +23,10 @@ function ProgressBar({ convertedDailyGoal, unit, convertedTotal }) {
           convertedTotal={convertedTotal}
           convertedDailyGoal={convertedDailyGoal}
         ></Bottle>
-        <p className="italic progress-info">{`${convertedTotal} / ${convertedDailyGoal} ${unit}`}</p>
+        <ProgressInfoLabel
+          color={theme.color}
+          className="italic progress-info"
+        >{`${convertedTotal} / ${convertedDailyGoal} ${unit}`}</ProgressInfoLabel>
       </div>
 
       {/* Check if max goal is reached and show a prompt */}
@@ -18,6 +34,7 @@ function ProgressBar({ convertedDailyGoal, unit, convertedTotal }) {
         <p
           style={{
             color: "var(--secondary-color)",
+            textSshadow: "1px 1px 1px var(--dark)",
           }}
         >
           {"You've reached your daily hydration goal!"}

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { styled } from "@mui/system";
+import React, { useEffect, useState, useContext } from "react";
 
 import { useHydration } from "../../context/HydrationContext";
 import { useTimer } from "../../context/TimerContext";
+import { ThemeContext } from "../../context/Theme";
+
+import { styled } from "@mui/system";
 import MaxGoalInput from "./MaxGoalInput";
 
 const WaterIntakeHeading = styled("h2")(({ color }) => ({
@@ -12,14 +14,16 @@ const WaterIntakeHeading = styled("h2")(({ color }) => ({
 function HydrationForm() {
   const { addHydrationLog, unit } = useHydration();
   const { handleStart, handleReset } = useTimer();
-  const [headingColor, setHeadingColor] = useState("#333");
+  const [headingColor, setHeadingColor] = useState("var(--gray)");
   const [waterIntakeLocal, setWaterIntakeLocal] = useState(0);
+
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (waterIntakeLocal) {
-      setHeadingColor("var(--main-color)");
+      setHeadingColor("var(--ocean)");
     } else {
-      setHeadingColor("#333");
+      setHeadingColor("var(--gray)");
     }
   }, [waterIntakeLocal]);
 
@@ -62,7 +66,7 @@ function HydrationForm() {
       </WaterIntakeHeading>
       <form id="log-submit-form" onSubmit={handleFormSubmit}>
         <label htmlFor="waterIntake">
-          <span>Water {unit}:</span>
+          <span style={{ color: theme.text }}>Water {unit}:</span>
           <input
             placeholder={waterIntakeLocal}
             type="number"
