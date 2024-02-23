@@ -12,6 +12,8 @@ import InlineText from "../../context/InlineText";
 
 const LoginHeading = styled("h2")(({ color }) => ({
   color,
+  backgroundColor: "var(--dark)",
+  margin: "0",
 }));
 
 const Login = () => {
@@ -62,7 +64,7 @@ const Login = () => {
     <div>
       <ToastContainer />
       <LoginHeading color={headingColor}>Login</LoginHeading>
-      <form onSubmit={handleLogin}>
+      <form className="user-form" onSubmit={handleLogin}>
         <label htmlFor="login">
           <InlineText>Username:</InlineText>
           <input

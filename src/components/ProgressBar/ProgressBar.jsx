@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useHydration } from "../../context/HydrationContext";
 
-import Bottle from "../Hydration/Bottle";
+import { Bottle } from "../Hydration/Bottle";
 
 import { ThemeContext } from "../../context/Theme";
 

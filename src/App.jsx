@@ -1,21 +1,21 @@
-import { useContext } from "react";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 /* Hydration */
-import HydrationForm from "./components/Hydration/HydrationForm";
-import HydrationLogs from "./components/Hydration/HydrationLogs";
-import ThirstinessLevel from "./components/Hydration/ThirstinessLevel";
+import { HydrationForm } from "./components/Hydration/HydrationForm";
+import { HydrationLogs } from "./components/Hydration/HydrationLogs";
+import { ThirstinessLevel } from "./components/Hydration/ThirstinessLevel";
 import { ProgressBar } from "./components/ProgressBar";
 
 /* User */
 import Login from "./components/User/Login";
 import Register from "./components/User/Register";
+import Greeting from "./components/User/Greeting";
 
 /* Timer */
 import Timer from "./components/Timer/Timer";
 
 /* Statistics Chart */
-import HydrationLogsPoolChart from "./components/Hydration/HydrationLogsPoolChart";
+import { HydrationLogsPoolChart } from "./components/Hydration/HydrationLogsPoolChart";
 
 /* Layout */
 import Layout from "./components/Layout";

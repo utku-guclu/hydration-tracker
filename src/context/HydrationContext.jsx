@@ -76,6 +76,7 @@ export const HydrationProvider = ({ children }) => {
       if (logPools.length > 0) {
         const statisticsData = calculateHourlyIntakeByPercentage(logPools);
         setStatistics(statisticsData);
+        console.log(`Statistics: ${JSON.stringify(statisticsData)}`);
       }
     } catch (error) {
       console.error("Error fetching statistics:", error);
@@ -331,8 +332,10 @@ export const HydrationProvider = ({ children }) => {
     const hourlyIntakePercentage = {};
 
     Object.keys(hourlyIntakeTotals).forEach((hour) => {
-      hourlyIntakePercentage[hour] =
-        ((hourlyIntakeTotals[hour] / totalIntake) * 100).toFixed(0);
+      hourlyIntakePercentage[hour] = (
+        (hourlyIntakeTotals[hour] / totalIntake) *
+        100
+      ).toFixed(0);
     });
 
     return hourlyIntakePercentage;

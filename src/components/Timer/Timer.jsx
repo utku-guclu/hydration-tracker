@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useTimer } from "../../context/TimerContext";
 
-import { styled } from "@mui/system";
 import Dialog from "../../context/Dialog";
 import SetTimer from "./SetTimer";
 
@@ -12,33 +11,12 @@ import { VscDebugRestart } from "react-icons/vsc";
 
 import { ThemeContext } from "../../context/Theme";
 
-const TimerHeading = styled("h2")(({ color }) => ({
-  color: color,
-  cursor: "pointer",
-  display: "inline",
-}));
-
-const TimerSetting = styled("div")(({ color }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: "2em",
-  marginTop: "20px",
-  backgroundColor: "var(--gray)",
-  padding: "1em",
-  borderRadius: "4px",
-  color,
-}));
-
-const TimerButtons = styled("div")(() => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const TimerDigits = styled("div")(() => ({
-  fontSize: "30px",
-}));
+import {
+  TimerHeading,
+  TimerSetting,
+  TimerDigits,
+  TimerButtons,
+} from "./Timer.style";
 
 const Timer = () => {
   const [headingColor, setHeadingColor] = useState("var(--gray)");

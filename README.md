@@ -6,18 +6,24 @@ The Hydration App is a simple application for tracking water intake, allowing us
 
 ## Table of Contents
 
-1. [Getting Started](#getting-started)
-   - [Prerequisites](#prerequisites)
-   - [Installation](#installation)
-   - [Running the App](#running-the-app)
-2. [Usage](#usage)
-   - [Logging Water Intake](#logging-water-intake)
-   - [Viewing Hydration Logs](#viewing-hydration-logs)
-   - [Updating and Deleting Logs](#updating-and-deleting-logs)
-3. [Folder Structure](#folder-structure)
-4. [Dependencies](#dependencies)
-5. [Contributing](#contributing)
-6. [License](#license)
+- [Hydration Tracker App](#hydration-tracker-app)
+  - [Overview](#overview)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+    - [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+  - [Configure the Database](#configure-the-database)
+  - [Running the App](#running-the-app)
+  - [Usage](#usage)
+    - [Prisma | Docker](#prisma--docker)
+    - [Logging Water Intake](#logging-water-intake)
+    - [Viewing Hydration Logs](#viewing-hydration-logs)
+    - [Updating and Deleting Logs](#updating-and-deleting-logs)
+  - [Folder Structure](#folder-structure)
+  - [Dependencies](#dependencies)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Getting Started
 
@@ -107,7 +113,7 @@ sudo docker-compose build
 sudo docker-compose up
 
 docker build -t <image_name>:<tag> .
-    
+
 docker stop <container_id or container_name>
 docker rm <container_id or container_name>
 
@@ -163,6 +169,8 @@ hydration-tracker/
 - **prisma**: Database toolkit for Node.js.
 - **react**: JavaScript library for building user interfaces.
 - **react-dom**: React package for working with the DOM.
+- **hydration-converter**: simple ml/cup converter.
+- **react-toggle-dark-mode**: cool toggle css animation.
 - (other dependencies coming soon...)
 
 ## Contributing

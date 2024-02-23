@@ -12,6 +12,8 @@ import InlineText from "../../context/InlineText";
 
 const RegisterHeading = styled("h2")(({ color }) => ({
   color: color,
+  backgroundColor: "var(--dark)",
+  margin: "0",
 }));
 
 const Register = () => {
@@ -55,7 +57,7 @@ const Register = () => {
     if (username && password) {
       setHeadingColor("var(--secondary-color)");
     } else {
-      setHeadingColor("#var(--gray)");
+      setHeadingColor("var(--gray)");
     }
   }, [username, password]);
 
@@ -63,7 +65,7 @@ const Register = () => {
     <div>
       <ToastContainer />
       <RegisterHeading color={headingColor}>Register</RegisterHeading>
-      <form onSubmit={handleRegister}>
+      <form className="user-form" onSubmit={handleRegister}>
         <label htmlFor="register">
           <InlineText>Username:</InlineText>
           <input

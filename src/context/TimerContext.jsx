@@ -6,8 +6,8 @@ import React, {
   useRef,
 } from "react";
 
-import timerClick from "../assets/timer-click.mp3";
-import clockAlarm from "../assets/clock-alarm.mp3";
+import timerClick from "../assets/sounds/timer-click.mp3";
+import clockAlarm from "../assets/sounds/clock-alarm.mp3";
 
 const TimerContext = createContext();
 

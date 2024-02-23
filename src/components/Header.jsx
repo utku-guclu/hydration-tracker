@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { styled } from "@mui/system";
 
 import Logout from "./User/Logout";
-import HydrationUnitLogo from "./Hydration/HydrationUnitLogo";
+import { HydrationUnitLogo } from "./Hydration/HydrationUnitLogo";
 
 /* Hooks */
 import { useUser } from "../context/UserContext";
@@ -15,9 +15,12 @@ const StyledHeader = styled("header")({
   flexDirection: "column",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "10px",
+  padding: "10px 0 0",
   backgroundColor: "var(--gray)",
   position: "relative",
+  // borderRadius: "4px",
+  borderBottomLeftRadius: 0,
+  borderBottomRightRadius: 0,
 });
 
 const StyledHeading = styled("h1")({
@@ -38,7 +41,7 @@ const StyledNav = styled("nav")({
     fontSize: "18px",
   },
   a: {
-    color: "#fff",
+    color: "var(--light)",
     textDecoration: "none",
     "&:hover": {
       color: "var(--water)",

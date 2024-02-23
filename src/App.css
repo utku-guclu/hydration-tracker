@@ -23,7 +23,7 @@ form {
   display: flex;
   flex-direction: column;
   background-color: var(--gray);
-  border-radius: 4px;
+  /* border-radius: 4px; */
   padding: 20px;
 }
 
@@ -105,9 +105,20 @@ input {
   color: var(--secondary-color);
 }
 
+.timer-input,
+.timer-button {
+  border-radius: 0 !important;
+}
+
 .timer-button:hover {
   color: var(--ocean);
   cursor: pointer;
+}
+
+/* USER */
+.user-form {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 @keyframes blink {

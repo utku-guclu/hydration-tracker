@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import React from "react";
 
 const StyledGreeting = styled("p")({
-  color: "#fff",
-  fontSize: "16px",
+  color: "#df8b46",
+  fontSize: "24px",
   fontStyle: "italic",
 });
 

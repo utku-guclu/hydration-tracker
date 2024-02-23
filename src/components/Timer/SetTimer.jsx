@@ -36,6 +36,7 @@ const SetTimer = ({ handleDialogClose, isDialogOpen }) => {
   return (
     <form onSubmit={handleSubmit}>
       <input
+        className="timer-input"
         ref={inputRef}
         min="0"
         type="number"
@@ -45,7 +46,7 @@ const SetTimer = ({ handleDialogClose, isDialogOpen }) => {
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
       />
-      <button type="submit">Set Timer</button>
+      <button className="timer-button" type="submit">Set Timer</button>
     </form>
   );
 };
