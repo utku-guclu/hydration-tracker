@@ -76,7 +76,7 @@ export const HydrationProvider = ({ children }) => {
       if (logPools.length > 0) {
         const statisticsData = calculateHourlyIntakeByPercentage(logPools);
         setStatistics(statisticsData);
-        console.log(`Statistics: ${JSON.stringify(statisticsData)}`);
+        // console.log(`Statistics: ${JSON.stringify(statisticsData)}`);
       }
     } catch (error) {
       console.error("Error fetching statistics:", error);
@@ -95,7 +95,7 @@ export const HydrationProvider = ({ children }) => {
           },
         }
       );
-      console.log("New log pool added:", response.data);
+      // console.log("New log pool added:", response.data);
     } catch (error) {
       console.error("Error adding to log pool:", error);
     }
