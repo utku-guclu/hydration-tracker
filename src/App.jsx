@@ -35,8 +35,10 @@ function App() {
   const Hydration = () => {
     return (
       <>
-        <section id="water" style={{ marginTop: "20px" }}>
+        <section id="greeting">
           {username && <Greeting username={username} />}
+        </section>
+        <section id="water-level" style={{ marginTop: "20px" }}>
           <ThirstinessLevel />
           <ProgressBar />
         </section>

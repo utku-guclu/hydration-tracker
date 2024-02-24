@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { useTimer } from "../../context/TimerContext";
 
 import Dialog from "../../context/Dialog";
@@ -10,6 +10,8 @@ import { IoPlay, IoPause } from "react-icons/io5";
 import { VscDebugRestart } from "react-icons/vsc";
 
 import { ThemeContext } from "../../context/Theme";
+
+import clockAlarm from "../../assets/sounds/clock-alarm.mp3";
 
 import {
   TimerHeading,
@@ -25,6 +27,12 @@ const Timer = () => {
 
   const { theme } = useContext(ThemeContext);
 
+  const clockAlarmRef = useRef(null);
+
+  const alarmSound = () => {
+    clockAlarmRef.current.play();
+  };
+
   const {
     time,
     timerRunning,
@@ -37,6 +45,7 @@ const Timer = () => {
   useEffect(() => {
     // Handle action when timer reaches 0 (e.g., remind to drink water)
     if (time === 0) {
+      alarmSound();
       setDrinkWater(true);
       handlePause();
     } else {
@@ -63,6 +72,7 @@ const Timer = () => {
 
   return (
     <>
+      <audio ref={clockAlarmRef} src={clockAlarm} />
       {/* TimerHeading is now clickable */}
       {!timerRunning && <Tooltip id="timer-tooltip" />}
       <TimerHeading

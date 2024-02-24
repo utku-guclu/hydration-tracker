@@ -27,7 +27,7 @@ export const Bubble = styled("div")(({ filledPercentage }) => ({
   },
 }));
 
-export const BottleContainer = styled("div")(({ filledPercentage }) => ({
+export const BottleContainer = styled("div")(({ filledPercentage, theme }) => ({
   height: "10rem",
   width: "100%",
   position: "relative",

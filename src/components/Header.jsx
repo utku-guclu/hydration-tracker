@@ -10,7 +10,7 @@ import { HydrationUnitLogo } from "./Hydration/HydrationUnitLogo";
 import { useUser } from "../context/UserContext";
 
 /* Semantic Header */
-const StyledHeader = styled("header")({
+const StyledHeader = styled("header")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
@@ -18,10 +18,7 @@ const StyledHeader = styled("header")({
   padding: "10px 0 0",
   backgroundColor: "var(--gray)",
   position: "relative",
-  // borderRadius: "4px",
-  borderBottomLeftRadius: 0,
-  borderBottomRightRadius: 0,
-});
+}));
 
 const StyledHeading = styled("h1")({
   margin: "20px 10px 10px",

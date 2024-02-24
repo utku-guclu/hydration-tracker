@@ -12,9 +12,7 @@ import { styled } from "@mui/system";
 import { createGlobalStyle } from "styled-components";
 
 const Hydration = styled("div")(({ theme }) => ({
-  color: theme.color,
-  backgroundColor: theme.backgroundColor,
-  display: "inline",
+  zIndex: -1,
 }));
 
 const GlobalStyle = createGlobalStyle`

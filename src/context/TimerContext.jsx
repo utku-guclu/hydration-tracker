@@ -1,13 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  createContext,
-  useContext,
-  useRef,
-} from "react";
-
-import timerClick from "../assets/sounds/timer-click.mp3";
-import clockAlarm from "../assets/sounds/clock-alarm.mp3";
+import React, { useState, useEffect, createContext, useContext } from "react";
 
 const TimerContext = createContext();
 
@@ -16,17 +7,6 @@ const TimerProvider = ({
   initialTime = 60 * 60,
   initialTimerRunningState = false,
 }) => {
-  const timerClickRef = useRef(null);
-  const clockAlarmRef = useRef(null);
-
-  const clickSound = () => {
-    timerClickRef.current.play();
-  };
-
-  const alarmSound = () => {
-    clockAlarmRef.current.play();
-  };
-
   // Function to get the initial time from localStorage or use the default initial time
   const getInitialTime = () => {
     const timerStorage = JSON.parse(localStorage.getItem("timerState")) || {
@@ -116,13 +96,6 @@ const TimerProvider = ({
     }
   }, []);
 
-  // Effect for alarm
-  useEffect(() => {
-    if (time === 0) {
-      alarmSound();
-    }
-  }, [time]);
-
   // Function to format time
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -139,8 +112,6 @@ const TimerProvider = ({
 
   return (
     <>
-      <audio ref={timerClickRef} src={timerClick} />
-      <audio ref={clockAlarmRef} src={clockAlarm} />
       <TimerContext.Provider
         value={{
           time,
