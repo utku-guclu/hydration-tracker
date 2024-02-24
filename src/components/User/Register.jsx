@@ -13,7 +13,8 @@ import InlineText from "../../context/InlineText";
 const RegisterHeading = styled("h2")(({ color }) => ({
   color: color,
   backgroundColor: "var(--dark)",
-  margin: "10px auto",
+  margin: "0",
+  padding: "10px",
 }));
 
 const Register = () => {
