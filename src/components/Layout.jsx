@@ -45,7 +45,9 @@ const Layout = () => {
           sunColor="var(--water)"
         />
       </Header>
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
       <Footer />
     </>
   );

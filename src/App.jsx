@@ -34,7 +34,7 @@ function App() {
 
   const Hydration = () => {
     return (
-      <main>
+      <>
         <section id="water" style={{ marginTop: "20px" }}>
           {username && <Greeting username={username} />}
           <ThirstinessLevel />
@@ -53,7 +53,7 @@ function App() {
         >
           <HydrationLogsPoolChart />
         </section>
-      </main>
+      </>
     );
   };
 

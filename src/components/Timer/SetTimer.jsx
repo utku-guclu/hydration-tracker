@@ -34,8 +34,9 @@ const SetTimer = ({ handleDialogClose, isDialogOpen }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ padding: 0 }}>
       <input
+        style={{ backgroundColor: "var(--gray)", paddingLeft: "5px" }}
         className="timer-input"
         ref={inputRef}
         min="0"
@@ -46,7 +47,9 @@ const SetTimer = ({ handleDialogClose, isDialogOpen }) => {
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
       />
-      <button className="timer-button" type="submit">Set Timer</button>
+      <button className="timer-button" type="submit">
+        Set Timer
+      </button>
     </form>
   );
 };

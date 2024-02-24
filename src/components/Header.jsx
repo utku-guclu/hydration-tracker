@@ -24,7 +24,7 @@ const StyledHeader = styled("header")({
 });
 
 const StyledHeading = styled("h1")({
-  marginBottom: 0,
+  margin: "20px 10px 10px",
   color: "var(--ocean)",
 });
 

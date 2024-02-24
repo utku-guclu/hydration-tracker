@@ -15,6 +15,8 @@ function HydrationUpdateForm({ log, onUpdate, isDialogOpen }) {
 
   const inputRef = useRef();
 
+  const placeholderText = `Intake ${unit}`;
+
   useEffect(() => {
     inputRef.current.focus();
   }, [isDialogOpen]);
@@ -46,10 +48,13 @@ function HydrationUpdateForm({ log, onUpdate, isDialogOpen }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ margin: 0 }}>
-      <label htmlFor="updatedIntake">
-        <span>Intake {unit}:</span>
+    <form onSubmit={handleSubmit} style={{ margin: 0, padding: 0 }}>
+      <label
+        htmlFor="updatedIntake"
+        style={{ backgroundColor: "var(--dark)", width: "100%", margin: 0 }}
+      >
         <input
+          style={{ backgroundColor: "var(--gray)", paddingLeft: "5px" }}
           ref={inputRef}
           type="number"
           min="0"
@@ -59,10 +64,11 @@ function HydrationUpdateForm({ log, onUpdate, isDialogOpen }) {
           onChange={handleChange}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
+          placeholder={placeholderText}
         />
       </label>
       <button
-        style={{ width: "100%", marginTop: "6px" }}
+        style={{ width: "100%", margin: 0 }}
         disabled={updatedIntake === 0 || updatedIntake === ""}
       >
         Update Log

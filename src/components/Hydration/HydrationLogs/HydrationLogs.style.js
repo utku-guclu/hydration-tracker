@@ -55,5 +55,5 @@ export const LogButtons = styled("div")(() => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  gap: ".5em",
+  gap: "1em",
 }));

@@ -22,6 +22,8 @@ export const TimerButtons = styled("div")(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  gap: "1em",
+  fontSize: "20px",
 }));
 
 export const TimerDigits = styled("div")(() => ({

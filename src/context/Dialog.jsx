@@ -30,13 +30,14 @@ function Dialog({ visible, onClose, children }) {
       style={{
         display: visible ? "flex" : "none",
         position: "fixed",
-        border: "4px solid var(--main-color)",
+        border: "none",
         boxShadow: "0 0 10px 5px var(--main-color)",
         flexDirection: "column",
         alignItems: "center",
         top: "50%",
         bottom: "50%",
         backgroundColor: "rgba(33,33,33, 1)",
+        zIndex: 100,
       }}
       ref={dialogRef}
     >

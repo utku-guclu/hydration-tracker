@@ -13,7 +13,7 @@ import InlineText from "../../context/InlineText";
 const LoginHeading = styled("h2")(({ color }) => ({
   color,
   backgroundColor: "var(--dark)",
-  margin: "0",
+  margin: "10px auto",
 }));
 
 const Login = () => {

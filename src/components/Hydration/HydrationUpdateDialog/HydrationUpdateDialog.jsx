@@ -17,7 +17,7 @@ function HydrationUpdateDialog({ log, onUpdate, onCancel }) {
 
   return (
     <Dialog visible={visible} onClose={handleClose}>
-      <HydrationUpdateHeading>Update Hydration Log</HydrationUpdateHeading>
+      <HydrationUpdateHeading>Update Log</HydrationUpdateHeading>
       <HydrationUpdateForm
         log={log}
         onUpdate={onUpdate}
