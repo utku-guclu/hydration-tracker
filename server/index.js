@@ -1,35 +1,25 @@
 require("dotenv").config();
 
 const express = require("express");
+
+/* app */
+const app = express();
+
 const cors = require("cors");
 const helmet = require("helmet");
-const { PrismaClient } = require("@prisma/client");
-
-/* controllers */
-const userController = require("./controllers/userController");
-const authController = require("./controllers/authController");
-const hydrationLogController = require("./controllers/hydrationLogController");
 
 /* routers */
 const authRoutes = require("./routes/authRoutes");
 const hydrationRoutes = require("./routes/hydrationRoutes");
 const userRoutes = require("./routes/userRoutes");
 
-/* database */
-const prisma = new PrismaClient();
-
-/* app */
-const app = express();
-
+/* WELCOME */
 app.set("view engine", "ejs");
 app.set("views", "views");
 app.use(express.static("public"));
 
 /* port */
 const PORT = process.env.PORT || 3000;
-
-/* secret-key */
-const secretKey = process.env.JWT_SECRET_KEY;
 
 /* helmet configuration with various security options */
 app.use(
@@ -92,6 +82,10 @@ app.use(express.json());
 /* welcome */
 app.get("/", (req, res) => {
   res.render("welcome");
+});
+
+app.get("/api", (req, res) => {
+  res.json({ app: "Hydration Tracker 2024" });
 });
 /* welcome */
 

@@ -5,13 +5,14 @@ export const Bubble = styled("div")(({ filledPercentage }) => ({
   height: "30px",
   position: "absolute",
   borderRadius: "50%",
-  top: `calc(-${filledPercentage}% + 155px)`, // Adjusted top position based on filledPercentage
+  top: `calc(-${filledPercentage}% + 155px)`,
   right: "calc(50% - 15px)",
   backgroundColor: "rgba(255, 255, 255, 0.7)",
   boxShadow: `${
     filledPercentage === 100 ? "0 0 10px rgba(255, 255, 255, 0.7)" : ""
   }`,
-  animation: "float 3s ease-in-out infinite",
+  animation: "riseBubble 3s ease-in-out, float 3s ease-in-out infinite",
+  transform: `translateY(calc(-${filledPercentage}%)) rotate(0)`,
   zIndex: "1",
   cursor: "pointer",
   "@keyframes float": {
@@ -23,6 +24,14 @@ export const Bubble = styled("div")(({ filledPercentage }) => ({
     },
     "100%": {
       transform: "translateY(-5px)",
+    },
+  },
+  "@keyframes riseBubble": {
+    "0%": {
+      top: `calc(-${0}% + 155px)`,
+    },
+    "100%": {
+      top: `calc(-${filledPercentage}% + 155px)`,
     },
   },
 }));
