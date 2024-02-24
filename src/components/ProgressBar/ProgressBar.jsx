@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useHydration } from "../../context/HydrationContext";
 
 import { Bottle } from "../Hydration/Bottle";
@@ -6,6 +6,8 @@ import { Bottle } from "../Hydration/Bottle";
 import { ThemeContext } from "../../context/Theme";
 
 import { styled } from "@mui/system";
+
+import goal from "../../assets/sounds/goal.mp3";
 
 const ProgressInfoLabel = styled("p")(({ color }) => ({
   color: color,
@@ -15,8 +17,24 @@ function ProgressBar() {
   const { convertedTotal, unit, convertedDailyGoal } = useHydration();
   const { theme } = useContext(ThemeContext);
 
+  const goalState =
+    convertedTotal !== 0 && convertedTotal >= convertedDailyGoal;
+
+  const goalRef = useRef(null);
+
+  const goalSound = () => {
+    goalRef.current.play();
+  };
+
+  useEffect(() => {
+    if (goalState) {
+      goalSound();
+    }
+  }, [goalState]);
+
   return (
     <>
+      <audio ref={goalRef} src={goal} />
       <div style={{ marginTop: "10px" }}>
         {/* <progress value={convertedTotal} max={convertedDailyGoal}></progress> */}
         <Bottle
@@ -30,7 +48,7 @@ function ProgressBar() {
       </div>
 
       {/* Check if max goal is reached and show a prompt */}
-      {convertedTotal !== 0 && convertedTotal >= convertedDailyGoal && (
+      {goalState && (
         <p
           style={{
             color: "var(--secondary-color)",
