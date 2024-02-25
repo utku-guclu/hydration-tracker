@@ -64,7 +64,7 @@ const ThemeProvider = ({ children }) => {
       return false;
     }
   });
-  const [lg, setLg] = useState(false);
+  const [lg, setLg] = useState(window.innerWidth > 600);
 
   useEffect(() => {
     const handleResize = () => {
