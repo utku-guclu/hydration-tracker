@@ -51,8 +51,6 @@ export const HydrationProvider = ({ children }) => {
   const { timeDifference } = useTimer();
   const { theme, isDarkTheme } = useContext(ThemeContext);
 
-  const { isDarkTheme } = useContext(ThemeContext);
-
   /* constants */
   const unit = isCup ? "(cup)" : "(ml)";
   const convertedTotal = isCup

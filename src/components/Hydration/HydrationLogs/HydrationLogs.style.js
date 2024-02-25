@@ -1,9 +1,8 @@
 import { styled } from "@mui/system";
 
-export const WaterIntakeLabel = styled("p")(({ isDarkTheme }) => ({
-  color: window.innerWidth > 600 ? "var(--dark)" : "inherit",
+export const WaterIntakeLabel = styled("p")(({ color }) => ({
+  color,
   cursor: "pointer",
-  fontWeight: isDarkTheme ? "unset" : 600,
 }));
 
 export const WaterInfoLabel = styled("p")(({ color }) => ({
