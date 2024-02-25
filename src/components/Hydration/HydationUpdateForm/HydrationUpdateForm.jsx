@@ -2,10 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 
 import { useHydration } from "../../../context/HydrationContext";
 
+import { useUser } from "../../../context/UserContext";
+
 import { mlToCups } from "hydration-converter";
 
+import { updateHydrationLog } from "../../../services/hydrationService";
+
 function HydrationUpdateForm({ log, onUpdate, isDialogOpen }) {
-  const { updateHydrationLog, unit, isCup } = useHydration();
+  const { unit, isCup, setLogs, fetchHydrationLogs } = useHydration();
+
+  const { token } = useUser();
 
   let { intake, timestamp } = log;
 
@@ -22,7 +28,14 @@ function HydrationUpdateForm({ log, onUpdate, isDialogOpen }) {
   }, [isDialogOpen]);
 
   const handleUpdate = () => {
-    updateHydrationLog(timestamp, updatedIntake);
+    updateHydrationLog(
+      token,
+      timestamp,
+      updatedIntake,
+      setLogs,
+      fetchHydrationLogs,
+      isCup
+    );
     onUpdate();
   };
 

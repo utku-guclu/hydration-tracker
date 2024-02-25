@@ -1,8 +1,10 @@
 import { useEffect, useState, useRef } from "react";
-import styled from "@emotion/styled";
 
 import { useHydration } from "../../../context/HydrationContext";
 import { useTimer } from "../../../context/TimerContext";
+import { useUser } from "../../../context/UserContext";
+
+import { addHydrationLog } from "../../../services/hydrationService";
 
 import { cupsToMl } from "hydration-converter";
 
@@ -13,8 +15,10 @@ import { Bubble, BottleContainer } from "./Bottle.style";
 function Bottle({ convertedTotal, convertedDailyGoal }) {
   const [filledPercentage, setFilledPercentage] = useState(0);
 
-  const { addHydrationLog, isCup } = useHydration();
   const { handleReset, handleStart } = useTimer();
+  const { isCup, setRecentIntake, setLogs, updateCall, dailyGoal } =
+    useHydration();
+  const { token } = useUser();
 
   const audioRef = useRef(null);
 
@@ -33,7 +37,15 @@ function Bottle({ convertedTotal, convertedDailyGoal }) {
   const handleBubbleClick = () => {
     // When the bubble is clicked, add 1 cup
     const waterAmount = isCup ? 1 : cupsToMl(1);
-    addHydrationLog(waterAmount);
+    addHydrationLog(
+      token,
+      waterAmount,
+      dailyGoal,
+      isCup,
+      setRecentIntake,
+      setLogs,
+      updateCall
+    );
     clickSound();
     handleReset();
     handleStart();

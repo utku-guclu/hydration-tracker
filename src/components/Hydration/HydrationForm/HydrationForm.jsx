@@ -3,17 +3,23 @@ import React, { useEffect, useState, useContext } from "react";
 import { useHydration } from "../../../context/HydrationContext";
 import { useTimer } from "../../../context/TimerContext";
 import { ThemeContext } from "../../../context/Theme";
+import { useUser } from "../../../context/UserContext";
 
 import { styled } from "@mui/system";
 import MaxGoalInput from "../MaxGoalnput/MaxGoalInput";
+
+import { addHydrationLog } from "../../../services/hydrationService";
 
 const WaterIntakeHeading = styled("h2")(({ color }) => ({
   color,
 }));
 
 function HydrationForm() {
-  const { addHydrationLog, unit } = useHydration();
+  const { token } = useUser();
+  const { unit, isCup, setRecentIntake, setLogs, updateCall, dailyGoal } =
+    useHydration();
   const { handleStart, handleReset } = useTimer();
+
   const [headingColor, setHeadingColor] = useState("var(--gray)");
   const [waterIntakeLocal, setWaterIntakeLocal] = useState(0);
 
@@ -50,13 +56,15 @@ function HydrationForm() {
     setWaterIntakeLocal(0);
     if (waterIntakeLocal <= 0 || waterIntakeLocal === "") return;
 
-    try {
-      await addHydrationLog(parseInt(waterIntakeLocal, 10));
-      console.log("Hydration log added successfully");
-    } catch (error) {
-      console.error("Failed to add hydration log", error);
-    }
-    console.log(`Submitted water intake: ${waterIntakeLocal} ${unit}`);
+    addHydrationLog(
+      token,
+      waterIntakeLocal,
+      dailyGoal,
+      isCup,
+      setRecentIntake,
+      setLogs,
+      updateCall
+    );
   };
 
   return (

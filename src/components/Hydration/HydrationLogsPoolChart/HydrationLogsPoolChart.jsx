@@ -16,11 +16,8 @@ const StatisticHeading = styled("h2")(({ color }) => ({
   cursor: "pointer",
 }));
 
-const StatisticLabel = styled("p")(({ isDarkTheme }) => ({
-  color:
-    !isDarkTheme && window.innerWidth < 600
-      ? "rgb(139 139 139 / 87%)"
-      : "var(--dark)",
+const StatisticLabel = styled("p")(({ color }) => ({
+  color,
   fontWeight: "400",
   fontSize: "12px",
   fontStyle: "italic",
@@ -31,7 +28,7 @@ export default function SimpleCharts() {
 
   const { statistics, resetLogPool } = useHydration();
   const { token } = useUser();
-  const { isDarkTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   const percentages = Object.values(statistics);
   const hours = Object.keys(statistics).map((hour) => {
@@ -53,13 +50,11 @@ export default function SimpleCharts() {
 
   useEffect(() => {
     if (isStatistics) {
-      !isDarkTheme && window.innerWidth < 600
-        ? setHeadingColor("#02B2AF")
-        : setHeadingColor("var(--dark)");
+      setHeadingColor(theme.statistics);
     } else {
-      setHeadingColor("var(--gray)");
+      setHeadingColor(theme.idle);
     }
-  }, [isStatistics, isDarkTheme, window.innerWidth]);
+  }, [isStatistics, theme.statistics]);
 
   return (
     token && (
@@ -68,7 +63,7 @@ export default function SimpleCharts() {
         <StatisticHeading
           data-tooltip-id="statistics-tooltip"
           data-tooltip-content="Double click to reset statistics!"
-          onDoubleClick={resetLogPool}
+          onDoubleClick={() => resetLogPool()}
           color={headingColor}
         >
           Statistics
@@ -94,7 +89,7 @@ export default function SimpleCharts() {
             height={300}
           />
         ) : (
-          <StatisticLabel isDarkTheme={isDarkTheme}>
+          <StatisticLabel color={theme.secondaryStatistics}>
             No statistics yet!
           </StatisticLabel>
         )}

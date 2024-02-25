@@ -25,7 +25,7 @@ const Timer = () => {
   const [drinkWater, setDrinkWater] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to control dialog visibility
 
-  const { theme, isDarkTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   const clockAlarmRef = useRef(null);
 
@@ -55,13 +55,11 @@ const Timer = () => {
 
   useEffect(() => {
     if (timerRunning) {
-      isDarkTheme || window.innerWidth > 600
-        ? setHeadingColor("var(--dark)")
-        : setHeadingColor("var(--ocean)");
+      setHeadingColor(theme.color);
     } else {
       setHeadingColor("var(--gray)");
     }
-  }, [timerRunning, window.innerWidth]);
+  }, [timerRunning, theme.color]);
 
   // Function to handle opening the dialog
   const handleDialogOpen = () => {
@@ -104,7 +102,7 @@ const Timer = () => {
         </TimerButtons>
       </TimerSetting>
       {drinkWater && (
-        <p style={{ color: "var(--water)" }}>It's time to drink water!</p>
+        <p style={{ color: theme.color }}>It's time to drink water!</p>
       )}
 
       {/* Dialog component, conditionally rendered based on isDialogOpen state */}

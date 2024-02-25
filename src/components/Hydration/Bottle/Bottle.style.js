@@ -8,7 +8,7 @@ export const Bubble = styled("div")(({ filledPercentage, theme }) => {
 
   return {
     transition: "all 1s ease-out",
-    display: !isDarkTheme ? "inherit" : "none",
+    display: isDarkTheme ? "inherit" : "none",
     width: "30px",
     height: "30px",
     position: "absolute",
@@ -53,11 +53,11 @@ export const BottleContainer = styled("div")(({ filledPercentage, theme }) => {
   return {
     width: "100%",
     transition: "all 1s ease-out",
-    position: !isDarkTheme ? "relative" : "absolute",
-    bottom: !isDarkTheme ? "unset" : 0,
-    left: !isDarkTheme ? "unset" : 0,
-    height: !isDarkTheme ? "10rem" : "100%",
-    zIndex: !isDarkTheme ? "unset" : -1,
+    position: isDarkTheme ? "relative" : "absolute",
+    bottom: isDarkTheme ? "unset" : 0,
+    left: isDarkTheme ? "unset" : 0,
+    height: isDarkTheme ? "10rem" : "100%",
+    zIndex: isDarkTheme ? "unset" : -1,
     outline: "0",
     overflow: "hidden",
     backgroundColor: "var(--water)",

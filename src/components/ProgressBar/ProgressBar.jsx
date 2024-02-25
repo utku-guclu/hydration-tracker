@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useHydration } from "../../context/HydrationContext";
 
 import { Bottle } from "../Hydration/Bottle";
@@ -7,12 +7,16 @@ import { styled } from "@mui/system";
 
 import goal from "../../assets/sounds/goal.mp3";
 
+import { ThemeContext } from "../../context/Theme";
+
 const ProgressInfoLabel = styled("p")(({ color }) => ({
   color: window.innerWidth > 600 ? "var(--dark)" : "inherit",
 }));
 
 function ProgressBar() {
   const { convertedTotal, unit, convertedDailyGoal } = useHydration();
+
+  const { theme } = useContext(ThemeContext);
 
   const goalState =
     convertedTotal !== 0 && convertedTotal >= convertedDailyGoal;
@@ -45,7 +49,7 @@ function ProgressBar() {
       {goalState && (
         <p
           style={{
-            color: "var(--secondary-color)",
+            color: theme.label,
             textSshadow: "1px 1px 1px var(--dark)",
           }}
         >

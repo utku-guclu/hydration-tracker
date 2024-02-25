@@ -4,11 +4,18 @@ import HydrationUpdateDialog from "../HydrationUpdateDialog/HydrationUpdateDialo
 
 import { useHydration } from "../../../context/HydrationContext";
 
+import { useUser } from "../../../context/UserContext";
+
 import { mlToCups } from "hydration-converter";
 
 import { Tooltip } from "react-tooltip";
 
 import { ThemeContext } from "../../../context/Theme";
+
+import {
+  deleteHydrationLog,
+  resetLogs,
+} from "../../../services/hydrationService";
 
 /* Circular indeterminate */
 import CircularProgress from "@mui/material/CircularProgress";
@@ -35,23 +42,24 @@ function HydrationLogs() {
   const [selectedLog, setSelectedLog] = useState(null);
   const {
     logs,
+    setLogs,
     isLoadingLogs,
     fetchHydrationLogs,
-    deleteHydrationLog,
     isCup,
     convertedTotal,
     unit,
-    resetLogs,
   } = useHydration();
 
-  const { theme, isDarkTheme } = useContext(ThemeContext);
+  const { token, userId } = useUser();
+
+  const { theme } = useContext(ThemeContext);
 
   const handleReset = () => {
-    resetLogs();
+    resetLogs(token, userId, setLogs);
   };
 
   const handleDelete = (timestamp) => {
-    deleteHydrationLog(timestamp);
+    deleteHydrationLog(token, timestamp, setLogs, fetchHydrationLogs);
   };
 
   const handleUpdate = (log) => {
@@ -70,11 +78,9 @@ function HydrationLogs() {
     if (logs.length === 0) {
       setHeadingColor("var(--gray)");
     } else {
-      window.innerWidth > 600
-        ? setHeadingColor("var(--dark)")
-        : setHeadingColor("var(--ocean)");
+      setHeadingColor(theme.color);
     }
-  }, [logs, window.innerWidth]);
+  }, [logs, theme.color]);
 
   return (
     <>
@@ -87,17 +93,19 @@ function HydrationLogs() {
           data-tooltip-place="top"
           onDoubleClick={handleReset}
           color={headingColor}
-          isDarkTheme={isDarkTheme}
         >
           Hydration Logs
         </LogsHeading>
 
         {logs.length > 0 ? (
-          <WaterIntakeLabel className="water-intake-label" theme={theme}>
+          <WaterIntakeLabel
+            className="water-intake-label"
+            color={theme.hydrated}
+          >
             Total Water Intake:{" "}
             <span
               style={{
-                color: window.innerWidth > 600 ? "var(--dark)" : "inherit",
+                color: theme.secondaryStatistics,
               }}
               className="italic water-info"
             >
@@ -105,7 +113,7 @@ function HydrationLogs() {
             </span>
           </WaterIntakeLabel>
         ) : (
-          <WaterInfoLabel isDarkTheme={isDarkTheme}>
+          <WaterInfoLabel color={theme.secondaryStatistics}>
             No logs yet!
           </WaterInfoLabel>
         )}
@@ -122,7 +130,9 @@ function HydrationLogs() {
                 <TableRow key={log.timestamp}>
                   <LogsDetails>
                     <IntakeCol>
-                      <span style={{ color: "var(--ocean)" }}>INTAKE</span>
+                      <span style={{ color: theme.secondaryLabel }}>
+                        INTAKE
+                      </span>
                       <span style={{ color: theme.text }}>
                         {` ${isCup ? mlToCups(log.intake) : log.intake}  ${
                           isCup ? "(cup)" : "(ml)"
@@ -131,7 +141,7 @@ function HydrationLogs() {
                     </IntakeCol>
                     {/* <span>|</span> */}
                     <TimeCol>
-                      <span style={{ color: "var(--ocean)" }}>TIME</span>
+                      <span style={{ color: theme.secondaryLabel }}>TIME</span>
                       <span style={{ color: theme.text }}>
                         {new Date(log.timestamp)
                           .toLocaleString()

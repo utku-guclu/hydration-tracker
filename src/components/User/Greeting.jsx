@@ -1,15 +1,19 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useContext } from "react";
 
-const StyledGreeting = styled("p")({
-  color: "#df8b46",
+import { ThemeContext } from "../../context/Theme";
+
+const StyledGreeting = styled("p")(({color}) => ({
+  color,
   fontSize: "24px",
   fontStyle: "italic",
-});
+}));
 
 const Greeting = ({ username }) => {
   const currentHour = new Date().getHours();
   let greeting;
+
+  const { theme } = useContext(ThemeContext);
 
   if (currentHour >= 5 && currentHour < 12) {
     greeting = "Good morning";
@@ -22,7 +26,7 @@ const Greeting = ({ username }) => {
   }
 
   return (
-    <StyledGreeting>
+    <StyledGreeting color={theme.greeting}>
       {greeting}, {username}!
     </StyledGreeting>
   );

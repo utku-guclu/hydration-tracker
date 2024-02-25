@@ -1,7 +1,7 @@
 import { styled } from "@mui/system";
 
 export const TimerHeading = styled("h2")(({ color }) => ({
-  color: color,
+  color,
   cursor: "pointer",
   display: "inline",
 }));
@@ -14,7 +14,6 @@ export const TimerSetting = styled("div")(({ color }) => ({
   marginTop: "20px",
   backgroundColor: "var(--gray)",
   padding: "1em",
-  // borderRadius: "4px",
   color,
 }));
 
