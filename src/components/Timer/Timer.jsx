@@ -25,7 +25,7 @@ const Timer = () => {
   const [drinkWater, setDrinkWater] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to control dialog visibility
 
-  const { theme } = useContext(ThemeContext);
+  const { theme, isDarkTheme } = useContext(ThemeContext);
 
   const clockAlarmRef = useRef(null);
 

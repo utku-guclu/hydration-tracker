@@ -22,6 +22,8 @@ import {
   generateHydrationImage,
 } from "../services/hydrationService";
 
+import { ThemeContext } from "./Theme";
+
 const HydrationContext = createContext();
 
 export const HydrationProvider = ({ children }) => {
@@ -48,6 +50,8 @@ export const HydrationProvider = ({ children }) => {
   const { token } = useUser();
   const { timeDifference } = useTimer();
   const { theme, isDarkTheme } = useContext(ThemeContext);
+
+  const { isDarkTheme } = useContext(ThemeContext);
 
   /* constants */
   const unit = isCup ? "(cup)" : "(ml)";

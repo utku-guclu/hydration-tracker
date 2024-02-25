@@ -42,7 +42,7 @@ const Layout = () => {
             top: "10px",
             zIndex: "100",
           }}
-          checked={isDarkTheme}
+          checked={!isDarkTheme}
           onChange={toggleTheme}
           size={20}
           sunColor="var(--water)"
