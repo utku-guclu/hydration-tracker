@@ -24,6 +24,13 @@ import {
 
 import { ThemeContext } from "./Theme";
 
+import {
+  resetPool,
+  fetchLogs,
+  fetchLogPool,
+  addToLogPool,
+} from "../services/hydrationService";
+
 const HydrationContext = createContext();
 
 export const HydrationProvider = ({ children }) => {
