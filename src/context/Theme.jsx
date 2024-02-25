@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 
 // Define light and dark themes
 const darkTheme = {
@@ -51,7 +51,12 @@ export const ThemeContext = createContext({
 
 const ThemeProvider = ({ children }) => {
   const [isDarkTheme, setIsDarkTheme] = useState(() => {
+    // activate light theme on larger screens
     try {
+      if (window.innerWidth > 600) {
+        return false;
+      }
+
       const storedTheme = localStorage.getItem("theme");
       return storedTheme === "dark";
     } catch (error) {
@@ -80,15 +85,20 @@ const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     // switch to light theme automatically
-    if (lg) {
-      if (isDarkTheme) {
-        setIsDarkTheme(false);
-      }
+    if (lg && isDarkTheme) {
+      setIsDarkTheme(false);
     }
   }, [lg, isDarkTheme]);
 
+  // toggle only on small screens
+  const checkToggle = useCallback(() => {
+    if (!lg) {
+      setIsDarkTheme((prev) => !prev);
+    }
+  }, [lg]);
+
   const toggleTheme = () => {
-    setIsDarkTheme((prev) => !prev);
+    checkToggle();
     // Save theme choice to local storage
     localStorage.setItem("theme", !isDarkTheme ? "dark" : "light");
   };
