@@ -6,8 +6,6 @@ import { useHydration } from "../../../context/HydrationContext";
 
 import { mlToCups } from "hydration-converter";
 
-import { styled } from "@mui/system";
-
 import { Tooltip } from "react-tooltip";
 
 import { ThemeContext } from "../../../context/Theme";
@@ -46,7 +44,7 @@ function HydrationLogs() {
     resetLogs,
   } = useHydration();
 
-  const { theme } = useContext(ThemeContext);
+  const { theme, isDarkTheme } = useContext(ThemeContext);
 
   const handleReset = () => {
     resetLogs();
@@ -72,34 +70,44 @@ function HydrationLogs() {
     if (logs.length === 0) {
       setHeadingColor("var(--gray)");
     } else {
-      setHeadingColor("var(--ocean)");
+      window.innerWidth > 600
+        ? setHeadingColor("var(--dark)")
+        : setHeadingColor("var(--ocean)");
     }
-  }, [logs]);
+  }, [logs, window.innerWidth]);
 
   return (
     <>
       <div>
         {logs.length > 0 && <Tooltip id="logs-heading" />}
         <LogsHeading
+          className="hydration-logs-heading"
           data-tooltip-id="logs-heading"
           data-tooltip-content="Double click to reset logs!"
           data-tooltip-place="top"
           onDoubleClick={handleReset}
           color={headingColor}
-          theme={theme}
+          isDarkTheme={isDarkTheme}
         >
           Hydration Logs
         </LogsHeading>
 
         {logs.length > 0 ? (
-          <WaterIntakeLabel color={theme.color}>
-            Total Water Intake:{""}
-            <span className="italic water-info">
+          <WaterIntakeLabel className="water-intake-label" theme={theme}>
+            Total Water Intake:{" "}
+            <span
+              style={{
+                color: window.innerWidth > 600 ? "var(--dark)" : "inherit",
+              }}
+              className="italic water-info"
+            >
               {convertedTotal} {unit}
             </span>
           </WaterIntakeLabel>
         ) : (
-          <WaterInfoLabel>No logs yet!</WaterInfoLabel>
+          <WaterInfoLabel isDarkTheme={isDarkTheme}>
+            No logs yet!
+          </WaterInfoLabel>
         )}
         {logs.length > 0 && (
           <LogsTable>

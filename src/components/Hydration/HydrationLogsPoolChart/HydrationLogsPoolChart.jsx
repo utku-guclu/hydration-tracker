@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { BarChart } from "@mui/x-charts/BarChart";
 import { useHydration } from "../../../context/HydrationContext";
@@ -8,24 +8,30 @@ import { Tooltip } from "react-tooltip";
 
 import styled from "@emotion/styled";
 
+import { ThemeContext } from "../../../context/Theme";
+
 const StatisticHeading = styled("h2")(({ color }) => ({
-  color: color,
+  color,
   display: "inline",
   cursor: "pointer",
 }));
 
-const StatisticLabel = styled("p")(({ color }) => ({
-  color: "rgb(139 139 139 / 87%)",
+const StatisticLabel = styled("p")(({ isDarkTheme }) => ({
+  color:
+    !isDarkTheme && window.innerWidth < 600
+      ? "rgb(139 139 139 / 87%)"
+      : "var(--dark)",
   fontWeight: "400",
   fontSize: "12px",
   fontStyle: "italic",
 }));
 
 export default function SimpleCharts() {
+  const [headingColor, setHeadingColor] = useState();
+
   const { statistics, resetLogPool } = useHydration();
   const { token } = useUser();
-  // console.log(statistics);
-  const [headingColor, setHeadingColor] = useState();
+  const { isDarkTheme } = useContext(ThemeContext);
 
   const percentages = Object.values(statistics);
   const hours = Object.keys(statistics).map((hour) => {
@@ -47,11 +53,13 @@ export default function SimpleCharts() {
 
   useEffect(() => {
     if (isStatistics) {
-      setHeadingColor("#02B2AF");
+      !isDarkTheme && window.innerWidth < 600
+        ? setHeadingColor("#02B2AF")
+        : setHeadingColor("var(--dark)");
     } else {
       setHeadingColor("var(--gray)");
     }
-  }, [isStatistics]);
+  }, [isStatistics, isDarkTheme, window.innerWidth]);
 
   return (
     token && (
@@ -86,7 +94,9 @@ export default function SimpleCharts() {
             height={300}
           />
         ) : (
-          <StatisticLabel>No statistics yet!</StatisticLabel>
+          <StatisticLabel isDarkTheme={isDarkTheme}>
+            No statistics yet!
+          </StatisticLabel>
         )}
       </>
     )

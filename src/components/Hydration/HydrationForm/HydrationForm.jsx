@@ -61,7 +61,7 @@ function HydrationForm() {
 
   return (
     <>
-      <WaterIntakeHeading color={headingColor}>
+      <WaterIntakeHeading className="water-intake-heading" color={headingColor}>
         Log Your Water Intake
       </WaterIntakeHeading>
       <form id="log-submit-form" onSubmit={handleFormSubmit}>

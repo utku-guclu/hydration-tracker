@@ -75,6 +75,7 @@ const Login = () => {
             value={username}
             autoComplete="username"
             onChange={handleUserChange}
+            placeholder="John"
             required
           />
         </label>
@@ -85,6 +86,7 @@ const Login = () => {
             id="password"
             name="password"
             type="password"
+            placeholder="*****"
             value={password}
             autoComplete="current-password"
             onChange={handlePassChange}

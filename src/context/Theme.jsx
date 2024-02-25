@@ -5,14 +5,14 @@ const lightTheme = {
   backgroundColor: "var(--dark)",
   color: "var(--light)",
   text: "var(--light)",
-  // secondary: "var(--secondary-color)",
+  secondaryBackgroundColor: "var(--dark)",
 };
 
 const darkTheme = {
   backgroundColor: "var(--light)",
   color: "var(--dark)",
   text: "var(--light)",
-  // secondary: "var(--secondary-color)",
+  secondaryBackgroundColor: "var(--water)",
 };
 
 export const ThemeContext = createContext({

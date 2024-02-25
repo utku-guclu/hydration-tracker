@@ -25,7 +25,7 @@ const Timer = () => {
   const [drinkWater, setDrinkWater] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to control dialog visibility
 
-  const { theme } = useContext(ThemeContext);
+  const { theme, isDarkTheme } = useContext(ThemeContext);
 
   const clockAlarmRef = useRef(null);
 
@@ -55,11 +55,13 @@ const Timer = () => {
 
   useEffect(() => {
     if (timerRunning) {
-      setHeadingColor("var(--ocean)");
+      isDarkTheme || window.innerWidth > 600
+        ? setHeadingColor("var(--dark)")
+        : setHeadingColor("var(--ocean)");
     } else {
       setHeadingColor("var(--gray)");
     }
-  }, [timerRunning]);
+  }, [timerRunning, window.innerWidth]);
 
   // Function to handle opening the dialog
   const handleDialogOpen = () => {
@@ -78,7 +80,7 @@ const Timer = () => {
       <TimerHeading
         data-tooltip-id="timer-tooltip"
         data-tooltip-content="Set Timer!"
-        className="timer"
+        className="timer-heading"
         color={headingColor}
         onClick={handleDialogOpen} // Open dialog on click
       >

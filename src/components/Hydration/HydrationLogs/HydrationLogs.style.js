@@ -1,19 +1,23 @@
 import { styled } from "@mui/system";
 
-export const WaterIntakeLabel = styled("p")(({ color }) => ({
-  color,
+export const WaterIntakeLabel = styled("p")(({ isDarkTheme }) => ({
+  color: window.innerWidth > 600 ? "var(--dark)" : "inherit",
   cursor: "pointer",
+  fontWeight: isDarkTheme ? "unset" : 600,
 }));
 
-export const WaterInfoLabel = styled("p")(({ color }) => ({
-  color: "rgb(139 139 139 / 87%)",
+export const WaterInfoLabel = styled("p")(({ isDarkTheme }) => ({
+  color:
+    window.innerWidth < 600 && !isDarkTheme
+      ? "rgb(139 139 139 / 87%)"
+      : "var(--dark)",
   fontWeight: "400",
   fontSize: "12px",
   fontStyle: "italic",
 }));
 
-export const LogsHeading = styled("h2")(({ color, theme }) => ({
-  color: color,
+export const LogsHeading = styled("h2")(({ color }) => ({
+  color,
   cursor: "pointer",
 }));
 

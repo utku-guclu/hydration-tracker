@@ -5,6 +5,8 @@ const ThirstinessLevelText = styled("div")(({ color }) => ({
   color,
   textAlign: "center",
   fontStyle: "italic",
+  fontSize: "20px",
+  fontWeight: 600,
 }));
 
 function ThirstinessLevel() {

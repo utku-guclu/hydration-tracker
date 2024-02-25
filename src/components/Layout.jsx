@@ -18,7 +18,7 @@ const Hydration = styled("div")(({ theme }) => ({
 const GlobalStyle = createGlobalStyle`
   body {
     color: ${(props) => props.theme.color};
-    background-color: ${(props) => props.theme.backgroundColor};
+    background-color: ${(props) => props.theme.secondaryBackgroundColor};
   }
 `;
 
@@ -37,7 +37,7 @@ const Layout = () => {
             top: "10px",
             zIndex: "100",
           }}
-          checked={isDarkTheme}
+          checked={!isDarkTheme}
           onChange={toggleTheme}
           size={20}
           sunColor="var(--water)"

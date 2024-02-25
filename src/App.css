@@ -11,6 +11,8 @@ body {
   padding: 0 20px;
   min-width: 320px;
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
 main {
@@ -79,7 +81,8 @@ input {
 }
 
 .progress-info {
-  margin-top: 0;
+  margin-top: 2px;
+  font-size: larger;
 }
 
 /* WATER */

@@ -74,6 +74,7 @@ const Register = () => {
             name="register"
             type="text"
             value={username}
+            placeholder="John"
             autoComplete="username"
             onChange={handleUserChange}
             required
@@ -87,6 +88,7 @@ const Register = () => {
             name="password"
             type="password"
             value={password}
+            placeholder="*****"
             autoComplete="current-password"
             onChange={handlePassChange}
             required

@@ -10,6 +10,8 @@ import { mlToCups, cupsToMl } from "hydration-converter";
 
 import axios from "axios";
 
+import { ThemeContext } from "./Theme";
+
 const HydrationContext = createContext();
 
 export const HydrationProvider = ({ children }) => {
@@ -43,6 +45,8 @@ export const HydrationProvider = ({ children }) => {
   const { token, userId } = useUser();
 
   const { timeDifference } = useTimer();
+
+  const { isDarkTheme } = useContext(ThemeContext);
 
   /* constants */
   const unit = isCup ? "(cup)" : "(ml)";
@@ -107,7 +111,7 @@ export const HydrationProvider = ({ children }) => {
         `${server}/api/hydration/logs/statistics`,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Assuming you have a valid token
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -346,6 +350,7 @@ export const HydrationProvider = ({ children }) => {
   };
 
   const calculateThirstinessLevel = (intake, timeSinceLastDrink) => {
+    const { innerWidth: width } = window;
     // Determine the user's current thirstiness level based on recent intake and time since last drink
     if (timeSinceLastDrink >= 3600) {
       setThirstinessColor("var(--danger)");
@@ -354,13 +359,17 @@ export const HydrationProvider = ({ children }) => {
       setThirstinessColor("var(--threat)");
       return "Dehydrated"; // If the recent intake is 0, the user is dehydrated
     } else if (intake < 500 && timeSinceLastDrink >= 3000) {
-      setThirstinessColor("var(--warning)");
+      width < 600
+        ? setThirstinessColor("var(--warning)")
+        : setThirstinessColor("var(--threat)");
       return "Slightly Thirsty"; // If intake is low and 10 mins passed
     } else if (intake < 1000 && timeSinceLastDrink >= 1800) {
       setThirstinessColor("var(--sea)");
       return "Moderately Thirsty"; // If intake is moderate and 30 mins passed
     } else {
-      setThirstinessColor("var(--water)");
+      width < 600 && !isDarkTheme
+        ? setThirstinessColor("var(--water)")
+        : setThirstinessColor("var(--dark)");
       return "Hydrated"; // Otherwise, the user is hydrated
     }
   };
