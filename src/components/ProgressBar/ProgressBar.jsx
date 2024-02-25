@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useHydration } from "../../context/HydrationContext";
 
 import { Bottle } from "../Hydration/Bottle";
