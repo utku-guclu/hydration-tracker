@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-import server from "../config/baseURL";
-
 import { useUser } from "./UserContext";
 
 import { useTimer } from "./TimerContext";
