@@ -5,6 +5,8 @@ import useFetch from "../../../hooks/useFetch";
 import server from "../../../config/baseURL";
 import { CircularProgress } from "@mui/material";
 
+import googleClient from "../../../config/googleClient";
+
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
 const SignUp = () => {
@@ -16,7 +18,7 @@ const SignUp = () => {
     /* global google */
     if (window.google) {
       google.accounts.id.initialize({
-        client_id: import.meta.env.VITE_APP_GOOGLE_CLIENT_ID,
+        client_id: googleClient,
         callback: handleGoogle,
       });
 
