@@ -22,6 +22,7 @@ const userReducer = (state, action) => {
       // clearSession();
       localStorage.removeItem("token");
       localStorage.removeItem("username");
+      localStorage.removeItem("user");
       return { ...state, username: null, token: null, userId: null };
     default:
       return state;
@@ -36,9 +37,15 @@ const UserProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
 
+    const google = localStorage.getItem("user");
     const fetchUserStatus = async () => {
       try {
-        if (token && username) {
+        if (google) {
+          const googleUser = JSON.parse(google);
+          const { firstName: username, token } = googleUser;
+          const user = { token, username };
+          login(user);
+        } else if (token && username) {
           const userStatus = await authService.checkAccess(token);
           if (userStatus) {
             const user = { token, username };
@@ -67,6 +74,7 @@ const UserProvider = ({ children }) => {
         username: state.username,
         token: state.token,
         userId: state.userId,
+        user: state.user,
         login,
         logout,
       }}

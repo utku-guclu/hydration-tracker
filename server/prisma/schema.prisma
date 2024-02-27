@@ -23,7 +23,14 @@ model User {
   password     String
   hydrations   HydrationLog[] // Define a one-to-many relationship with HydrationLog
   logsPool     LogPool[]      // Define a one-to-many relationship with LogPool
-  // Add other fields as needed
+
+  // Google schema fields
+  googleId     String        @unique
+  email        String        @unique
+  // Other profile information
+  firstName    String?
+  lastName     String?
+  picture      String?
 }
 
 model LogPool {

@@ -12,6 +12,7 @@ const prisma = new PrismaClient();
 /* middlewares */
 const validatePassword = require("../middlewares/validatePass");
 const authenticateToken = require("../middlewares/authToken");
+const verifyGoogleToken = require("../middlewares/google");
 
 // Login endpoint with password validation and JWT token creation
 authController.post("/login", async (req, res) => {
@@ -63,6 +64,57 @@ authController.post("/access", authenticateToken, (req, res) => {
   } catch (error) {
     console.error("Error:", error);
     res.status(403).json({ error: "Access Denied", status: false });
+  }
+});
+
+/* google */
+authController.post("/google/signin", async (req, res) => {
+  try {
+    if (req.body.credential) {
+      const verificationResponse = await verifyGoogleToken(req.body.credential);
+      if (verificationResponse.error) {
+        return res.status(400).json({
+          message: verificationResponse.error,
+        });
+      }
+
+      const email = verificationResponse?.payload?.email;
+
+      // Find profile in db
+      const user = await prisma.user
+        .findUnique({
+          where: {
+            email,
+          },
+        })
+        .catch((err) => console.log(err));
+
+      if (!user) {
+        return res
+          .status(401)
+          .json({ error: "You are not registered. Please sign up" });
+      }
+
+      // Get the user ID
+      const userId = user.id;
+
+      res.status(201).json({
+        message: "Login was successful",
+        user: {
+          firstName: user?.firstName,
+          lastName: user?.lastName,
+          picture: user?.picture,
+          email: user?.email,
+          token: jwt.sign({ email: user?.email, userId: user.id }, secretKey, {
+            expiresIn: "1d",
+          }),
+        },
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: error?.message || error,
+    });
   }
 });
 

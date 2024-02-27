@@ -10,6 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 import InlineText from "../../context/InlineText";
 
+import { SignUp } from "./Google";
+import { CircularProgress } from "@mui/material";
+
 const RegisterHeading = styled("h2")(({ color }) => ({
   color: color,
   backgroundColor: "var(--dark)",
@@ -24,12 +27,15 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const user = await authService.register(username, password);
       login(user); // {token, username}
       // give success message to user - ui
@@ -41,6 +47,7 @@ const Register = () => {
       console.error("Registration failed", error);
       toast.error(error.toString().slice(6));
     } finally {
+      setIsLoading(false);
       setUsername("");
       setPassword("");
     }
@@ -54,6 +61,10 @@ const Register = () => {
     setPassword(e.target.value);
   };
 
+  const handleGoogle = () => {
+    e.preventDefault();
+  };
+
   useEffect(() => {
     if (username && password) {
       setHeadingColor("var(--secondary-color)");
@@ -65,6 +76,9 @@ const Register = () => {
   return (
     <div>
       <ToastContainer />
+      <form className="google-form" onSubmit={handleGoogle}>
+        <SignUp />
+      </form>
       <RegisterHeading color={headingColor}>Register</RegisterHeading>
       <form className="user-form" onSubmit={handleRegister}>
         <label htmlFor="register">
@@ -95,7 +109,11 @@ const Register = () => {
           />
         </label>
         <br />
-        <button type="submit">Register</button>
+        {isLoading ? (
+          <CircularProgress style={{ margin: "0 auto" }} />
+        ) : (
+          <button type="submit">Register</button>
+        )}
       </form>
     </div>
   );

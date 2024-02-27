@@ -66,17 +66,19 @@ const Header = ({ children }) => {
             </li>
           )}
           {/* Render the "Login" link only if not on the login page and user is not logged in */}
-          {location.pathname !== "/login" && !authenticated && (
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          )}
+          {location.pathname !== "/login" &&
+            !authenticated && (
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            )}
           {/* Render the "Register" link only if not on the register page and user is not logged in */}
-          {location.pathname !== "/register" && !authenticated && (
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-          )}
+          {location.pathname !== "/register" &&
+            !authenticated && (
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+            )}
           {/* Render the "Logout" link only if user is logged in */}
           {authenticated && (
             <li>

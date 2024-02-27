@@ -35,6 +35,9 @@ app.use(
         styleSrc: ["style.com"], // Allow styles from 'style.com'
       },
     },
+    referrerPolicy: {
+      policy: "strict-origin-when-cross-origin",
+    },
     dnsPrefetchControl: false, // Disable DNS prefetching
   })
 );
@@ -92,7 +95,6 @@ app.get("/api", (req, res) => {
 app.use("/user", userRoutes); // For user registration
 app.use("/auth", authRoutes); // authenticate user
 app.use("/api/hydration", hydrationRoutes); // for hydration
-app.use("/auth", authRoutes); // for statistics
 
 // Only start the server if the file is run directly
 if (require.main === module) {

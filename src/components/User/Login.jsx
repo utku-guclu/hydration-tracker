@@ -10,6 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 import InlineText from "../../context/InlineText";
 
+import { SignIn } from "./Google";
+import { CircularProgress } from "@mui/material";
+
 const LoginHeading = styled("h2")(({ color }) => ({
   color,
   backgroundColor: "var(--dark)",
@@ -24,12 +27,15 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const user = await authService.login(username, password);
       login(user);
       // give success message to user - ui
@@ -40,6 +46,7 @@ const Login = () => {
       // give error message to user - ui
       toast.error(error.toString().slice(6));
     } finally {
+      setIsLoading(false);
       setUsername("");
       setPassword("");
     }
@@ -53,6 +60,10 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  const handleGoogle = () => {
+    e.preventDefault();
+  };
+
   useEffect(() => {
     if (username && password) {
       setHeadingColor("var(--secondary-color)");
@@ -64,6 +75,9 @@ const Login = () => {
   return (
     <div>
       <ToastContainer />
+      <form className="google-form" onSubmit={handleGoogle}>
+        <SignIn />
+      </form>
       <LoginHeading color={headingColor}>Login</LoginHeading>
       <form className="user-form" onSubmit={handleLogin}>
         <label htmlFor="login">
@@ -94,7 +108,12 @@ const Login = () => {
           />
         </label>
         <br />
-        <button type="submit">Login</button>
+
+        {isLoading ? (
+          <CircularProgress style={{ margin: "0 auto" }} />
+        ) : (
+          <button type="submit">Login</button>
+        )}
       </form>
     </div>
   );

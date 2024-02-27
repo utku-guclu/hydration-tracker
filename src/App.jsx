@@ -1,4 +1,9 @@
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  BrowserRouter as Router,
+  Navigate,
+} from "react-router-dom";
 
 /* Hydration */
 import { HydrationForm } from "./components/Hydration/HydrationForm";
@@ -7,6 +12,7 @@ import { ThirstinessLevel } from "./components/Hydration/ThirstinessLevel";
 import { ProgressBar } from "./components/ProgressBar";
 
 /* User */
+import { Google, SignIn, SignUp } from "./components/User/Google";
 import Login from "./components/User/Login";
 import Register from "./components/User/Register";
 import Greeting from "./components/User/Greeting";
@@ -64,8 +70,15 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Hydration />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route
+            path="/login"
+            element={token ? <Navigate to="/" /> : <Login />}
+          />
+          <Route
+            path="/register"
+            element={token ? <Navigate to="/" /> : <Register />}
+          />
+          <Route path="/google" element={<Google />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

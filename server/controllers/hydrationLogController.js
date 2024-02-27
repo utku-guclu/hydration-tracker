@@ -106,6 +106,7 @@ hydrationLogController.post("/", authenticateToken, async (req, res) => {
 
   // Extract user ID from the request object (assuming it was attached by the authenticateToken middleware)
   const { userId } = req.user;
+  console.log(req.user);
 
   try {
     const createdLog = await prisma.hydrationLog.create({
