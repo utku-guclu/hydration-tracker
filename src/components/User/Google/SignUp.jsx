@@ -5,7 +5,6 @@ import useFetch from "../../../hooks/useFetch";
 import server from "../../../config/baseURL";
 import { CircularProgress } from "@mui/material";
 
-
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
 import GoogleButton from "react-google-button";
@@ -20,7 +19,7 @@ const SignUp = () => {
     /* global google */
     if (window.google) {
       google.accounts.id.initialize({
-        client_id: import.meta.env.VITE_APP_GOOGLE_CLIENT_ID,
+        client_id: googleClient,
         callback: handleGoogle,
       });
 

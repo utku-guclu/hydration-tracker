@@ -10,9 +10,11 @@ import { UserProvider } from "./context/UserContext.jsx";
 
 import ThemeProvider from "./context/Theme.jsx";
 
+import googleClient from "./config/googleClient.js";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <GoogleOAuthProvider>
-    <React.StrictMode clientId={import.meta.env.VITE_APP_GOOGLE_CLIENT_ID}>
+    <React.StrictMode clientId={googleClient}>
       <ThemeProvider>
         <UserProvider>
           <TimerProvider>
