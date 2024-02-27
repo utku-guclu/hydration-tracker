@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import { styled } from "@mui/system";
 import React, { useContext } from "react";
 
 import { ThemeContext } from "../../context/Theme";

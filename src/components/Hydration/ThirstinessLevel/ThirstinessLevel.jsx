@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import { styled } from "@mui/system";
 import { useHydration } from "../../../context/HydrationContext";
 
 const ThirstinessLevelText = styled("div")(({ color }) => ({

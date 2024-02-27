@@ -6,7 +6,7 @@ import { useUser } from "../../../context/UserContext";
 
 import { Tooltip } from "react-tooltip";
 
-import styled from "@emotion/styled";
+import { styled } from "@mui/system";
 
 import { ThemeContext } from "../../../context/Theme";
 
