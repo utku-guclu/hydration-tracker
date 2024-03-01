@@ -8,6 +8,18 @@ const app = express();
 const cors = require("cors");
 const helmet = require("helmet");
 
+/* redis */
+const Redis = require("redis");
+// Create a new Redis client instance
+const redisClient = Redis.createClient();
+// Handle Redis client errors
+redisClient.on("error", (err) => console.log("Redis Client Error", err));
+
+// Connect to Redis
+redisClient.on("connect", () => {
+  console.log("Connected to Redis");
+});
+
 /* routers */
 const authRoutes = require("./routes/authRoutes");
 const hydrationRoutes = require("./routes/hydrationRoutes");

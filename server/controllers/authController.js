@@ -14,6 +14,8 @@ const validatePassword = require("../middlewares/validatePass");
 const authenticateToken = require("../middlewares/authToken");
 const verifyGoogleToken = require("../middlewares/google");
 
+/* redis */
+
 // Login endpoint with password validation and JWT token creation
 authController.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -49,7 +51,7 @@ authController.post("/login", async (req, res) => {
     };
 
     res.status(200).json(access);
-    console.log("user accessed!");
+    console.log("user logged in!");
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -115,6 +117,46 @@ authController.post("/google/signin", async (req, res) => {
     res.status(500).json({
       message: error?.message || error,
     });
+  }
+});
+
+authController.get("/ai", authenticateToken, async (req, res) => {
+  const DEFAULT_EXPIRATION = 3600;
+  const SECRET_MESSAGE = "Saruman";
+
+  try {
+    // Store the secret message in Redis with an expiration time
+
+    (async () => {
+      redisClient.on("error", (err) => console.log("Redis Client Error", err));
+
+      await redisClient.connect();
+    })();
+    redisClient.set(
+      "ai",
+      DEFAULT_EXPIRATION,
+      SECRET_MESSAGE,
+      (error, result) => {
+        if (error) {
+          console.error("Error storing data in Redis:", error);
+          res
+            .status(500)
+            .json({ error: "Internal server error", status: false });
+        } else {
+          console.log("Data stored in Redis:", result);
+          res.json({
+            message: "Access granted to protected route",
+            status: true,
+          });
+        }
+
+        // Close the Redis client after the operation is complete
+        redisClient.quit();
+      }
+    );
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(403).json({ error: "Access Denied", status: false });
   }
 });
 

@@ -46,10 +46,28 @@ const StyledNav = styled("nav")({
   },
 });
 
+const UserProfile = styled("li")({
+  display: "flex",
+  alignItems: "center",
+});
+
+const UserLogo = styled("img")({
+  width: "40px",
+  height: "40px",
+  borderRadius: "50%",
+  marginRight: "10px",
+});
+
 const Header = ({ children }) => {
   const location = useLocation();
 
-  const { token: authenticated, logout } = useUser();
+  const {
+    token: authenticated,
+    logout,
+    lastName,
+    username,
+    picture,
+  } = useUser();
 
   return (
     <StyledHeader>
@@ -66,24 +84,25 @@ const Header = ({ children }) => {
             </li>
           )}
           {/* Render the "Login" link only if not on the login page and user is not logged in */}
-          {location.pathname !== "/login" &&
-            !authenticated && (
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-            )}
+          {location.pathname !== "/login" && !authenticated && (
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          )}
           {/* Render the "Register" link only if not on the register page and user is not logged in */}
-          {location.pathname !== "/register" &&
-            !authenticated && (
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
-            )}
+          {location.pathname !== "/register" && !authenticated && (
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+          )}
           {/* Render the "Logout" link only if user is logged in */}
           {authenticated && (
-            <li>
+            <UserProfile>
+              {picture && (
+                <UserLogo src={picture} alt={`${username} ${lastName}`} />
+              )}
               <Logout logout={logout}>Logout</Logout>
-            </li>
+            </UserProfile>
           )}
         </ul>
       </StyledNav>

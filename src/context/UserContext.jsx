@@ -9,15 +9,17 @@ const initialState = {
   username: null,
   token: null,
   userId: null,
+  lastName: "",
+  picture: null,
 };
 
 const userReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      const { username, token, userId } = action.payload;
+      const { username, token, userId, lastName, picture } = action.payload;
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
-      return { ...state, username, token, userId };
+      return { ...state, username, token, userId, lastName, picture };
     case "LOGOUT":
       // clearSession();
       localStorage.removeItem("token");
@@ -42,8 +44,9 @@ const UserProvider = ({ children }) => {
       try {
         if (google) {
           const googleUser = JSON.parse(google);
-          const { firstName: username, token } = googleUser;
-          const user = { token, username };
+          console.log(googleUser);
+          const { firstName: username, token, lastName, picture } = googleUser;
+          const user = { token, username, lastName, picture };
           login(user);
         } else if (token && username) {
           const userStatus = await authService.checkAccess(token);
@@ -72,9 +75,10 @@ const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         username: state.username,
+        lastName: state.lastName,
+        picture: state.picture,
         token: state.token,
         userId: state.userId,
-        user: state.user,
         login,
         logout,
       }}
