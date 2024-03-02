@@ -180,6 +180,11 @@ export const HydrationProvider = ({ children }) => {
     }
   }, [thirstiness, token, isImageFetched]);
 
+  // useEffect to reset isImageFetched when thirstiness or token changes
+  useEffect(() => {
+    setIsImageFetched(false);
+  }, [thirstiness, token]);
+
   return (
     <HydrationContext.Provider
       value={{
