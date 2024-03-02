@@ -7,6 +7,10 @@ const hydrationLogController = express.Router();
 
 const authenticateToken = require("../middlewares/authToken");
 
+/* generate image */
+const generateImage = require("../utils/generateImage.js");
+const getOrSetCache = require("../utils/getOrSetCache");
+
 /* STATISTICS */
 
 // Separate endpoint for adding new log pools
@@ -252,6 +256,27 @@ hydrationLogController.put(
         console.error("Hydration log not found");
         res.status(404).json({ error: "Hydration log not found" });
       }
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+
+hydrationLogController.post(
+  "/generateImage",
+  authenticateToken,
+  async (req, res) => {
+    try {
+      const { hydrationStatus } = req.body; // Define the caption for the image
+
+      // Use getOrSetCache function to retrieve or set the value from/to cache
+      await getOrSetCache(hydrationStatus, async () => {
+        console.log("Cache Miss - Generating fresh image.data..");
+        const response = await generateImage(hydrationStatus); // Generate the image based on the caption
+        res.status(200).json(response);
+        return response;
+      });
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({ error: "Internal server error" });

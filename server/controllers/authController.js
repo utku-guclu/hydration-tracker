@@ -14,11 +14,6 @@ const validatePassword = require("../middlewares/validatePass");
 const authenticateToken = require("../middlewares/authToken");
 const verifyGoogleToken = require("../middlewares/google");
 
-/* redis */
-const Redis = require("ioredis");
-const { red } = require("@mui/material/colors");
-const redis = new Redis();
-
 // Login endpoint with password validation and JWT token creation
 authController.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -120,64 +115,6 @@ authController.post("/google/signin", async (req, res) => {
     res.status(500).json({
       message: error?.message || error,
     });
-  }
-});
-
-/* redis */
-const DEFAULT_EXPIRATION = 6; // Expiration time in seconds
-
-// Define the getOrSetCache function
-async function getOrSetCache(key, cb) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      // Attempt to get the value from the cache
-      const data = await redis.get(key);
-
-      // If the value exists in the cache, return it
-      if (data !== null) {
-        console.log("Cache Hit!");
-        resolve(JSON.parse(data));
-        return;
-      }
-
-      // If the value is not found in the cache, generate it using the callback function
-      const freshData = await cb();
-
-      // Store the newly generated value in the cache with expiration time
-      await redis.set(
-        key,
-        JSON.stringify(freshData),
-        "EX",
-        DEFAULT_EXPIRATION
-      );
-
-      // Log expiration time
-      setTimeout(() => {
-        console.log(`Expiration time for key '${key}' has been reached.`);
-      }, DEFAULT_EXPIRATION * 1000); // Convert seconds to milliseconds
-
-      resolve(freshData);
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-
-// Define the '/ai' endpoint handler
-authController.get("/ai", authenticateToken, async (req, res) => {
-  try {
-    const secret = "Saruman";
-
-    // Use getOrSetCache function to retrieve or set the value from/to cache
-    const cachedMessage = await getOrSetCache(secret, async () => {
-      console.log("Cache Miss - Generating fresh data...");
-      return secret;
-    });
-
-    return res.status(200).json({ message: cachedMessage });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Internal server error" });
   }
 });
 

@@ -79,7 +79,7 @@ function App() {
             element={token ? <Navigate to="/" /> : <Register />}
           />
           <Route path="/google" element={<Google />} />
-          <Route path="*" element={<NotFound />} />
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Route>
       </Routes>
     </Router>

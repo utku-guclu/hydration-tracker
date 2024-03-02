@@ -9,6 +9,14 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
+    depends_on:
+      - redis
+
+  # Redis service
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
 
   # Client service
   # client:

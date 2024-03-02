@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+} from "react";
 
 import { useUser } from "./UserContext";
 
@@ -13,6 +19,7 @@ import {
   fetchLogs,
   fetchLogPool,
   addToLogPool,
+  generateImage,
 } from "../services/hydrationService";
 
 const HydrationContext = createContext();
@@ -149,6 +156,22 @@ export const HydrationProvider = ({ children }) => {
     );
     setThirstiness(thirstinessLevel);
   }, [recentIntake, timeDifference, theme]);
+
+  // fetch hydration image
+  useMemo(() => {
+    async function fetchHydrationImage() {
+      try {
+        console.log("fetching img");
+        const response = await generateImage(token, thirstiness);
+        console.log(response);
+      } catch (error) {
+        console.log("Error fetching Hydration Image", error);
+      }
+    }
+    if (thirstiness && token) {
+      fetchHydrationImage();
+    }
+  }, [thirstiness, token]);
 
   return (
     <HydrationContext.Provider

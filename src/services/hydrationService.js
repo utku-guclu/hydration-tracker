@@ -255,3 +255,37 @@ export const resetLogs = async (token, userId, setLogs) => {
     console.error("Error:", error);
   }
 };
+
+export const generateImage = async (token, hydrationStatus) => {
+  if (!token) return;
+  try {
+    const response = await fetch(`${server}/api/hydration/logs/generateImage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ hydrationStatus }),
+    });
+    if (response.ok) {
+      const imageBytes = await response.arrayBuffer();
+
+      console.log("Hydration image successfully generated!");
+
+      if (imageBytes) {
+        // Convert ArrayBuffer to Blob
+        const blob = new Blob([imageBytes], { type: "image/png" });
+        console.log(blob);
+        // Create URL from Blob
+        const imageUrl = URL.createObjectURL(blob);
+        return imageUrl;
+      } else {
+        console.error("Failed to generate image");
+      }
+    } else {
+      console.log("Failed to send hydration status");
+    }
+  } catch (error) {
+    console.log("Error:", error);
+  }
+};

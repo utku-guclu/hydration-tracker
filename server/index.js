@@ -75,7 +75,14 @@ app.use(
 );
 
 /* cors */
-app.use(cors());
+app.use(
+  cors({
+    rigin: ['https://hydration-tracker.vercel.app', 'https://localhost:5173'],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  })
+);
 
 /* json */
 app.use(express.json());
