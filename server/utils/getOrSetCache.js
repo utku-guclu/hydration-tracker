@@ -1,7 +1,6 @@
 const Redis = require("ioredis");
 const redis = new Redis();
 
-// Define the getOrSetCache function
 async function getOrSetCache(key, cb) {
   const DEFAULT_EXPIRATION = 600; // Expiration time in seconds
   return new Promise(async (resolve, reject) => {
@@ -11,72 +10,33 @@ async function getOrSetCache(key, cb) {
 
       // If the value exists in the cache, return it
       if (data !== null && data !== undefined && data.trim() !== "") {
-        console.log("Cache Hit! Retrieved data from cache:", data);
-        const parsedData = JSON.parse(data);
-        if (parsedData && parsedData.type === "ArrayBuffer") {
-          // Convert base64 string back to ArrayBuffer
-          const arrayBuffer = base64ToArrayBuffer(parsedData.value);
-          resolve(arrayBuffer);
-        } else {
-          resolve(parsedData);
-        }
+        console.log("Cache Hit! Retrieved data from Redis");
+        // Decode the Base64 string back into the original image blob
+        const imageBlob = new Blob([Buffer.from(data)], {
+          type: "application/octet-stream",
+        }); // Gives back the original blob
+        resolve(imageBlob);
         return;
       }
 
       // If the value is not found in the cache, generate it using the callback function
+      console.log(`Cache Miss - Generating fresh image data..`);
       const freshData = await cb();
-
-      // Check if fresh data is an ArrayBuffer
-      if (freshData instanceof ArrayBuffer) {
-        // Convert ArrayBuffer to base64 string
-        const base64Data = arrayBufferToBase64(freshData);
-        // Store the newly generated value in the cache with expiration time
-        await redis.set(
-          key,
-          JSON.stringify({ type: "ArrayBuffer", value: base64Data }),
-          "EX",
-          DEFAULT_EXPIRATION
-        );
-      } else {
-        // Store other types of data directly in the cache
-        await redis.set(
-          key,
-          JSON.stringify(freshData),
-          "EX",
-          DEFAULT_EXPIRATION
-        );
+      if (!freshData) {
+        // Handle the case where the freshData is undefined or null
+        console.log("Fresh data is undefined or null.");
+        reject(new Error("Fresh data is undefined or null."));
+        return;
       }
-
-      // Log expiration time
-      setTimeout(() => {
-        console.log(`Expiration time for key '${key}' has been reached.`);
-      }, DEFAULT_EXPIRATION * 1000); // Convert seconds to milliseconds
-
-      resolve(freshData);
+      // Encode the image blob into a Base64 string before storing it in Redis
+      const encodedData = freshData.toString("base64");
+      await redis.set(key, encodedData, "EX", DEFAULT_EXPIRATION);
+      console.log("Data stored in Redis cache");
+      resolve(freshData); // bufferJSON 
     } catch (error) {
       reject(error);
     }
   });
-}
-
-// Function to convert ArrayBuffer to base64 string
-function arrayBufferToBase64(buffer) {
-  const bytes = new Uint8Array(buffer);
-  let binary = "";
-  bytes.forEach((byte) => {
-    binary += String.fromCharCode(byte);
-  });
-  return btoa(binary);
-}
-
-// Function to convert base64 string to ArrayBuffer
-function base64ToArrayBuffer(base64) {
-  const binaryString = atob(base64);
-  const bytes = new Uint8Array(binaryString.length);
-  for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  return bytes.buffer;
 }
 
 module.exports = getOrSetCache;

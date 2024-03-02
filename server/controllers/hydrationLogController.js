@@ -8,7 +8,7 @@ const hydrationLogController = express.Router();
 const authenticateToken = require("../middlewares/authToken");
 
 /* generate image */
-const generateImage = require("../utils/generateImage.js");
+const generateImage = require("../utils/generateImage");
 const getOrSetCache = require("../utils/getOrSetCache");
 
 /* STATISTICS */
@@ -268,15 +268,15 @@ hydrationLogController.post(
   authenticateToken,
   async (req, res) => {
     try {
-      const { hydrationStatus } = req.body; // Define the caption for the image
-
+      const { hydrationStatus } = req.body; 
       // Use getOrSetCache function to retrieve or set the value from/to cache
-      await getOrSetCache(hydrationStatus, async () => {
-        console.log("Cache Miss - Generating fresh image.data..");
-        const response = await generateImage(hydrationStatus); // Generate the image based on the caption
-        res.status(200).json(response);
-        return response;
-      });
+      // await getOrSetCache(hydrationStatus, async () => {
+      //   const response = await generateImage(hydrationStatus); // Generate the image based on the caption
+      //   res.status(200).json(response);
+      // });
+      const response = await generateImage(hydrationStatus);
+      console.log(response);
+      return res.json(response);
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({ error: "Internal server error" });

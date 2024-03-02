@@ -3,6 +3,8 @@ import { cupsToMl } from "hydration-converter";
 
 import server from "../config/baseURL";
 
+import blobToBase64 from "../utils/blobToBase64";
+
 export const fetchLogPool = async (token, setStatistics, calcHourlyIntake) => {
   if (!token) return;
   try {
@@ -268,20 +270,9 @@ export const generateImage = async (token, hydrationStatus) => {
       body: JSON.stringify({ hydrationStatus }),
     });
     if (response.ok) {
-      const imageBytes = await response.arrayBuffer();
-
-      console.log("Hydration image successfully generated!");
-
-      if (imageBytes) {
-        // Convert ArrayBuffer to Blob
-        const blob = new Blob([imageBytes], { type: "image/png" });
-        console.log(blob);
-        // Create URL from Blob
-        const imageUrl = URL.createObjectURL(blob);
-        return imageUrl;
-      } else {
-        console.error("Failed to generate image");
-      }
+      console.log(response)
+      const url = blobToBase64(response)
+      console.log(url)
     } else {
       console.log("Failed to send hydration status");
     }

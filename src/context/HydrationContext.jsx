@@ -158,11 +158,14 @@ export const HydrationProvider = ({ children }) => {
   }, [recentIntake, timeDifference, theme]);
 
   // fetch hydration image
+
+  const controller = new AbortController();
+  const signal = controller.signal;
   useMemo(() => {
     async function fetchHydrationImage() {
       try {
         console.log("fetching img");
-        const response = await generateImage(token, thirstiness);
+        const response = await generateImage(token, thirstiness, signal);
         console.log(response);
       } catch (error) {
         console.log("Error fetching Hydration Image", error);
@@ -171,6 +174,9 @@ export const HydrationProvider = ({ children }) => {
     if (thirstiness && token) {
       fetchHydrationImage();
     }
+    return () => {
+      controller.abort();
+    };
   }, [thirstiness, token]);
 
   return (
