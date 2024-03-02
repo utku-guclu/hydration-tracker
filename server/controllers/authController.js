@@ -124,7 +124,9 @@ authController.post("/google/signin", async (req, res) => {
 });
 
 /* redis */
-const DEFAULT_EXPIRATION = 6;
+const DEFAULT_EXPIRATION = 6; // Expiration time in seconds
+
+// Define the getOrSetCache function
 async function getOrSetCache(key, cb) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -141,8 +143,18 @@ async function getOrSetCache(key, cb) {
       // If the value is not found in the cache, generate it using the callback function
       const freshData = await cb();
 
-      // Store the newly generated value in the cache
-      await redis.set(key, JSON.stringify(freshData));
+      // Store the newly generated value in the cache with expiration time
+      await redis.set(
+        key,
+        JSON.stringify(freshData),
+        "EX",
+        DEFAULT_EXPIRATION
+      );
+
+      // Log expiration time
+      setTimeout(() => {
+        console.log(`Expiration time for key '${key}' has been reached.`);
+      }, DEFAULT_EXPIRATION * 1000); // Convert seconds to milliseconds
 
       resolve(freshData);
     } catch (error) {
@@ -151,14 +163,15 @@ async function getOrSetCache(key, cb) {
   });
 }
 
+// Define the '/ai' endpoint handler
 authController.get("/ai", authenticateToken, async (req, res) => {
   try {
-    const SECRET_MESSAGE = "Saruman";
+    const secret = "Saruman";
 
     // Use getOrSetCache function to retrieve or set the value from/to cache
-    const cachedMessage = await getOrSetCache("SECRET_MESSAGE", async () => {
+    const cachedMessage = await getOrSetCache(secret, async () => {
       console.log("Cache Miss - Generating fresh data...");
-      return SECRET_MESSAGE;
+      return secret;
     });
 
     return res.status(200).json({ message: cachedMessage });
