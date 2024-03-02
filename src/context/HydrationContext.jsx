@@ -40,6 +40,9 @@ export const HydrationProvider = ({ children }) => {
   const [thirstinessColor, setThirstinessColor] = useState("var(--gray)");
   const [statistics, setStatistics] = useState({ 0: 0 });
 
+  // Define a state variable to track whether the image has been fetched
+  const [isImageFetched, setIsImageFetched] = useState(false);
+
   /* hooks */
   const { token } = useUser();
   const { timeDifference } = useTimer();
@@ -158,26 +161,24 @@ export const HydrationProvider = ({ children }) => {
   }, [recentIntake, timeDifference, theme]);
 
   // fetch hydration image
-
-  const controller = new AbortController();
-  const signal = controller.signal;
   useMemo(() => {
     async function fetchHydrationImage() {
       try {
-        console.log("fetching img");
+        console.log("fetching img..");
         const response = await generateImage(token, thirstiness, signal);
         console.log(response);
+        // Set the state variable to true to indicate that the image has been fetched
+        setIsImageFetched(true);
       } catch (error) {
         console.log("Error fetching Hydration Image", error);
       }
     }
-    if (thirstiness && token) {
+
+    // Fetch the image only if it hasn't been fetched before and all necessary data is available
+    if (!isImageFetched && thirstiness && token) {
       fetchHydrationImage();
     }
-    return () => {
-      controller.abort();
-    };
-  }, [thirstiness, token]);
+  }, [thirstiness, token, isImageFetched]);
 
   return (
     <HydrationContext.Provider

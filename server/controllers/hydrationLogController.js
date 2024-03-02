@@ -270,10 +270,10 @@ hydrationLogController.post(
     try {
       const { hydrationStatus } = req.body; 
       // Use getOrSetCache function to retrieve or set the value from/to cache
-      // await getOrSetCache(hydrationStatus, async () => {
-      //   const response = await generateImage(hydrationStatus); // Generate the image based on the caption
-      //   res.status(200).json(response);
-      // });
+      await getOrSetCache(hydrationStatus, async () => {
+        const response = await generateImage(hydrationStatus); // Generate the image based on the caption
+        res.status(200).json(response);
+      });
       const response = await generateImage(hydrationStatus);
       console.log(response);
       return res.json(response);
