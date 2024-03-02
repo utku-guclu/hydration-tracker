@@ -15,6 +15,9 @@ const authenticateToken = require("../middlewares/authToken");
 const verifyGoogleToken = require("../middlewares/google");
 
 /* redis */
+const Redis = require("ioredis");
+const { red } = require("@mui/material/colors");
+const redis = new Redis();
 
 // Login endpoint with password validation and JWT token creation
 authController.post("/login", async (req, res) => {
@@ -120,43 +123,48 @@ authController.post("/google/signin", async (req, res) => {
   }
 });
 
-authController.get("/ai", authenticateToken, async (req, res) => {
-  const DEFAULT_EXPIRATION = 3600;
-  const SECRET_MESSAGE = "Saruman";
+/* redis */
+const DEFAULT_EXPIRATION = 6;
+async function getOrSetCache(key, cb) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // Attempt to get the value from the cache
+      const data = await redis.get(key);
 
-  try {
-    // Store the secret message in Redis with an expiration time
-
-    (async () => {
-      redisClient.on("error", (err) => console.log("Redis Client Error", err));
-
-      await redisClient.connect();
-    })();
-    redisClient.set(
-      "ai",
-      DEFAULT_EXPIRATION,
-      SECRET_MESSAGE,
-      (error, result) => {
-        if (error) {
-          console.error("Error storing data in Redis:", error);
-          res
-            .status(500)
-            .json({ error: "Internal server error", status: false });
-        } else {
-          console.log("Data stored in Redis:", result);
-          res.json({
-            message: "Access granted to protected route",
-            status: true,
-          });
-        }
-
-        // Close the Redis client after the operation is complete
-        redisClient.quit();
+      // If the value exists in the cache, return it
+      if (data !== null) {
+        console.log("Cache Hit!");
+        resolve(JSON.parse(data));
+        return;
       }
-    );
+
+      // If the value is not found in the cache, generate it using the callback function
+      const freshData = await cb();
+
+      // Store the newly generated value in the cache
+      await redis.set(key, JSON.stringify(freshData));
+
+      resolve(freshData);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+authController.get("/ai", authenticateToken, async (req, res) => {
+  try {
+    const SECRET_MESSAGE = "Saruman";
+
+    // Use getOrSetCache function to retrieve or set the value from/to cache
+    const cachedMessage = await getOrSetCache("SECRET_MESSAGE", async () => {
+      console.log("Cache Miss - Generating fresh data...");
+      return SECRET_MESSAGE;
+    });
+
+    return res.status(200).json({ message: cachedMessage });
   } catch (error) {
     console.error("Error:", error);
-    res.status(403).json({ error: "Access Denied", status: false });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
