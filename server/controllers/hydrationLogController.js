@@ -8,8 +8,7 @@ const hydrationLogController = express.Router();
 const authenticateToken = require("../middlewares/authToken");
 
 /* generate image */
-const generateImage = require("../utils/generateImage");
-const getOrSetCache = require("../utils/getOrSetCache");
+// const getOrSetCache = require("../utils/getOrSetCache");
 
 /* STATISTICS */
 
@@ -263,25 +262,24 @@ hydrationLogController.put(
   }
 );
 
-hydrationLogController.post(
-  "/generateImage",
-  authenticateToken,
-  async (req, res) => {
-    try {
-      const { hydrationStatus } = req.body; 
-      // Use getOrSetCache function to retrieve or set the value from/to cache
-      await getOrSetCache(hydrationStatus, async () => {
-        const response = await generateImage(hydrationStatus); // Generate the image based on the caption
-        res.status(200).json(response);
-      });
-      const response = await generateImage(hydrationStatus);
-      console.log(response);
-      return res.json(response);
-    } catch (error) {
-      console.error("Error:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  }
-);
+// hydrationLogController.post(
+//   "/generateImage",
+//   authenticateToken,
+//   async (req, res) => {
+//     try {
+//       const { hydrationStatus } = req.body;
+//       // Use getOrSetCache function to retrieve or set the value from/to cache
+//       const imageBlob = await getOrSetCache(hydrationStatus, async () => {
+//         return generateImage(hydrationStatus); // Generate the image based on the caption
+//       });
+//       console.log(imageBlob);
+//       // Send the image blob as a response to the client
+//       res.status(200).json({ imageBlob });
+//     } catch (error) {
+//       console.error("Error:", error);
+//       res.status(500).json({ error: "Internal server error" });
+//     }
+//   }
+// );
 
 module.exports = hydrationLogController;

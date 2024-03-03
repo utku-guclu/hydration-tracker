@@ -11,8 +11,10 @@ import { ThemeContext } from "../context/Theme";
 import { styled } from "@mui/system";
 import { createGlobalStyle } from "styled-components";
 
-const Hydration = styled("div")(({ theme }) => ({
-  zIndex: -1,
+const Hydration = styled("main")(({ isDarkTheme }) => ({
+  backgroundColor: !isDarkTheme
+    ? "rgba(255, 246, 233, 0.5)"
+    : "",
 }));
 
 const GlobalStyle = createGlobalStyle`
@@ -43,9 +45,9 @@ const Layout = () => {
           sunColor="var(--water)"
         />
       </Header>
-      <main>
+      <Hydration isDarkTheme={isDarkTheme}>
         <Outlet />
-      </main>
+      </Hydration>
       <Footer />
     </>
   );

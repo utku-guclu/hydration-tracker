@@ -3,10 +3,11 @@ import React, { useContext } from "react";
 
 import { ThemeContext } from "../../context/Theme";
 
-const StyledGreeting = styled("p")(({color}) => ({
+const StyledGreeting = styled("p")(({ color }) => ({
   color,
   fontSize: "24px",
   fontStyle: "italic",
+  textShadow: "rgb(82 74 74 / 53%)",
 }));
 
 const Greeting = ({ username }) => {

@@ -4,6 +4,7 @@ import { cupsToMl } from "hydration-converter";
 import server from "../config/baseURL";
 
 import blobToBase64 from "../utils/blobToBase64";
+import generateImage from "../utils/generateImage";
 
 export const fetchLogPool = async (token, setStatistics, calcHourlyIntake) => {
   if (!token) return;
@@ -258,25 +259,14 @@ export const resetLogs = async (token, userId, setLogs) => {
   }
 };
 
-export const generateImage = async (token, hydrationStatus) => {
+export const generateHydrationImage = async (token, hydrationStatus) => {
   if (!token) return;
   try {
-    const response = await fetch(`${server}/api/hydration/logs/generateImage`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ hydrationStatus }),
-    });
-    if (response.ok) {
-      console.log(response)
-      const url = blobToBase64(response)
-      console.log(url)
-    } else {
-      console.log("Failed to send hydration status");
-    }
+    const response = await generateImage(hydrationStatus);
+    const imageUrl = await blobToBase64(response);
+    return imageUrl
   } catch (error) {
     console.log("Error:", error);
+    return null;
   }
 };

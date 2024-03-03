@@ -19,7 +19,7 @@ import {
   fetchLogs,
   fetchLogPool,
   addToLogPool,
-  generateImage,
+  generateHydrationImage,
 } from "../services/hydrationService";
 
 const HydrationContext = createContext();
@@ -42,11 +42,12 @@ export const HydrationProvider = ({ children }) => {
 
   // Define a state variable to track whether the image has been fetched
   const [isImageFetched, setIsImageFetched] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   /* hooks */
   const { token } = useUser();
   const { timeDifference } = useTimer();
-  const { theme } = useContext(ThemeContext);
+  const { theme, isDarkTheme } = useContext(ThemeContext);
 
   /* constants */
   const unit = isCup ? "(cup)" : "(ml)";
@@ -165,9 +166,9 @@ export const HydrationProvider = ({ children }) => {
     async function fetchHydrationImage() {
       try {
         console.log("fetching img..");
-        const response = await generateImage(token, thirstiness, signal);
-        console.log(response);
+        const response = await generateHydrationImage(token, thirstiness);
         // Set the state variable to true to indicate that the image has been fetched
+        setImageUrl(response);
         setIsImageFetched(true);
       } catch (error) {
         console.log("Error fetching Hydration Image", error);
@@ -175,10 +176,10 @@ export const HydrationProvider = ({ children }) => {
     }
 
     // Fetch the image only if it hasn't been fetched before and all necessary data is available
-    if (!isImageFetched && thirstiness && token) {
+    if (thirstiness && token) {
       fetchHydrationImage();
     }
-  }, [thirstiness, token, isImageFetched]);
+  }, [thirstiness, token]);
 
   // useEffect to reset isImageFetched when thirstiness or token changes
   useEffect(() => {
@@ -209,6 +210,23 @@ export const HydrationProvider = ({ children }) => {
       }}
     >
       {children}
+      {/* Apply background styling using pseudo-element */}
+      <style>{`
+        body::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center;
+          filter: saturate(1.2) contrast(1.3);
+          z-index: -1;
+          background-image: url('${isCup && !isDarkTheme ? imageUrl : ""}');
+        }
+      `}</style>
     </HydrationContext.Provider>
   );
 };
