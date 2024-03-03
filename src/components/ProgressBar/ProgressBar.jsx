@@ -50,7 +50,6 @@ function ProgressBar() {
         <p
           style={{
             color: theme.label,
-            textSshadow: "1px 1px 1px var(--dark)",
           }}
         >
           {"You've reached your daily hydration goal!"}

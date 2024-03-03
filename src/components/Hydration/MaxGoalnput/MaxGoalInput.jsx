@@ -25,7 +25,7 @@ function MaxGoalInput({ unit }) {
   return (
     <form onSubmit={handleUpdateGoal}>
       <label htmlFor="dailyGoal">
-        <span style={{ color: theme.text }}>Daily Goal:</span>
+        <span style={{ color: "var(--light)" }}>Daily Goal:</span>
         <input
           placeholder={`${convertedDailyGoal} ${unit}`}
           type="number"

@@ -74,7 +74,7 @@ function HydrationForm() {
       </WaterIntakeHeading>
       <form id="log-submit-form" onSubmit={handleFormSubmit}>
         <label htmlFor="waterIntake">
-          <span style={{ color: theme.text }}>Water {unit}:</span>
+          <span style={{ color: "var(--light)" }}>Water {unit}:</span>
           <input
             placeholder={waterIntakeLocal}
             type="number"

@@ -5,7 +5,7 @@ const darkTheme = {
   backgroundColor: "var(--dark)",
   color: "var(--ocean)",
   secondaryColor: "var(--dark)",
-  text: "var(--light)",
+  text: "var(--sea)",
   secondaryBackgroundColor: "var(--dark)",
   label: "var(--secondary-color)",
   idle: "var(--gray)",
@@ -17,7 +17,7 @@ const darkTheme = {
   warning: "var(--warning)",
   danger: "var(--danger)",
   greeting: "var(--greeting)",
-  secondaryLabel: "var(--water)",
+  secondaryLabel: "var(--ocean)",
   secondaryStatistics: "var(--statistics)",
 };
 
@@ -25,7 +25,7 @@ const lightTheme = {
   backgroundColor: "var(--light)",
   color: "var(--dark)",
   secondaryColor: "var(--light)",
-  text: "var(--light)",
+  text: "var(--sea)",
   secondaryBackgroundColor: "var(--water)",
   label: "var(--dark)",
   idle: "var(--gray)",
@@ -37,7 +37,7 @@ const lightTheme = {
   danger: "#a41037",
   statistics: "var(--dark)",
   greeting: "var(--dark)",
-  secondaryLabel: "var(--ocean)",
+  secondaryLabel: "var(--dark)",
   secondaryStatistics: "var(--black)",
 };
 

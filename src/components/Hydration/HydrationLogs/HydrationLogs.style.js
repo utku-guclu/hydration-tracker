@@ -24,10 +24,11 @@ export const LogsDetails = styled("div")(() => ({
 }));
 
 export const LogsTable = styled("ul")(() => ({
-  backgroundColor: "var(--gray)",
+  // backgroundColor: "var(--gray)",
   display: "grid",
   padding: "20px",
   gap: "10px",
+  width: "100%",
 }));
 
 export const TableRow = styled("li")(({ bgColor }) => ({
