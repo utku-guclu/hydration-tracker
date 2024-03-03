@@ -19,6 +19,7 @@ const darkTheme = {
   greeting: "var(--greeting)",
   secondaryLabel: "var(--ocean)",
   secondaryStatistics: "var(--statistics)",
+  inlineText: "var(--water)"
 };
 
 const lightTheme = {
@@ -39,6 +40,7 @@ const lightTheme = {
   greeting: "var(--dark)",
   secondaryLabel: "var(--dark)",
   secondaryStatistics: "var(--black)",
+  inlineText: "var(--water)"
 };
 
 export const ThemeContext = createContext({
