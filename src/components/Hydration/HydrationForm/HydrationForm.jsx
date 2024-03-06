@@ -9,9 +9,10 @@ import { styled } from "@mui/system";
 import MaxGoalInput from "../MaxGoalnput/MaxGoalInput";
 
 import { addHydrationLog } from "../../../services/hydrationService";
+
 import UnitTexField from "../../UI/UnitTextField";
 
-import { mlToCups } from "hydration-converter";
+import { mlToCups } from "../../../utils/hydrationConverter";
 
 const WaterIntakeHeading = styled("h2")(({ color }) => ({
   color,
@@ -100,10 +101,7 @@ function HydrationForm() {
           // onFocus={handleInputFocus}
           // onBlur={handleInputBlur}
         />
-        <button
-          disabled={!waterIntakeLocal}
-          type="submit"
-        >
+        <button disabled={!waterIntakeLocal} type="submit">
           Log Water Intake
         </button>
       </form>
