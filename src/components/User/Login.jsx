@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useUser } from "../../context/UserContext";
 import authService from "../../services/authService";
 
@@ -12,6 +12,10 @@ import InlineText from "../../context/InlineText";
 
 import { SignIn } from "./Google";
 import { CircularProgress } from "@mui/material";
+
+import ValidationTextField from "../UI/ValidationTextField";
+
+import { ThemeContext } from "../../context/Theme";
 
 const LoginHeading = styled("h2")(({ color }) => ({
   color,
@@ -29,7 +33,11 @@ const Login = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
+
+  const { isDarkTheme, theme } = useContext(ThemeContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -44,7 +52,9 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       // give error message to user - ui
-      toast.error(error.toString().slice(6));
+      const errorMessage = error.toString().slice(6);
+      toast.error(errorMessage);
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
       setUsername("");
@@ -53,10 +63,12 @@ const Login = () => {
   };
 
   const handleUserChange = (e) => {
+    setError(false);
     setUsername(e.target.value);
   };
 
   const handlePassChange = (e) => {
+    setError(false);
     setPassword(e.target.value);
   };
 
@@ -79,40 +91,47 @@ const Login = () => {
         <SignIn />
       </form>
       <LoginHeading color={headingColor}>Login</LoginHeading>
-      <form className="user-form" onSubmit={handleLogin}>
-        <label htmlFor="login">
-          <InlineText>Username:</InlineText>
-          <input
-            id="login"
-            name="login"
-            type="text"
-            value={username}
-            autoComplete="username"
-            onChange={handleUserChange}
-            placeholder="John"
-            required
-          />
-        </label>
+      <form
+        style={{
+          backgroundColor: isDarkTheme ? theme.hydrated : "inherit",
+        }}
+        className="user-form"
+        onSubmit={handleLogin}
+      >
+        <ValidationTextField
+          autoComplete="off"
+          id="login"
+          name="login"
+          type="text"
+          value={username}
+          onChange={handleUserChange}
+          placeholder="John"
+          helperText={error}
+          error={!!error}
+          label={"Username"}
+        />
+
         <br />
-        <label htmlFor="password">
-          <InlineText>Password:</InlineText>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="*****"
-            value={password}
-            autoComplete="current-password"
-            onChange={handlePassChange}
-            required
-          />
-        </label>
+
+        <ValidationTextField
+          id="password"
+          name="password"
+          type="password"
+          value={password}
+          autoComplete="off"
+          onChange={handlePassChange}
+          placeholder="*****"
+          helperText={error}
+          error={!!error}
+          label={"Password"}
+        />
+
         <br />
 
         {isLoading ? (
           <CircularProgress style={{ margin: "0 auto" }} />
         ) : (
-          <button type="submit">Login</button>
+          <button type="submit">LOGIN</button>
         )}
       </form>
     </div>

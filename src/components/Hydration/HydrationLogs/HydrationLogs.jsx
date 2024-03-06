@@ -146,8 +146,8 @@ function HydrationLogs() {
               ) : (
                 /* Logs */
                 logs.map((log) => (
-                  <Item>
-                    <TableRow key={log.timestamp}>
+                  <Item key={log.timestamp}>
+                    <TableRow>
                       <LogsDetails>
                         <IntakeCol>
                           <span style={{ color: theme.secondaryLabel }}>

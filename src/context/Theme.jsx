@@ -7,6 +7,7 @@ const darkTheme = {
   secondaryColor: "var(--dark)",
   text: "var(--sea)",
   secondaryBackgroundColor: "var(--dark)",
+  alternativeBackgroundColor: "var(--light)",
   label: "var(--secondary-color)",
   idle: "var(--gray)",
   statistics: "var(--statistics)",
@@ -19,7 +20,8 @@ const darkTheme = {
   greeting: "var(--greeting)",
   secondaryLabel: "var(--ocean)",
   secondaryStatistics: "var(--statistics)",
-  inlineText: "var(--water)"
+  inlineText: "var(--water)",
+  light: "var(--light)",
 };
 
 const lightTheme = {
@@ -28,6 +30,7 @@ const lightTheme = {
   secondaryColor: "var(--light)",
   text: "var(--sea)",
   secondaryBackgroundColor: "var(--water)",
+  alternativeBackgroundColor: "inherit",
   label: "var(--dark)",
   idle: "var(--gray)",
   hydrated: "var(--dark)",
@@ -40,7 +43,8 @@ const lightTheme = {
   greeting: "var(--dark)",
   secondaryLabel: "var(--dark)",
   secondaryStatistics: "var(--black)",
-  inlineText: "var(--water)"
+  inlineText: "var(--water)",
+  light: "var(--light)",
 };
 
 export const ThemeContext = createContext({

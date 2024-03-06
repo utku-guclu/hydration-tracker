@@ -9,6 +9,9 @@ import { styled } from "@mui/system";
 import MaxGoalInput from "../MaxGoalnput/MaxGoalInput";
 
 import { addHydrationLog } from "../../../services/hydrationService";
+import UnitTexField from "../../UI/UnitTextField";
+
+import { mlToCups } from "hydration-converter";
 
 const WaterIntakeHeading = styled("h2")(({ color }) => ({
   color,
@@ -16,12 +19,19 @@ const WaterIntakeHeading = styled("h2")(({ color }) => ({
 
 function HydrationForm() {
   const { token } = useUser();
-  const { unit, isCup, setRecentIntake, setLogs, updateCall, dailyGoal } =
-    useHydration();
+  const {
+    unit,
+    isCup,
+    setRecentIntake,
+    setLogs,
+    updateCall,
+    dailyGoal,
+    recentIntake,
+  } = useHydration();
   const { handleStart, handleReset } = useTimer();
 
   const [headingColor, setHeadingColor] = useState("var(--gray)");
-  const [waterIntakeLocal, setWaterIntakeLocal] = useState(0);
+  const [waterIntakeLocal, setWaterIntakeLocal] = useState("");
 
   const { theme } = useContext(ThemeContext);
 
@@ -33,17 +43,17 @@ function HydrationForm() {
     }
   }, [waterIntakeLocal]);
 
-  const handleInputFocus = () => {
-    if (waterIntakeLocal === 0) {
-      setWaterIntakeLocal("");
-    }
-  };
+  // const handleInputFocus = () => {
+  //   if (waterIntakeLocal === 0) {
+  //     setWaterIntakeLocal("");
+  //   }
+  // };
 
-  const handleInputBlur = () => {
-    if (waterIntakeLocal === "") {
-      setWaterIntakeLocal(0);
-    }
-  };
+  // const handleInputBlur = () => {
+  //   if (waterIntakeLocal === "") {
+  //     setWaterIntakeLocal(""); // use "" instead of 0
+  //   }
+  // };
 
   const handleInputChange = (e) => {
     setWaterIntakeLocal(e.target.value);
@@ -53,7 +63,7 @@ function HydrationForm() {
     e.preventDefault();
     handleReset();
     handleStart();
-    setWaterIntakeLocal(0);
+    setWaterIntakeLocal("");
     if (waterIntakeLocal <= 0 || waterIntakeLocal === "") return;
 
     addHydrationLog(
@@ -72,22 +82,28 @@ function HydrationForm() {
       <WaterIntakeHeading className="water-intake-heading" color={headingColor}>
         Log Your Water Intake
       </WaterIntakeHeading>
-      <form id="log-submit-form" onSubmit={handleFormSubmit}>
-        <label htmlFor="waterIntake">
-          <span style={{ color: "var(--light)" }}>Water {unit}:</span>
-          <input
-            placeholder={waterIntakeLocal}
-            type="number"
-            id="waterIntake"
-            name="waterIntake"
-            value={waterIntakeLocal}
-            min="0"
-            onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-          />
-        </label>
-        <button disabled={!waterIntakeLocal} type="submit">
+      <form
+        className="hydration-submit-form"
+        onSubmit={handleFormSubmit}
+        style={{ backgroundColor: theme.alternativeBackgroundColor }}
+      >
+        <UnitTexField
+          label="Water Intake"
+          unit={unit}
+          placeholder={isCup ? mlToCups(recentIntake) : recentIntake}
+          type="number"
+          id="waterIntake"
+          name="waterIntake"
+          value={waterIntakeLocal}
+          min="0"
+          onChange={handleInputChange}
+          // onFocus={handleInputFocus}
+          // onBlur={handleInputBlur}
+        />
+        <button
+          disabled={!waterIntakeLocal}
+          type="submit"
+        >
           Log Water Intake
         </button>
       </form>

@@ -46,6 +46,12 @@ const StyledNav = styled("nav")({
   },
 });
 
+const NavItem = styled("li")({
+  textTransform: "uppercase",
+});
+
+const NavItems = styled("ul")({});
+
 const UserProfile = styled("li")({
   display: "flex",
   alignItems: "center",
@@ -76,24 +82,24 @@ const Header = ({ children }) => {
       {location.pathname === "/" && <HydrationUnitLogo />}
 
       <StyledNav>
-        <ul>
+        <NavItems>
           {/* Render the "Home" link only if not on the home page */}
           {location.pathname !== "/" && (
-            <li>
+            <NavItem>
               <Link to="/">Home</Link>
-            </li>
+            </NavItem>
           )}
           {/* Render the "Login" link only if not on the login page and user is not logged in */}
           {location.pathname !== "/login" && !authenticated && (
-            <li>
+            <NavItem>
               <Link to="/login">Login</Link>
-            </li>
+            </NavItem>
           )}
           {/* Render the "Register" link only if not on the register page and user is not logged in */}
           {location.pathname !== "/register" && !authenticated && (
-            <li>
+            <NavItem>
               <Link to="/register">Register</Link>
-            </li>
+            </NavItem>
           )}
           {/* Render the "Logout" link only if user is logged in */}
           {authenticated && (
@@ -104,7 +110,7 @@ const Header = ({ children }) => {
               <Logout logout={logout}>Logout</Logout>
             </UserProfile>
           )}
-        </ul>
+        </NavItems>
       </StyledNav>
     </StyledHeader>
   );

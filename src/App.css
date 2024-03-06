@@ -8,7 +8,6 @@ body {
   justify-content: center;
   text-align: center;
   margin: 0;
-  padding: 0 20px;
   min-width: 320px;
   min-height: 100vh;
   position: relative;
@@ -37,7 +36,8 @@ main {
 form {
   display: flex;
   flex-direction: column;
-  background-color: var(--gray);
+  justify-content: center;
+  align-items: center;
   /* border-radius: 4px; */
   padding: 20px;
 }
@@ -83,10 +83,18 @@ input {
   outline: none;
 }
 
+button {
+  width: 100%;
+  margin: 0;
+}
+
 /* Additional styles */
 
-#log-submit-form {
+.log-hydration-submit-form {
   margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .italic {

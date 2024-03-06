@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useUser } from "../../context/UserContext";
 import authService from "../../services/authService";
 
@@ -12,6 +12,9 @@ import InlineText from "../../context/InlineText";
 
 import { SignUp } from "./Google";
 import { CircularProgress } from "@mui/material";
+import ValidationTextField from "../UI/ValidationTextField";
+
+import { ThemeContext } from "../../context/Theme";
 
 const RegisterHeading = styled("h2")(({ color }) => ({
   color: color,
@@ -29,7 +32,11 @@ const Register = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
+
+  const { isDarkTheme, theme } = useContext(ThemeContext);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -44,8 +51,9 @@ const Register = () => {
       navigate("/");
     } catch (error) {
       // give error message to user - ui
-      console.error("Registration failed", error);
-      toast.error(error.toString().slice(6));
+      const errorMessage = error.toString().slice(6);
+      toast.error(errorMessage);
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
       setUsername("");
@@ -54,10 +62,12 @@ const Register = () => {
   };
 
   const handleUserChange = (e) => {
+    setError(false);
     setUsername(e.target.value);
   };
 
   const handlePassChange = (e) => {
+    setError(false);
     setPassword(e.target.value);
   };
 
@@ -80,39 +90,45 @@ const Register = () => {
         <SignUp />
       </form>
       <RegisterHeading color={headingColor}>Register</RegisterHeading>
-      <form className="user-form" onSubmit={handleRegister}>
-        <label htmlFor="register">
-          <InlineText>Username:</InlineText>
-          <input
-            id="register"
-            name="register"
-            type="text"
-            value={username}
-            placeholder="John"
-            autoComplete="username"
-            onChange={handleUserChange}
-            required
-          />
-        </label>
+      <form
+        style={{
+          backgroundColor: isDarkTheme ? theme.hydrated : "inherit",
+        }}
+        className="user-form"
+        onSubmit={handleRegister}
+      >
+        <ValidationTextField
+          autoComplete="off"
+          id="register"
+          name="register"
+          type="text"
+          value={username}
+          placeholder="John"
+          onChange={handleUserChange}
+          error={!!error}
+          label={"Username"}
+        />
+
         <br />
-        <label htmlFor="password">
-          <InlineText>Password:</InlineText>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            value={password}
-            placeholder="*****"
-            autoComplete="current-password"
-            onChange={handlePassChange}
-            required
-          />
-        </label>
+
+        <ValidationTextField
+          autoComplete="off"
+          id="password"
+          name="password"
+          type="password"
+          value={password}
+          placeholder="*****"
+          onChange={handlePassChange}
+          error={!!error}
+          label={"Username"}
+        />
+
         <br />
+
         {isLoading ? (
           <CircularProgress style={{ margin: "0 auto" }} />
         ) : (
-          <button type="submit">Register</button>
+          <button type="submit">REGISTER</button>
         )}
       </form>
     </div>

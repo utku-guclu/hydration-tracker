@@ -11,10 +11,13 @@ import { ThemeContext } from "../context/Theme";
 import { styled } from "@mui/system";
 import { createGlobalStyle } from "styled-components";
 
-const Hydration = styled("main")(({ isDarkTheme }) => ({
-  backgroundColor: !isDarkTheme
-    ? "rgba(255, 246, 233, 0.5)"
-    : "",
+const Hydration = styled("main")(({ isDarkTheme, theme }) => ({
+  backgroundColor: !isDarkTheme ? "rgba(255, 246, 233, 0.5)" : "",
+  padding: "0 20px",
+  [theme.breakpoints.down("430px")]: {
+    width: "100vw",
+    padding: 0,
+  },
 }));
 
 const GlobalStyle = createGlobalStyle`

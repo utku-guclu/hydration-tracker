@@ -81,7 +81,6 @@ function HydrationUpdateForm({ log, onUpdate, isDialogOpen }) {
         />
       </label>
       <button
-        style={{ width: "100%", margin: 0 }}
         disabled={updatedIntake === 0 || updatedIntake === ""}
       >
         Update Log

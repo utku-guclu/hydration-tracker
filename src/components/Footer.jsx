@@ -18,16 +18,16 @@ const StyledFooter = styled("footer")(({ color }) => ({
   padding: "10px",
   marginTop: "100px",
   backgroundColor: "var(--sea)",
-  color,
 }));
 
-const InnerContainer = styled("footer")({
+const InnerContainer = styled("div")(({ color }) => ({
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
   gap: "1em",
-});
+  color,
+}));
 
 const FooterText = styled("p")({
   margin: 0, // Remove default margin
@@ -65,11 +65,8 @@ const Footer = () => {
   };
 
   return (
-    <StyledFooter
-      color={theme.text}
-      style={{ display: isFooterVisible ? "flex" : "none" }}
-    >
-      <InnerContainer>
+    <StyledFooter style={{ display: isFooterVisible ? "flex" : "none" }}>
+      <InnerContainer color={theme.secondaryColor}>
         <FooterText>All rights reserved &copy; Hydration Tracker</FooterText>
         <FaArrowCircleUp
           style={{ fontSize: "20px", cursor: "pointer" }}

@@ -1,5 +1,5 @@
 // Login.jsx
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
 
 import server from "../../../config/baseURL";
@@ -7,12 +7,14 @@ import { CircularProgress } from "@mui/material";
 
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
+import GoogleButton from "react-google-button";
+
 const SignIn = () => {
   const { handleGoogle, loading, error } = useFetch(
     `${server}/auth/google/signin`
   );
 
-  useEffect(() => {
+  const openGoogle = useCallback(() => {
     /* global google */
     if (window.google) {
       google.accounts.id.initialize({
@@ -20,15 +22,15 @@ const SignIn = () => {
         callback: handleGoogle,
       });
 
-      google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-        // type: "standard",
-        theme: "filled_black",
-        // size: "small",
-        text: "signin_with",
-        shape: "pill",
-      });
+      // google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      //   // type: "standard",
+      //   theme: "filled_black",
+      //   // size: "small",
+      //   text: "signin_with",
+      //   shape: "pill",
+      // });
 
-      // google.accounts.id.prompt();
+      google.accounts.id.prompt();
     }
   }, [handleGoogle]);
 
@@ -45,7 +47,11 @@ const SignIn = () => {
         {loading ? (
           <CircularProgress />
         ) : (
-          <div id="signInDiv" data-text="sigin_with"></div>
+          <GoogleButton
+            id="signInDiv"
+            data-text="sigin_with"
+            onClick={openGoogle}
+          ></GoogleButton>
         )}
       </div>
     </>

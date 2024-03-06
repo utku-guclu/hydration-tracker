@@ -260,11 +260,11 @@ export const resetLogs = async (token, userId, setLogs) => {
 };
 
 export const generateHydrationImage = async (token, hydrationStatus) => {
-  // if (!token) return;
+  if (!token) return;
   try {
     const response = await generateImage(hydrationStatus);
     const imageUrl = await blobToBase64(response);
-    return imageUrl
+    return imageUrl;
   } catch (error) {
     console.log("Error:", error);
     return null;

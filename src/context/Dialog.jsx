@@ -42,7 +42,7 @@ function Dialog({ visible, onClose, children }) {
       ref={dialogRef}
     >
       {children}
-      <button style={{ width: "100%", marginTop: "6px" }} onClick={handleClose}>
+      <button style={{ marginTop: "6px" }} onClick={handleClose}>
         Close
       </button>
     </dialog>,

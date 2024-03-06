@@ -12,7 +12,7 @@ import { useTimer } from "./TimerContext";
 
 import { mlToCups, cupsToMl } from "hydration-converter";
 
-import { ThemeContext } from "./Theme";
+import { ThemeContext } from "./Theme"
 
 import {
   resetPool,
@@ -204,6 +204,7 @@ export const HydrationProvider = ({ children }) => {
         thirstinessColor,
         statistics,
         setRecentIntake,
+        recentIntake,
         setLogs,
         resetLogPool,
         updateCall,
