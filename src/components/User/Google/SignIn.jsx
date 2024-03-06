@@ -8,6 +8,7 @@ import { CircularProgress } from "@mui/material";
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
 import GoogleButton from "react-google-button";
+import googleClient from "../../../config/googleClient";
 
 const SignIn = () => {
   const { handleGoogle, loading, error } = useFetch(
@@ -18,7 +19,7 @@ const SignIn = () => {
     /* global google */
     if (window.google) {
       google.accounts.id.initialize({
-        client_id: import.meta.env.VITE_APP_GOOGLE_CLIENT_ID,
+        client_id: googleClient,
         callback: handleGoogle,
       });
 
