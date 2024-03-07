@@ -6,7 +6,7 @@ import { useHydration } from "../../../context/HydrationContext";
 
 import { useUser } from "../../../context/UserContext";
 
-import { mlToCups } from "hydration-converter";
+import { mlToCups } from "../../../utils/hydrationConverter";
 
 import { Tooltip } from "react-tooltip";
 

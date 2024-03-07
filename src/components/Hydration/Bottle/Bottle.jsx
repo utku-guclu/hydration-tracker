@@ -6,7 +6,7 @@ import { useUser } from "../../../context/UserContext";
 
 import { addHydrationLog } from "../../../services/hydrationService";
 
-import { cupsToMl } from "hydration-converter";
+import { cupsToMl } from "../../../utils/hydrationConverter";
 
 import waterDrop from "../../../assets/sounds/water-drop.mp3";
 

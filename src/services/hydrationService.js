@@ -1,5 +1,5 @@
 import axios from "axios";
-import { cupsToMl } from "hydration-converter";
+import { cupsToMl } from "../utils/hydrationConverter";
 
 import server from "../config/baseURL";
 
@@ -135,7 +135,7 @@ export const addHydrationLog = async (
     });
 
     if (response.ok) {
-      await updateCallback(intake);
+      () => updateCallback(intake);
     } else {
       console.error("Failed to add hydration log");
     }

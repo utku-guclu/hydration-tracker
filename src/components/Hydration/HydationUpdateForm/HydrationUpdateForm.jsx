@@ -4,7 +4,7 @@ import { useHydration } from "../../../context/HydrationContext";
 
 import { useUser } from "../../../context/UserContext";
 
-import { mlToCups } from "hydration-converter";
+import { mlToCups } from "../../../utils/hydrationConverter";
 
 import { updateHydrationLog } from "../../../services/hydrationService";
 
@@ -80,9 +80,7 @@ function HydrationUpdateForm({ log, onUpdate, isDialogOpen }) {
           placeholder={placeholderText}
         />
       </label>
-      <button
-        disabled={updatedIntake === 0 || updatedIntake === ""}
-      >
+      <button disabled={updatedIntake === 0 || updatedIntake === ""}>
         Update Log
       </button>
     </form>
