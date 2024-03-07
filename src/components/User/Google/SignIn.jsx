@@ -6,11 +6,7 @@ import server from "../../../config/baseURL";
 import { CircularProgress } from "@mui/material";
 
 import googleClient from "../../../config/googleClient";
-
-// https://developers.google.com/identity/gsi/web/reference/js-reference
-
 import GoogleButton from "react-google-button";
-import googleClient from "../../../config/googleClient";
 
 const SignIn = () => {
   const { handleGoogle, loading, error } = useFetch(
